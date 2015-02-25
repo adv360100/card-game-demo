@@ -42,10 +42,8 @@ public class HandActions : BasicAnimator {
 		float startPoint = containerWidth * -0.5f;
 		foreach (GameObject cardObject in CardList) 
 		{
-			Transform trans = transform;
-			trans.position = new Vector3(startPoint + objectWidth * index, trans.position.y, trans.position.z);
 			Card card = cardObject.GetComponent<Card>();
-			card.AnimateTo(trans,animationRate);
+			card.AnimateTo(new Vector3(startPoint + objectWidth * index, transform.position.y, transform.position.z),animationRate);
 			index++;
 		}
 	}
