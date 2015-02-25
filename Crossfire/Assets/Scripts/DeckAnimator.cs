@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DeckAnimator : MonoBehaviour {
+public class DeckAnimator : DeckActions {
 
-	public Transform Hand;
+	public BasicAnimator Hand;
 	public Transform Discard;
 	public MeshRenderer[] ExtraCards; //the deck 'stack' cards for when there are more than one card in the deck
 
-	DeckActions deck;
 	MeshRenderer mainMesh;
 
 	void Awake(){
-		deck = GetComponent<DeckActions> ();
 		mainMesh = GetComponent<MeshRenderer> ();
 		UpdateDeckDisplay ();
 	}
@@ -31,13 +29,13 @@ public class DeckAnimator : MonoBehaviour {
 
 	void OnMouseDown()
 	{
-		if (deck.DeckCount () == 0)
+		if (DeckCount () == 0)
 			return;
-		GameObject[] cards = deck.DrawCards (1);
+		GameObject[] cards = DrawCards (1);
 		foreach (GameObject cardObject in cards) 
 		{
-			Card c = cardObject.GetComponent<Card>();
-			c.AnimateCard(transform,Hand,1.0f);
+			cardObject.transform.position = transform.position;
+			Hand.AnimateTarget(cardObject,1.0f);
 		}
 
 		UpdateDeckDisplay ();
@@ -45,7 +43,7 @@ public class DeckAnimator : MonoBehaviour {
 
 	void UpdateDeckDisplay()
 	{
-		int deckSize = deck.DeckCount ();
+		int deckSize = DeckCount ();
 		if (deckSize > 0)
 			mainMesh.enabled = true;
 		else

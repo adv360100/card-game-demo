@@ -1,40 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Card : MonoBehaviour {
+public class Card : BasicAnimator {
 
 	public int value;
 
-	Transform animateToTransform;
-	float animateRate;
+	Transform AnimationTarget;
+	float AnimateRate;
 
 	// Use this for initialization
 	void Start () {
-		animateToTransform = null;
-		animateRate = 0.0f;
+		AnimationTarget = null;
+		AnimateRate = 0.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (animateToTransform != null)
+		if (AnimationTarget != null)
 		{
-			float fraction = Time.deltaTime * (1.0f / animateRate);
-			transform.position = Vector3.Lerp(transform.position,animateToTransform.position,fraction);
-			//transform.rotation = Quaternion.Slerp(transform.rotation,animateToTransform.rotation,fraction);
+			float fraction = Time.deltaTime * (1.0f / AnimateRate);
+			transform.position = Vector3.Lerp(transform.position,AnimationTarget.position,fraction);
+			//transform.rotation = Quaternion.Slerp(transform.rotation,AnimateToTransform.rotation,fraction);
 
-			if(transform.position == animateToTransform.position /*&&
-			   transform.rotation == animateToTransform.rotation*/)
+			if(transform.position == AnimationTarget.position)
 			{
-				animateToTransform = null;
-				animateRate = 0.0f;
+				AnimationTarget = null;
+				AnimateRate = 0.0f;
 			}
 		}
 	}
 
-	public void AnimateCard(Transform from, Transform to, float rate) {
-		animateToTransform = to;
-		animateRate = rate;
-		transform.position = from.position;
-		//transform.rotation = from.rotation;
+	override public void AnimateTo(Transform target, float rate) {
+		AnimationTarget = target;
+		AnimateRate = rate;
 	}
 }
