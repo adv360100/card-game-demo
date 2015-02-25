@@ -466,7 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73eaa51b4e2842f49b46a519aae5af86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainDeck: {fileID: 1619819473}
+  MainDeck: {fileID: 1619819475}
   OriginalCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
 --- !u!4 &1574937356
 Transform:
@@ -491,7 +491,6 @@ GameObject:
   - 33: {fileID: 1619819478}
   - 64: {fileID: 1619819477}
   - 23: {fileID: 1619819476}
-  - 114: {fileID: 1619819473}
   - 114: {fileID: 1619819475}
   m_Layer: 0
   m_Name: Deck
@@ -500,18 +499,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1619819473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1619819472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f59f70e00fade684584f879df7709430, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardList: []
 --- !u!4 &1619819474
 Transform:
   m_ObjectHideFlags: 0
@@ -539,13 +526,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bff2d4aac3917bb4f9214262bd6c12d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: {fileID: 2031445623}
-  discard: {fileID: 0}
-  extraCards:
-  - {fileID: 272708503}
-  - {fileID: 36532754}
-  - {fileID: 1854207851}
-  - {fileID: 948072675}
+  CardList: []
+  Hand: {fileID: 2031445624}
+  Discard: {fileID: 0}
+  ExtraCards: []
 --- !u!23 &1619819476
 Renderer:
   m_ObjectHideFlags: 0
@@ -664,6 +648,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 2031445623}
+  - 114: {fileID: 2031445624}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -683,3 +668,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &2031445624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2031445622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71afe38ecd3303a4daa94e63c2799d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CardList: []

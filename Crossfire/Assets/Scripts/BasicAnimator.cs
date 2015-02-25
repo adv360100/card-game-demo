@@ -17,7 +17,7 @@ public class BasicAnimator : MonoBehaviour {
 		Debug.LogWarning ("Please use a derived version of this function");
 	}
 
-	virtual public void AnimateTo(Transform target, float rate) {
+	virtual public void AnimateTo(Vector3 target, float rate) {
 		Debug.LogWarning ("Please use a derived version of this function");
 	}
 }
