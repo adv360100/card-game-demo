@@ -5,8 +5,8 @@ using System.Collections.Generic;
 //This class handles all the behind the scenes deck management
 public class DeckActions : MonoBehaviour {
 
-	public List<GameObject> cardList = new List<GameObject>();
-	protected List<GameObject> discardList = new List<GameObject>();
+	public List<GameObject> CardList = new List<GameObject>();
+	protected List<GameObject> DiscardList = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
@@ -19,35 +19,35 @@ public class DeckActions : MonoBehaviour {
 
 	public int DeckCount()
 	{
-		return cardList.Count;
+		return CardList.Count;
 	}
 
 	public int DiscardCount()
 	{
-		return discardList.Count;
+		return DiscardList.Count;
 	}
 
 	public void AddCards(IEnumerable<GameObject> cardsToAdd)
 	{
-		cardList.AddRange (cardsToAdd);
+		CardList.AddRange (cardsToAdd);
 	}
 
 	GameObject DrawCard()
 	{
-		if (cardList.Count <= 0)
+		if (CardList.Count <= 0)
 		{
-			if(discardList.Count <= 0)
+			if(DiscardList.Count <= 0)
 			{
 				return null;
 			}
 			//shuffle discard into deck and try draw again
-			ShuffleDeck(discardList.ToArray());
-			AddCards(discardList);
-			discardList.Clear();
+			ShuffleDeck(DiscardList.ToArray());
+			AddCards(DiscardList);
+			DiscardList.Clear();
 		}
 
-		GameObject topCard = cardList [cardList.Count - 1];
-		cardList.Remove (topCard);
+		GameObject topCard = CardList [CardList.Count - 1];
+		CardList.Remove (topCard);
 		return topCard;
 	}
 
@@ -73,7 +73,7 @@ public class DeckActions : MonoBehaviour {
 
 	public void DiscardCards(IEnumerable<GameObject> cardsToDiscard)
 	{
-		discardList.AddRange (cardsToDiscard);
+		DiscardList.AddRange (cardsToDiscard);
 	}
 	
 	void ShuffleDeck(GameObject[] deck)
@@ -88,11 +88,11 @@ public class DeckActions : MonoBehaviour {
 
 	public void Shuffle()
 	{
-		GameObject[] deck = cardList.ToArray ();
+		GameObject[] deck = CardList.ToArray ();
 		ShuffleDeck (deck);
-		cardList.Clear ();
+		CardList.Clear ();
 		foreach (GameObject c in deck) {
-			cardList.Add(c);
+			CardList.Add(c);
 		}
 	}
 
@@ -103,7 +103,7 @@ public class DebugDeckActions : DeckActions {
 	//get cards in deck for viewing 
 	public GameObject[] GetDeck()
 	{
-		return cardList.ToArray();
+		return CardList.ToArray();
 	}
 }
 

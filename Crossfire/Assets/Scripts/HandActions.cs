@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class HandActions : MonoBehaviour {
 
-	public List<GameObject> cardList = new List<GameObject>();
+	public List<GameObject> CardList = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +18,6 @@ public class HandActions : MonoBehaviour {
 
 	public void AddCards(IEnumerable<GameObject> cardsToAdd)
 	{
-		cardList.AddRange (cardsToAdd);
+		CardList.AddRange (cardsToAdd);
 	}
 }

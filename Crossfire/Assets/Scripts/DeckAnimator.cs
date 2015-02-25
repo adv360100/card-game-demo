@@ -3,9 +3,9 @@ using System.Collections;
 
 public class DeckAnimator : MonoBehaviour {
 
-	public Transform hand;
-	public Transform discard;
-	public MeshRenderer[] extraCards; //the deck 'stack' cards for when there are more than one card in the deck
+	public Transform Hand;
+	public Transform Discard;
+	public MeshRenderer[] ExtraCards; //the deck 'stack' cards for when there are more than one card in the deck
 
 	DeckActions deck;
 	MeshRenderer mainMesh;
@@ -20,7 +20,7 @@ public class DeckAnimator : MonoBehaviour {
 	void Start () {
 		//deck = GetComponent<DeckActions> ();
 		//mainMesh = GetComponent<MeshRenderer> ();
-
+	
 		UpdateDeckDisplay ();
 	}
 	
@@ -37,7 +37,7 @@ public class DeckAnimator : MonoBehaviour {
 		foreach (GameObject cardObject in cards) 
 		{
 			Card c = cardObject.GetComponent<Card>();
-			c.AnimateCard(transform,hand,1.0f);
+			c.AnimateCard(transform,Hand,1.0f);
 		}
 
 		UpdateDeckDisplay ();
@@ -51,9 +51,9 @@ public class DeckAnimator : MonoBehaviour {
 		else
 			mainMesh.enabled = false;
 
-		for (int i=0; i < extraCards.Length; i++)
+		for (int i=0; i < ExtraCards.Length; i++)
 		{
-			MeshRenderer mesh = extraCards[i];
+			MeshRenderer mesh = ExtraCards[i];
 			if (deckSize > i+1)
 				mesh.enabled = true;
 			else
