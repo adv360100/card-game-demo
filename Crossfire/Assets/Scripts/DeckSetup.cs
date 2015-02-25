@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DeckSetup : MonoBehaviour {
 
-	public DeckActions MainDeck;
+	public DeckAnimator MainDeck;
 	public GameObject OriginalCard;
 
 	// Use this for initialization
