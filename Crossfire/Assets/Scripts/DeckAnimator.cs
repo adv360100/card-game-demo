@@ -3,8 +3,6 @@ using System.Collections;
 
 public class DeckAnimator : DeckActions {
 
-	public BasicAnimator Hand;
-	public Transform Discard;
 	public MeshRenderer[] ExtraCards; //the deck 'stack' cards for when there are more than one card in the deck
 
 	MeshRenderer mainMesh;
@@ -35,7 +33,7 @@ public class DeckAnimator : DeckActions {
 		foreach (GameObject cardObject in cards) 
 		{
 			cardObject.transform.position = transform.position;
-			Hand.AnimateTarget(cardObject,1.0f);
+			PlayerManager.AddCardToHand(cardObject);
 		}
 
 		UpdateDeckDisplay ();

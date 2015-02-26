@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class HandActions : BasicAnimator {
 
 	public List<GameObject> CardList = new List<GameObject>();
+	public PlayerActions PlayerManager;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +23,11 @@ public class HandActions : BasicAnimator {
 		UpdateDeckDisplay ();
 	}
 
+	public void RemoveCard (GameObject card) {
+		CardList.Remove (card);
+		UpdateDeckDisplay ();
+	}
+
 	override public void AnimateTarget(GameObject target, float rate) {
 		CardList.Add (target);
 		UpdateDeckDisplay (rate);
@@ -34,6 +40,10 @@ public class HandActions : BasicAnimator {
 
 	void UpdateDeckDisplay(float animationRate)
 	{
+		if (CardList.Count == 0) {
+			return;
+		}
+
 		float objectWidth = CardList [0].renderer.bounds.size.x;
 		int count = CardList.Count - 1;
 		float containerWidth = count * objectWidth;
