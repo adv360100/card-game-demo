@@ -12,7 +12,7 @@ public class DeckSetup : MonoBehaviour {
 		// Create the starting deck
 		if (MainDeck != null) { 
 			List<GameObject> cardList = new List<GameObject>();
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 5; i++) {
 				GameObject cardToAdd = GameObject.Instantiate(OriginalCard, MainDeck.transform.position, MainDeck.transform.rotation) as GameObject;
 
 				Vector3 pos = cardToAdd.transform.position;
