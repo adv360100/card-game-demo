@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class BasicAnimator : MonoBehaviour {
@@ -18,6 +19,10 @@ public class BasicAnimator : MonoBehaviour {
 	}
 
 	virtual public void AnimateTo(Vector3 target, float rate) {
+		Debug.LogWarning ("Please use a derived version of this function");
+	}
+
+	virtual public void AnimateTo(Vector3 target, float rate, Func<int, int> callback) {
 		Debug.LogWarning ("Please use a derived version of this function");
 	}
 }

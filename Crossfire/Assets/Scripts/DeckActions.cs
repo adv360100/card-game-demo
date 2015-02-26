@@ -5,8 +5,8 @@ using System.Collections.Generic;
 //This class handles all the behind the scenes deck management
 public class DeckActions : MonoBehaviour {
 
+	public PlayerActions PlayerManager;
 	public List<GameObject> CardList = new List<GameObject>();
-	protected List<GameObject> DiscardList = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
@@ -22,11 +22,6 @@ public class DeckActions : MonoBehaviour {
 		return CardList.Count;
 	}
 
-	public int DiscardCount()
-	{
-		return DiscardList.Count;
-	}
-
 	public void AddCards(IEnumerable<GameObject> cardsToAdd)
 	{
 		CardList.AddRange (cardsToAdd);
@@ -36,17 +31,18 @@ public class DeckActions : MonoBehaviour {
 	{
 		if (CardList.Count <= 0)
 		{
-			if(DiscardList.Count <= 0)
+			if(PlayerManager.GetDiscardPile().Count <= 0)
 			{
 				return null;
 			}
 			//shuffle discard into deck and try draw again
-			ShuffleDeck(DiscardList.ToArray());
-			AddCards(DiscardList);
-			DiscardList.Clear();
+			AddCards(PlayerManager.GetDiscardPile());
+			ShuffleDeck(CardList.ToArray());
+			PlayerManager.RemoveDiscardPile();
 		}
 
 		GameObject topCard = CardList [CardList.Count - 1];
+		topCard.GetComponent<Card>().CurrentCardLocation = CardLocation.CardLocationCurrentPlayer;
 		CardList.Remove (topCard);
 		return topCard;
 	}
@@ -69,11 +65,6 @@ public class DeckActions : MonoBehaviour {
 		}
 
 		return drawnCards;
-	}
-
-	public void DiscardCards(IEnumerable<GameObject> cardsToDiscard)
-	{
-		DiscardList.AddRange (cardsToDiscard);
 	}
 	
 	void ShuffleDeck(GameObject[] deck)

@@ -126,16 +126,17 @@ namespace DeckActionUT
 			DeckActions deck = obj.GetComponent<DeckActions> ();
 			GameObject[] cardsToAdd = Helpers.MakeCards (2,test.transform);
 			deck.AddCards (cardsToAdd);
-			GameObject[] cardsToDiscard = Helpers.MakeCards (2,test.transform);
-			deck.DiscardCards (cardsToDiscard);
+//			GameObject[] cardsToDiscard = Helpers.MakeCards (2,test.transform);
+//			deck.DiscardCards (cardsToDiscard);
 
 			deck.DrawCards (4);
 
 			int deckCount = deck.DeckCount ();
-			int discardCount = deck.DiscardCount ();
+//			int discardCount = deck.DiscardCount ();
 			//Debug.Log (deckCount);
 			//Debug.Log (discardCount);
-			bool decksAreEmpty = (0 == (deckCount + discardCount));
+//			bool decksAreEmpty = (0 == (deckCount + discardCount));
+			bool decksAreEmpty = (0 == (deckCount));
 			Assert.That (decksAreEmpty);
 			GameObject.DestroyImmediate (test);
 		}
