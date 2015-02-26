@@ -8,8 +8,7 @@ public class DiscardDeck : Deck {
 	Vector3 AnimationTarget;
 	float AnimateRate;
 	Func<int, int> CallbackFunction;
-	MeshRenderer mainMesh;
-	
+
 	void Awake () {
 		mainMesh = GetComponent<MeshRenderer> ();
 		UpdateDeckDisplay ();

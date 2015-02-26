@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BlackMarketArea : BasicAnimator {
+public class BlackMarketArea : BasicArea {
 
 	public List<GameObject> CardList;
 	public int Columns = 3;
@@ -18,7 +18,17 @@ public class BlackMarketArea : BasicAnimator {
 	
 	}
 
-	override public void AnimateTarget(GameObject target, float rate) {
+	override public void OnFocusEnter()
+	{
+		
+	}
+
+	override public void OnFocusExit()
+	{
+		
+	}
+
+	public void AnimateTarget(GameObject target, float rate) {
 		CardList.Add (target);
 		UpdateDeckDisplay (rate);
 	}

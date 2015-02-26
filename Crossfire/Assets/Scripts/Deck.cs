@@ -8,7 +8,7 @@ public class Deck : BasicAnimator {
 	public PlayerActions PlayerManager;
 	public List<GameObject> CardList = new List<GameObject>();
 	public MeshRenderer[] ExtraCards; //the deck 'stack' cards for when there are more than one card in the deck
-	MeshRenderer mainMesh;
+	protected MeshRenderer mainMesh;
 
 	public int DeckCount()
 	{
