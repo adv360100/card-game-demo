@@ -35,7 +35,7 @@ public class HandActions : BasicAnimator {
 	void UpdateDeckDisplay(float animationRate)
 	{
 		float objectWidth = CardList [0].renderer.bounds.size.x;
-		int count = CardList.Count;
+		int count = CardList.Count - 1;
 		float containerWidth = count * objectWidth;
 		int index = 0;
 		//find start point
