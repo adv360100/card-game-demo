@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class DeckSetup : MonoBehaviour {
 
-	public DeckAnimator MainDeck;
-	public DeckAnimator MarketDeck;
+	public Deck MainDeck;
+	public Deck MarketDeck;
 	public GameObject OriginalCard;
 
 	// Use this for initialization

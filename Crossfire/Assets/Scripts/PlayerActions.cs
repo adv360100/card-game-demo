@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerActions : MonoBehaviour {
 
-	public DeckAnimator MainDeck;
+	public Deck MainDeck;
 	public DiscardActions DiscardPile;
 	public HandActions Hand;
 	public GameObject PlayField;
