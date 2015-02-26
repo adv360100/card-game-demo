@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 //This class handles all the behind the scenes deck management
-public class Deck : MonoBehaviour {
+public class Deck : BasicAnimator {
 
 	public PlayerActions PlayerManager;
 	public List<GameObject> CardList = new List<GameObject>();
@@ -112,7 +112,7 @@ public class Deck : MonoBehaviour {
 		UpdateDeckDisplay ();
 	}
 	
-	void UpdateDeckDisplay()
+	public void UpdateDeckDisplay()
 	{
 		int deckSize = DeckCount ();
 		if (deckSize > 0)

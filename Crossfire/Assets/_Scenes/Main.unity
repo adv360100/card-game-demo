@@ -1040,6 +1040,9 @@ MonoBehaviour:
   - {fileID: 834652211}
   CardList: []
   PlayerManager: {fileID: 1574937355}
+  AnimationTarget: {x: 0, y: 0, z: 0}
+  AnimateRate: 0
+  mainMesh: {fileID: 0}
 --- !u!23 &1489433148
 Renderer:
   m_ObjectHideFlags: 0

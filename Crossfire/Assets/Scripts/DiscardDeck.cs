@@ -3,12 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class DiscardActions : BasicAnimator {
-
-	public MeshRenderer[] ExtraCards; //the deck 'stack' cards for when there are more than one card in the deck
-	public List<GameObject> CardList = new List<GameObject>();
-	public PlayerActions PlayerManager;
-
+public class DiscardDeck : Deck {
+	
 	Vector3 AnimationTarget;
 	float AnimateRate;
 	Func<int, int> CallbackFunction;
@@ -16,7 +12,7 @@ public class DiscardActions : BasicAnimator {
 	
 	void Awake () {
 		mainMesh = GetComponent<MeshRenderer> ();
-		UpdateDisplay ();
+		UpdateDeckDisplay ();
 	}
 
 	// Use this for initialization
@@ -41,34 +37,15 @@ public class DiscardActions : BasicAnimator {
 
 	public void AddCard (GameObject card) {
 		CardList.Add (card);
-		UpdateDisplay ();
+		UpdateDeckDisplay ();
 	}
 
 	public void RemoveAllCards () {
 		CardList.Clear ();
-		UpdateDisplay ();
+		UpdateDeckDisplay ();
 	}
 
-	public void UpdateDisplay () {
-		if (CardList.Count > 0)
-			mainMesh.enabled = true;
-		else
-			mainMesh.enabled = false;
-		
-		for (int i = 0; i < ExtraCards.Length; i++)
-		{
-			MeshRenderer mesh = ExtraCards[i];
-			if (CardList.Count > i + 1)
-				mesh.enabled = true;
-			else
-				mesh.enabled = false;
-			
-		}
-	}
-
-	public override void AnimateTo (Vector3 target, float rate, System.Func<int, int> callback) {
-		AnimationTarget = target;
-		AnimateRate = rate;
-		CallbackFunction = callback;
+	public bool ContainsCard (Card card) {
+		return CardList.Contains (card.gameObject);
 	}
 }

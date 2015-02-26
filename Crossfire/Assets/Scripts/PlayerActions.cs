@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PlayerActions : MonoBehaviour {
 
 	public Deck MainDeck;
-	public DiscardActions DiscardPile;
+	public DiscardDeck DiscardPile;
 	public HandActions Hand;
 	public GameObject PlayField;
 	public GameObject OriginalCard;
@@ -43,7 +43,7 @@ public class PlayerActions : MonoBehaviour {
 		Vector3 curPos = DiscardPile.transform.position;
 		DiscardPile.AnimateTo(MainDeck.transform.position, 1.0f, p => {
 			DiscardPile.RemoveAllCards();
-			DiscardPile.UpdateDisplay();
+			DiscardPile.UpdateDeckDisplay();
 			DiscardPile.transform.position = curPos;
 			return 0;
 		});
