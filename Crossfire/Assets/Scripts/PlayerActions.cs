@@ -41,11 +41,10 @@ public class PlayerActions : MonoBehaviour {
 
 	public void RemoveDiscardPile () {
 		Vector3 curPos = DiscardPile.transform.position;
-		DiscardPile.QuadraticOutMoveTo (DiscardPile.transform.position, MainDeck.transform.position, 1.0f, p => {
+		DiscardPile.QuadraticOutMoveTo (DiscardPile.transform.position, MainDeck.transform.position, 1.0f, () => {
 			DiscardPile.RemoveAllCards ();
 			DiscardPile.UpdateDeckDisplay ();
 			DiscardPile.transform.position = curPos;
-			return 0;
 		});
 	}
 	
@@ -55,10 +54,9 @@ public class PlayerActions : MonoBehaviour {
 		}
 
 		card.CurrentCardLocation = CardLocation.CardLocationDiscard;
-		card.QuadraticOutMoveTo (card.transform.position, DiscardPile.transform.position, 1.0f, p => {
+		card.QuadraticOutMoveTo (card.transform.position, DiscardPile.transform.position, 1.0f, () => {
 			DiscardPile.AddCard (card.gameObject);
 			Hand.RemoveCard (card.gameObject);
-			return 1;
 		});
 	}
 

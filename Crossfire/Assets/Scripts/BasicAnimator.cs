@@ -4,7 +4,9 @@ using System.Collections;
 
 public class BasicAnimator : MonoBehaviour {
 
-	private Func<float, int> UpdateFunction = null;
+	public delegate void AnimationCompletionCallback();
+	private delegate void UpdateFunction(float deltaTime);
+	private UpdateFunction MyUpdateFunction = null;
 
 	// Use this for initialization
 	void Start () {
@@ -13,18 +15,18 @@ public class BasicAnimator : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected void Update () {
-		if (UpdateFunction != null) {
-			UpdateFunction(Time.deltaTime);
+		if (MyUpdateFunction != null) {
+			MyUpdateFunction(Time.deltaTime);
 		}
 	}
 
-	public void QuadraticOutMoveTo (Vector3 originalPosition, Vector3 targetPosition, float animationDuration, Func<int, int> completionCallback) {
-		if (UpdateFunction != null) {
+	public void QuadraticOutMoveTo (Vector3 originalPosition, Vector3 targetPosition, float animationDuration, AnimationCompletionCallback completionCallback) {
+		if (MyUpdateFunction != null) {
 			return;
 		}
 
 		float currentTime = 0;
-		UpdateFunction = deltaTime => {
+		MyUpdateFunction = deltaTime => {
 			currentTime += deltaTime;
 			float fraction = currentTime / animationDuration;
 
@@ -33,12 +35,10 @@ public class BasicAnimator : MonoBehaviour {
 			if (Vector3.Distance(transform.position, targetPosition) <= 0.01f) {
 				transform.position = targetPosition;
 				if (completionCallback != null) {
-					completionCallback(1);
+					completionCallback();
 				}
-				UpdateFunction = null;
+				MyUpdateFunction = null;
 			}
-
-			return 0;
 		};
 	}
 	

@@ -1509,6 +1509,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a69ea7e0bf8342468b9394b9da2455b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MarketDeck: {fileID: 0}
+  DiscardDeck: {fileID: 0}
+  BasicCard: {fileID: 0}
   CardList: []
   Columns: 3
   Rows: 2

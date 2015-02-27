@@ -66,7 +66,7 @@ public class BlackMarketArea : BasicArea {
 			Card card = cardObject.GetComponent<Card>();
 			float x = startPointX + objectWidth * (index / Rows);
 			float y = startPointY + objectHeight * (index / Columns);
-			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, transform.position.z), animationDuration, p => { card.CurrentCardLocation = CardLocation.CardLocationCurrentPlayer; return 1; });
+			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, transform.position.z), animationDuration, () => { card.CurrentCardLocation = CardLocation.CardLocationCurrentPlayer; });
 			index++;
 		}
 	}
