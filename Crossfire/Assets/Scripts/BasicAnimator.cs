@@ -4,14 +4,18 @@ using System.Collections;
 
 public class BasicAnimator : MonoBehaviour {
 
+	private Func<float, int> UpdateFunction = null;
+
 	// Use this for initialization
 	void Start () {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	protected void Update () {
+		if (UpdateFunction != null) {
+			UpdateFunction(Time.deltaTime);
+		}
 	}
 
 	virtual public void AnimateTarget(GameObject target, float rate) {
@@ -24,5 +28,36 @@ public class BasicAnimator : MonoBehaviour {
 
 	virtual public void AnimateTo(Vector3 target, float rate, Func<int, int> callback) {
 		Debug.LogWarning ("Please use a derived version of this function");
+	}
+
+	public void QuadraticOutMoveTo (Vector3 originalPosition, Vector3 targetPosition, float animationDuration, Func<int, int> completionCallback) {
+		if (UpdateFunction != null) {
+			return;
+		}
+
+		float currentTime = 0;
+		UpdateFunction = deltaTime => {
+			currentTime += deltaTime;
+			float fraction = currentTime / animationDuration;
+			Debug.Log(fraction);
+
+			transform.position = CalclulateQuadraticOut (originalPosition, targetPosition, fraction);
+
+			if (Vector3.Distance(transform.position, targetPosition) <= 0.01f) {
+				transform.position = targetPosition;
+				completionCallback(1);
+				UpdateFunction = null;
+			}
+
+			return 0;
+		};
+	}
+	
+	private Vector3 CalclulateQuadraticOut (Vector3 start, Vector3 end, float delta) {
+		return new Vector3 (CalclulateQuadraticOut(start.x, end.x, delta), CalclulateQuadraticOut(start.y, end.y, delta), CalclulateQuadraticOut(start.z, end.z, delta));
+	}
+
+	private float CalclulateQuadraticOut (float start, float end, float delta) {
+		return -(end - start) * delta * (delta - 2) + start;
 	}
 }

@@ -53,7 +53,7 @@ public class HandActions : BasicAnimator {
 		foreach (GameObject cardObject in CardList) 
 		{
 			Card card = cardObject.GetComponent<Card>();
-			card.AnimateTo(new Vector3(startPoint + objectWidth * index, transform.position.y, transform.position.z),animationRate);
+			card.QuadraticOutMoveTo(card.transform.position, new Vector3(startPoint + objectWidth * index, transform.position.y, transform.position.z), animationRate, p => {return 1;});
 			index++;
 		}
 	}

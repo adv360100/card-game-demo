@@ -50,6 +50,10 @@ public class PlayerActions : MonoBehaviour {
 	}
 	
 	public void MoveCardToDiscardFromHand (Card card) {
+		if (DiscardPile.ContainsCard (card)) {
+			return;
+		}
+
 		DiscardPile.AddCard (card.gameObject);
 		Hand.RemoveCard (card.gameObject);
 		card.AnimateTo (DiscardPile.transform.position, 1.0f);

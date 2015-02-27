@@ -25,11 +25,13 @@ public class Card : BasicAnimator {
 		if (CurrentCardLocation == CardLocation.CardLocationCurrentPlayer) {
 			// Move to discard pile
 			PlayerManager.MoveCardToDiscardFromHand(this);
+			CurrentCardLocation = CardLocation.CardLocationDiscard;
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		base.Update ();
 		if (AnimateRate > 0f) {
 			float fraction = Time.deltaTime * (1.0f / AnimateRate);
 			transform.position = Vector3.Lerp(transform.position,AnimationTarget,fraction);

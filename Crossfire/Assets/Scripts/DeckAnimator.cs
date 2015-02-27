@@ -25,13 +25,12 @@ public class DeckAnimator : DeckActions {
 		
 	}
 
-	void OnMouseDown()
-	{
-		if (DeckCount () == 0)
-			return;
+	void OnMouseDown () {
 		GameObject[] cards = DrawCards (1);
-		foreach (GameObject cardObject in cards) 
-		{
+		foreach (GameObject cardObject in cards) {
+			if (cardObject == null) {
+				continue;
+			}
 			cardObject.transform.position = transform.position;
 			PlayerManager.AddCardToHand(cardObject);
 		}
