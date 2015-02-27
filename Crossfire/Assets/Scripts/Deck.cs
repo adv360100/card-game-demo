@@ -5,7 +5,6 @@ using System.Collections.Generic;
 //This class handles all the behind the scenes deck management
 public class Deck : BasicAnimator {
 
-	public PlayerActions PlayerManager;
 	public List<GameObject> CardList = new List<GameObject>();
 	public MeshRenderer[] ExtraCards; //the deck 'stack' cards for when there are more than one card in the deck
 	protected MeshRenderer mainMesh;
@@ -15,52 +14,17 @@ public class Deck : BasicAnimator {
 		return CardList.Count;
 	}
 
+	virtual public GameObject DrawCard()
+	{
+		return null;
+	}
+
 	public void AddCards(IEnumerable<GameObject> cardsToAdd)
 	{
 		CardList.AddRange (cardsToAdd);
 	}
 
-	GameObject DrawCard()
-	{
-		if (CardList.Count <= 0)
-		{
-			if(PlayerManager.GetDiscardPile().Count <= 0)
-			{
-				return null;
-			}
-			//shuffle discard into deck and try draw again
-			AddCards(PlayerManager.GetDiscardPile());
-			ShuffleDeck(CardList.ToArray());
-			PlayerManager.RemoveDiscardPile();
-		}
-
-		GameObject topCard = CardList [CardList.Count - 1];
-		topCard.GetComponent<Card>().CurrentCardLocation = CardLocation.CardLocationCurrentPlayer;
-		CardList.Remove (topCard);
-		return topCard;
-	}
-
-	public GameObject[] DrawCards(int drawNumber)
-	{
-		GameObject card;
-
-		GameObject[] drawnCards = new GameObject[drawNumber];
-		for (int i=0; i < drawNumber; i++) {
-			card = DrawCard();
-
-			if(null == card)
-			{
-				//no more cards to draw
-				break;
-			}
-
-			drawnCards[i] = card;
-		}
-
-		return drawnCards;
-	}
-	
-	void ShuffleDeck(GameObject[] deck)
+	protected void ShuffleDeck(GameObject[] deck)
 	{
 		for (int i = 0; i < deck.Length; i++) {
 			GameObject temp = deck[i];
@@ -82,20 +46,6 @@ public class Deck : BasicAnimator {
 	
 	void Awake(){
 		mainMesh = GetComponent<MeshRenderer> ();
-		UpdateDeckDisplay ();
-	}
-	
-	void OnMouseDown()
-	{
-		if (DeckCount () == 0)
-			return;
-		GameObject[] cards = DrawCards (1);
-		foreach (GameObject cardObject in cards) 
-		{
-			cardObject.transform.position = transform.position;
-			PlayerManager.AddCardToHand(cardObject);
-		}
-		
 		UpdateDeckDisplay ();
 	}
 	
