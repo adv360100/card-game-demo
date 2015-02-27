@@ -98,7 +98,7 @@ namespace DeckActionUT
 				Card card = cardsInDeckBeforeDraw[i].GetComponent<Card>();
 				if(null == card)
 					Assert.Fail("Gameobject does not contain a Card component");
-				beforeShuffleCardValues[i] = card.value;
+//				beforeShuffleCardValues[i] = card.value;
 			}
 
 			deck.Shuffle ();
@@ -109,7 +109,7 @@ namespace DeckActionUT
 				Card card = cardsInDeckAfterDraw[i].GetComponent<Card>();
 				if(null == card)
 					Assert.Fail("Gameobject does not contain a Card component");
-				afterShuffleCardValues[i] = card.value;
+//				afterShuffleCardValues[i] = card.value;
 			}
 			//check that the arrays don't match
 			bool deckOrderHasChanged = !(Helpers.ArraysEqual(beforeShuffleCardValues,afterShuffleCardValues));
@@ -154,8 +154,8 @@ namespace DeckActionUT
 			for (int i=0; i < count; i++) {
 				GameObject obj = GameObject.Instantiate(cardOriginal) as GameObject;
 				obj.transform.parent = test;
-				Card card = obj.GetComponent<Card>();
-				card.value = i;
+//				Card card = obj.GetComponent<Card>();
+//				card.value = i;
 				cardsToAdd [i] = obj;
 			}
 			GameObject.DestroyImmediate (cardOriginal);

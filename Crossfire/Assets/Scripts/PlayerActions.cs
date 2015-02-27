@@ -41,9 +41,9 @@ public class PlayerActions : MonoBehaviour {
 
 	public void RemoveDiscardPile () {
 		Vector3 curPos = DiscardPile.transform.position;
-		DiscardPile.AnimateTo(MainDeck.transform.position, 1.0f, p => {
-			DiscardPile.RemoveAllCards();
-			DiscardPile.UpdateDeckDisplay();
+		DiscardPile.QuadraticOutMoveTo (DiscardPile.transform.position, MainDeck.transform.position, 1.0f, p => {
+			DiscardPile.RemoveAllCards ();
+			DiscardPile.UpdateDeckDisplay ();
 			DiscardPile.transform.position = curPos;
 			return 0;
 		});
@@ -54,13 +54,16 @@ public class PlayerActions : MonoBehaviour {
 			return;
 		}
 
-		DiscardPile.AddCard (card.gameObject);
-		Hand.RemoveCard (card.gameObject);
-		card.AnimateTo (DiscardPile.transform.position, 1.0f);
+		card.CurrentCardLocation = CardLocation.CardLocationDiscard;
+		card.QuadraticOutMoveTo (card.transform.position, DiscardPile.transform.position, 1.0f, p => {
+			DiscardPile.AddCard (card.gameObject);
+			Hand.RemoveCard (card.gameObject);
+			return 1;
+		});
 	}
 
 	public void AddCardToHand (GameObject card) {
-		Hand.AnimateTarget (card, 1.0f);
+		Hand.AddCard (card);
 	}
 
 	public void EndTurn () {

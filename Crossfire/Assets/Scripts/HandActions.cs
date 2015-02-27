@@ -11,14 +11,13 @@ public class HandActions : BasicAnimator {
 	void Start () {
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void AddCard (GameObject card) {
+		CardList.Add (card);
+		UpdateDeckDisplay ();
 	}
 
-	public void AddCards(IEnumerable<GameObject> cardsToAdd)
-	{
+	public void AddCards (IEnumerable<GameObject> cardsToAdd) {
 		CardList.AddRange (cardsToAdd);
 		UpdateDeckDisplay ();
 	}
@@ -28,18 +27,11 @@ public class HandActions : BasicAnimator {
 		UpdateDeckDisplay ();
 	}
 
-	override public void AnimateTarget(GameObject target, float rate) {
-		CardList.Add (target);
-		UpdateDeckDisplay (rate);
-	}
-
-	void UpdateDeckDisplay()
-	{
+	void UpdateDeckDisplay() {
 		UpdateDeckDisplay (1.0f);
 	}
 
-	void UpdateDeckDisplay(float animationRate)
-	{
+	void UpdateDeckDisplay(float animationRate) {
 		if (CardList.Count == 0) {
 			return;
 		}
@@ -50,10 +42,9 @@ public class HandActions : BasicAnimator {
 		int index = 0;
 		//find start point
 		float startPoint = containerWidth * -0.5f;
-		foreach (GameObject cardObject in CardList) 
-		{
+		foreach (GameObject cardObject in CardList) {
 			Card card = cardObject.GetComponent<Card>();
-			card.QuadraticOutMoveTo(card.transform.position, new Vector3(startPoint + objectWidth * index, transform.position.y, transform.position.z), animationRate, p => {return 1;});
+			card.QuadraticOutMoveTo(card.transform.position, new Vector3(startPoint + objectWidth * index, transform.position.y, transform.position.z), animationRate, null);
 			index++;
 		}
 	}
