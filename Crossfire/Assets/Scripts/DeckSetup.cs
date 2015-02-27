@@ -30,7 +30,7 @@ public class DeckSetup : MonoBehaviour {
 
 	void InitBlackMarket()
 	{
-		if (MainDeck != null) { 
+		if (MarketDeck != null) { 
 			List<GameObject> cardList = new List<GameObject>();
 			for (int i = 0; i < 5; i++) {
 				GameObject cardToAdd = GameObject.Instantiate(OriginalCard, MainDeck.transform.position, MainDeck.transform.rotation) as GameObject;

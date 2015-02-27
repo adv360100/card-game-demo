@@ -4,13 +4,29 @@ using System.Collections.Generic;
 
 public class BlackMarketArea : BasicArea {
 
-	public List<GameObject> CardList;
+	public Deck MarketDeck;
+	public Deck DiscardDeck;
+	public GameObject BasicCard;
+	public List<GameObject> CardList; //cards in the market area
 	public int Columns = 3;
 	public int Rows = 2;
 
 	// Use this for initialization
 	void Start () {
-	
+		if (MarketDeck != null)
+		{
+			List<GameObject> cardList = new List<GameObject>();
+			for (int i = 0; i < 5; i++) {
+				GameObject cardToAdd = GameObject.Instantiate(BasicCard, MarketDeck.transform.position, MarketDeck.transform.rotation) as GameObject;
+				
+				Vector3 pos = cardToAdd.transform.position;
+				pos.z = 1;
+				cardToAdd.transform.position = pos;
+				cardList.Add(cardToAdd);
+			}
+			
+			MarketDeck.AddCards(cardList);
+		}
 	}
 	
 	// Update is called once per frame

@@ -32,7 +32,7 @@ public class MoveCamera : MonoBehaviour {
 		}
 		//grab the position
 		b = TargetAreas [targetIndex];
-		transform.position = b.transform.position;
+		transform.position = new Vector3(b.transform.position.x,b.transform.position.y, transform.position.z);
 		CurrentAreaIndex = targetIndex;
 		//inform area
 		b.OnFocusEnter ();
