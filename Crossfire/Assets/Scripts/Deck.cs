@@ -85,19 +85,6 @@ public class Deck : BasicAnimator {
 		UpdateDeckDisplay ();
 	}
 	
-	// Use this for initialization
-	void Start () {
-		//deck = GetComponent<DeckActions> ();
-		//mainMesh = GetComponent<MeshRenderer> ();
-		
-		UpdateDeckDisplay ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-	
 	void OnMouseDown()
 	{
 		if (DeckCount () == 0)

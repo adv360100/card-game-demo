@@ -7,15 +7,6 @@ public class HandActions : BasicAnimator {
 	public List<GameObject> CardList = new List<GameObject>();
 	public PlayerActions PlayerManager;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	public void AddCards(IEnumerable<GameObject> cardsToAdd)
 	{

@@ -39,7 +39,7 @@ public class BasicAnimator : MonoBehaviour {
 		UpdateFunction = deltaTime => {
 			currentTime += deltaTime;
 			float fraction = currentTime / animationDuration;
-			Debug.Log(fraction);
+			//Debug.Log(fraction);
 
 			transform.position = CalclulateQuadraticOut (originalPosition, targetPosition, fraction);
 
