@@ -76,7 +76,7 @@ public class BlackMarketArea : BasicArea {
 		UpdateDeckDisplay (rate);
 	}
 
-	void UpdateDeckDisplay(float animationRate)
+	void UpdateDeckDisplay(float animationDuration)
 	{
 		float objectWidth = CardList [0].renderer.bounds.size.x;
 		float objectHeight = CardList [0].renderer.bounds.size.y;
@@ -93,7 +93,7 @@ public class BlackMarketArea : BasicArea {
 			Card card = cardObject.GetComponent<Card>();
 			float x = startPointX + objectWidth * (index / Rows);
 			float y = startPointY + objectHeight * (index / Columns);
-			card.AnimateTo(new Vector3(x, y, transform.position.z),animationRate);
+			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, transform.position.z), animationDuration, p => { card.CurrentCardLocation = CardLocation.CardLocationCurrentPlayer; return 1; });
 			index++;
 		}
 	}

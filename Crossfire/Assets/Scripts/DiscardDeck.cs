@@ -4,19 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class DiscardDeck : Deck {
-	
-	float AnimateRate;
-
-	void Awake () {
-		mainMesh = GetComponent<MeshRenderer> ();
-		UpdateDeckDisplay ();
-	}
-
-
-
 
 	public void AddCard (GameObject card) {
 		CardList.Add (card);
+		GetComponent<Renderer> ().material.SetTexture (0, card.GetComponent<Renderer> ().material.GetTexture(0));
 		UpdateDeckDisplay ();
 	}
 

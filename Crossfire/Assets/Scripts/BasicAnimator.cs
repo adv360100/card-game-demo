@@ -18,18 +18,6 @@ public class BasicAnimator : MonoBehaviour {
 		}
 	}
 
-	virtual public void AnimateTarget(GameObject target, float rate) {
-		Debug.LogWarning ("Please use a derived version of this function");
-	}
-
-	virtual public void AnimateTo(Vector3 target, float rate) {
-		Debug.LogWarning ("Please use a derived version of this function");
-	}
-
-	virtual public void AnimateTo(Vector3 target, float rate, Func<int, int> callback) {
-		Debug.LogWarning ("Please use a derived version of this function");
-	}
-
 	public void QuadraticOutMoveTo (Vector3 originalPosition, Vector3 targetPosition, float animationDuration, Func<int, int> completionCallback) {
 		if (UpdateFunction != null) {
 			return;
@@ -39,13 +27,14 @@ public class BasicAnimator : MonoBehaviour {
 		UpdateFunction = deltaTime => {
 			currentTime += deltaTime;
 			float fraction = currentTime / animationDuration;
-			//Debug.Log(fraction);
 
 			transform.position = CalclulateQuadraticOut (originalPosition, targetPosition, fraction);
 
 			if (Vector3.Distance(transform.position, targetPosition) <= 0.01f) {
 				transform.position = targetPosition;
-				completionCallback(1);
+				if (completionCallback != null) {
+					completionCallback(1);
+				}
 				UpdateFunction = null;
 			}
 
