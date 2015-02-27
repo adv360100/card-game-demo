@@ -3,19 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 //This class handles all the behind the scenes deck management
-public class DeckActions : MonoBehaviour {
+public class Deck : BasicAnimator {
 
 	public PlayerActions PlayerManager;
 	public List<GameObject> CardList = new List<GameObject>();
-
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public MeshRenderer[] ExtraCards; //the deck 'stack' cards for when there are more than one card in the deck
+	protected MeshRenderer mainMesh;
 
 	public int DeckCount()
 	{
@@ -86,10 +79,61 @@ public class DeckActions : MonoBehaviour {
 			CardList.Add(c);
 		}
 	}
+	
+	void Awake(){
+		mainMesh = GetComponent<MeshRenderer> ();
+		UpdateDeckDisplay ();
+	}
+	
+	// Use this for initialization
+	void Start () {
+		//deck = GetComponent<DeckActions> ();
+		//mainMesh = GetComponent<MeshRenderer> ();
+		
+		UpdateDeckDisplay ();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+	
+	void OnMouseDown()
+	{
+		if (DeckCount () == 0)
+			return;
+		GameObject[] cards = DrawCards (1);
+		foreach (GameObject cardObject in cards) 
+		{
+			cardObject.transform.position = transform.position;
+			PlayerManager.AddCardToHand(cardObject);
+		}
+		
+		UpdateDeckDisplay ();
+	}
+	
+	public void UpdateDeckDisplay()
+	{
+		int deckSize = DeckCount ();
+		if (deckSize > 0)
+			mainMesh.enabled = true;
+		else
+			mainMesh.enabled = false;
+		
+		for (int i=0; i < ExtraCards.Length; i++)
+		{
+			MeshRenderer mesh = ExtraCards[i];
+			if (deckSize > i+1)
+				mesh.enabled = true;
+			else
+				mesh.enabled = false;
+			
+		}
+	}
 
 }
 
-public class DebugDeckActions : DeckActions {
+public class DebugDeckActions : Deck {
 	
 	//get cards in deck for viewing 
 	public GameObject[] GetDeck()

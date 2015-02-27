@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +17,7 @@ namespace DeckActionUT
 			//arrange
 			GameObject obj = Helpers.MakeDeckObject(test.transform);
 			obj.transform.parent = test.transform;
-			DeckActions deck = obj.GetComponent<DeckActions> ();
+			Deck deck = obj.GetComponent<Deck> ();
 			GameObject[] cardToAdd = Helpers.MakeCards (1,test.transform);
 			//act
 			deck.AddCards (cardToAdd);
@@ -34,7 +34,7 @@ namespace DeckActionUT
 			GameObject test = new GameObject ();
 			test.name = "AddCards_insertTwoCards_deckHasTwoCards";
 			GameObject obj = Helpers.MakeDeckObject(test.transform);
-			DeckActions deck = obj.GetComponent<DeckActions> ();
+			Deck deck = obj.GetComponent<Deck> ();
 			GameObject[] cardsToAdd = Helpers.MakeCards (2,test.transform);
 
 			deck.AddCards (cardsToAdd);
@@ -50,7 +50,7 @@ namespace DeckActionUT
 			GameObject test = new GameObject ();
 			test.name = "DrawCards_drawOneCard_deckHasOneLessCard";
 			GameObject obj = Helpers.MakeDeckObject(test.transform);
-			DeckActions deck = obj.GetComponent<DeckActions> ();
+			Deck deck = obj.GetComponent<Deck> ();
 			GameObject[] cardsToAdd = Helpers.MakeCards (2,test.transform);
 			deck.AddCards (cardsToAdd);
 			int deckCountBeforeDraw = deck.DeckCount ();
@@ -69,7 +69,7 @@ namespace DeckActionUT
 			GameObject test = new GameObject ();
 			test.name = "DrawCards_drawTwoCards_deckHasTwoLessCards";
 			GameObject obj = Helpers.MakeDeckObject(test.transform);
-			DeckActions deck = obj.GetComponent<DeckActions> ();
+			Deck deck = obj.GetComponent<Deck> ();
 			GameObject[] cardsToAdd = Helpers.MakeCards (4,test.transform);
 			deck.AddCards (cardsToAdd);
 			int deckCountBeforeDraw = deck.DeckCount ();
@@ -123,7 +123,7 @@ namespace DeckActionUT
 			GameObject test = new GameObject ();
 			test.name = "DrawCards_draw4CardsOutOfDeckOf2With2Discards_deckAndDiscardsEmpty";
 			GameObject obj = Helpers.MakeDeckObject(test.transform);
-			DeckActions deck = obj.GetComponent<DeckActions> ();
+			Deck deck = obj.GetComponent<Deck> ();
 			GameObject[] cardsToAdd = Helpers.MakeCards (2,test.transform);
 			deck.AddCards (cardsToAdd);
 //			GameObject[] cardsToDiscard = Helpers.MakeCards (2,test.transform);
@@ -194,7 +194,7 @@ namespace DeckActionUT
 			if(debug)
 				obj.AddComponent<DebugDeckActions> ();
 			else
-				obj.AddComponent<DeckActions> ();
+				obj.AddComponent<Deck> ();
 
 			return obj;
 		}
