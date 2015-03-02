@@ -53,11 +53,10 @@ public class BlackMarketArea : BasicArea {
 
 	public void RemoveDiscardPile () {
 		Vector3 curPos = DiscardDeck.transform.position;
-		DiscardDeck.AnimateTo(MarketDeck.transform.position, 1.0f, p => {
+		DiscardDeck.QuadraticOutMoveTo(DiscardDeck.transform.position, MarketDeck.transform.position, 1.0f, () => {
 			DiscardDeck.RemoveAllCards();
 			DiscardDeck.UpdateDeckDisplay();
 			DiscardDeck.transform.position = curPos;
-			return 0;
 		});
 	}
 

@@ -21,10 +21,11 @@ public class BasicAnimator : MonoBehaviour {
 	}
 
 	public void QuadraticOutMoveTo (Vector3 originalPosition, Vector3 targetPosition, float animationDuration, AnimationCompletionCallback completionCallback) {
-		if (MyUpdateFunction != null) {
-			return;
-		}
+//		if (MyUpdateFunction != null) {
+//			return;
+//		}
 
+		transform.position = originalPosition;
 		float currentTime = 0;
 		MyUpdateFunction = deltaTime => {
 			currentTime += deltaTime;
