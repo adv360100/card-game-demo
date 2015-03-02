@@ -22,6 +22,7 @@ public class MarketDeck : Deck {
 		GameObject topCard = CardList [CardList.Count - 1];
 		topCard.GetComponent<Card>().CurrentCardLocation = CardLocation.CardLocationCurrentPlayer;
 		CardList.Remove (topCard);
+		UpdateDeckDisplay ();
 		return topCard;
 	}
 

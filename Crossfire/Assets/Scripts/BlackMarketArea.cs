@@ -19,14 +19,15 @@ public class BlackMarketArea : BasicArea {
 			List<GameObject> cardList = new List<GameObject>();
 			for (int i = 0; i < 10; i++) {
 				GameObject cardToAdd = GameObject.Instantiate(BasicCard, MarketDeck.transform.position, MarketDeck.transform.rotation) as GameObject;
-				
+				cardToAdd.transform.parent = transform;
 				Vector3 pos = cardToAdd.transform.position;
-				pos.z = float.MaxValue;
+				pos.z = 100f;
 				cardToAdd.transform.position = pos;
 				cardList.Add(cardToAdd);
 			}
 			
 			MarketDeck.AddCards(cardList);
+			MarketDeck.UpdateDeckDisplay();
 		}
 	}
 
@@ -39,7 +40,7 @@ public class BlackMarketArea : BasicArea {
 			if(card == null)
 				break;
 			needsUpdate = true;
-			card.transform.position = transform.position;
+			card.transform.position = MarketDeck.transform.position;
 			CardList.Add(card);
 		}
 
@@ -77,22 +78,21 @@ public class BlackMarketArea : BasicArea {
 
 	void UpdateDeckDisplay(float animationDuration)
 	{
+		if (CardList.Count == 0)
+			return;
+
 		float objectWidth = CardList [0].renderer.bounds.size.x;
 		float objectHeight = CardList [0].renderer.bounds.size.y;
-		int count = Columns - 1;
-		float containerWidth = count * objectWidth;
-		count = Rows - 1;
-		float containerHeight = Rows * objectHeight;
 		int index = 0;
 		//find start point
-		float startPointX = containerWidth * -0.5f;
-		float startPointY = containerHeight * -0.5f;
+		float startPointX = MarketDeck.transform.position.x + objectWidth;
+		float startPointY = MarketDeck.transform.position.y;
 		foreach (GameObject cardObject in CardList) 
 		{
 			Card card = cardObject.GetComponent<Card>();
-			float x = startPointX + objectWidth * (index / Rows);
-			float y = startPointY + objectHeight * (index / Columns);
-			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, transform.position.z), animationDuration, () => { card.CurrentCardLocation = CardLocation.CardLocationCurrentPlayer; });
+			float x = startPointX;// + objectWidth * (index / Rows);
+			float y = startPointY;// + objectHeight * (index / Columns);
+			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, MarketDeck.transform.position.z), animationDuration, () => { card.CurrentCardLocation = CardLocation.CardLocationCurrentPlayer; });
 			index++;
 		}
 	}
