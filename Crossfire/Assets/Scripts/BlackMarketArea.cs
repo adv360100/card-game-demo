@@ -9,8 +9,8 @@ public class BlackMarketArea : BasicArea {
 	public GameObject BasicCard;
 	public List<GameObject> CardList; //cards in the market area
 	public int Columns = 3;
-	public int Rows = 2;
 	public int CardMax = 6;
+	public float CardSpacing = 2f;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +23,11 @@ public class BlackMarketArea : BasicArea {
 				Vector3 pos = cardToAdd.transform.position;
 				pos.z = 100f;
 				cardToAdd.transform.position = pos;
+				//set card location
+				Card cardComp = cardToAdd.GetComponent<Card>();
+				cardComp.CurrentCardLocation = CardLocation.CardLocationMarketDeck;
 				cardList.Add(cardToAdd);
+
 			}
 			
 			MarketDeck.AddCards(cardList);
@@ -85,14 +89,15 @@ public class BlackMarketArea : BasicArea {
 		float objectHeight = CardList [0].renderer.bounds.size.y;
 		int index = 0;
 		//find start point
-		float startPointX = MarketDeck.transform.position.x + objectWidth;
+		float startPointX = MarketDeck.transform.position.x + objectWidth + CardSpacing;
 		float startPointY = MarketDeck.transform.position.y;
 		foreach (GameObject cardObject in CardList) 
 		{
 			Card card = cardObject.GetComponent<Card>();
-			float x = startPointX;// + objectWidth * (index / Rows);
-			float y = startPointY;// + objectHeight * (index / Columns);
-			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, MarketDeck.transform.position.z), animationDuration, () => { card.CurrentCardLocation = CardLocation.CardLocationCurrentPlayer; });
+			float x = startPointX + (objectWidth + CardSpacing) * (index % Columns);
+			int currentRow = index / Columns;
+			float y = startPointY - (objectHeight + CardSpacing) * currentRow;//subtract so that the cards go down the y axis
+			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, MarketDeck.transform.position.z), animationDuration, () => { card.CurrentCardLocation = CardLocation.CardLocationMarketField; });
 			index++;
 		}
 	}
