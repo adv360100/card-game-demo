@@ -23,7 +23,11 @@ public class BlackMarketArea : BasicArea {
 				Vector3 pos = cardToAdd.transform.position;
 				pos.z = 100f;
 				cardToAdd.transform.position = pos;
+				//set card location
+				Card cardComp = cardToAdd.GetComponent<Card>();
+				cardComp.CurrentCardLocation = CardLocation.CardLocationMarketDeck;
 				cardList.Add(cardToAdd);
+
 			}
 			
 			MarketDeck.AddCards(cardList);
@@ -93,7 +97,7 @@ public class BlackMarketArea : BasicArea {
 			float x = startPointX + (objectWidth + CardSpacing) * (index % Columns);
 			int currentRow = index / Columns;
 			float y = startPointY - (objectHeight + CardSpacing) * currentRow;//subtract so that the cards go down the y axis
-			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, MarketDeck.transform.position.z), animationDuration, () => { card.CurrentCardLocation = CardLocation.CardLocationCurrentPlayer; });
+			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, MarketDeck.transform.position.z), animationDuration, () => { card.CurrentCardLocation = CardLocation.CardLocationMarketField; });
 			index++;
 		}
 	}

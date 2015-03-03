@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum CardLocation {CardLocationDeck = 0, CardLocationDiscard, CardLocationCurrentPlayer, CardLocationOtherPlayer};
+public enum CardLocation {CardLocationDeck = 0, CardLocationDiscard, CardLocationCurrentPlayer, CardLocationOtherPlayer, 
+							CardLocationMarketDeck, CardLocationMarketField};
 
 public class Card : BasicAnimator {
 
