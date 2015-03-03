@@ -1,26 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerDeck : Deck {
 
 	public PlayerActions PlayerManager;
 
-	override public GameObject DrawCard()
-	{
-		if (CardList.Count <= 0)
-		{
-			if(PlayerManager.GetDiscardPile().Count <= 0)
-			{
+	override public GameObject DrawCard() {
+		if (CardList.Count <= 0) {
+			if (PlayerManager.GetDiscardPile().Count <= 0) {
 				return null;
 			}
 			//shuffle discard into deck and try draw again
-			AddCards(PlayerManager.GetDiscardPile());
-			ShuffleDeck(CardList.ToArray());
-			PlayerManager.RemoveDiscardPile();
+			ShuffleDeck (CardList.ToArray ());
+			List<GameObject> discardPile = new List<GameObject> (PlayerManager.GetDiscardPile ());
+			PlayerManager.RemoveDiscardPile (() => {
+				AddCards (discardPile);
+				OnMouseDown ();
+			});
+			return null;
 		}
 		
 		GameObject topCard = CardList [CardList.Count - 1];
 		topCard.GetComponent<Card>().CurrentCardLocation = CardLocation.CardLocationCurrentPlayer;
+		topCard.GetComponent<Renderer>().enabled = true;
 		CardList.Remove (topCard);
 		return topCard;
 	}
@@ -47,11 +50,11 @@ public class PlayerDeck : Deck {
 
 	void OnMouseDown()
 	{
-		if (DeckCount () == 0)
-			return;
 		GameObject[] cards = DrawCards (1);
-		foreach (GameObject cardObject in cards) 
-		{
+		foreach (GameObject cardObject in cards) {
+			if (cardObject == null) {
+				continue;
+			}
 			cardObject.transform.position = transform.position;
 			PlayerManager.AddCardToHand(cardObject);
 		}

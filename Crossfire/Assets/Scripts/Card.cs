@@ -20,7 +20,6 @@ public class Card : BasicAnimator {
 		if (CurrentCardLocation == CardLocation.CardLocationCurrentPlayer) {
 			// Move to discard pile
 			PlayerManager.MoveCardToDiscardFromHand(this);
-			CurrentCardLocation = CardLocation.CardLocationDiscard;
 		}
 	}
 }

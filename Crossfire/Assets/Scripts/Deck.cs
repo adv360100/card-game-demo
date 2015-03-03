@@ -7,25 +7,21 @@ public class Deck : BasicAnimator {
 
 	public List<GameObject> CardList = new List<GameObject>();
 	public MeshRenderer[] ExtraCards; //the deck 'stack' cards for when there are more than one card in the deck
-	protected MeshRenderer mainMesh;
 
-	public int DeckCount()
-	{
+	public int DeckCount () {
 		return CardList.Count;
 	}
 
-	virtual public GameObject DrawCard()
-	{
+	virtual public GameObject DrawCard () {
 		return null;
 	}
 
-	public void AddCards(IEnumerable<GameObject> cardsToAdd)
-	{
+	public void AddCards (IEnumerable<GameObject> cardsToAdd) {
 		CardList.AddRange (cardsToAdd);
+		UpdateDeckDisplay ();
 	}
 
-	protected void ShuffleDeck(GameObject[] deck)
-	{
+	protected void ShuffleDeck (GameObject[] deck) {
 		for (int i = 0; i < deck.Length; i++) {
 			GameObject temp = deck[i];
 			int randomIndex = Random.Range(0, deck.Length);
@@ -34,8 +30,7 @@ public class Deck : BasicAnimator {
 		}
 	}
 
-	public void Shuffle()
-	{
+	public void Shuffle () {
 		GameObject[] deck = CardList.ToArray ();
 		ShuffleDeck (deck);
 		CardList.Clear ();
@@ -44,23 +39,20 @@ public class Deck : BasicAnimator {
 		}
 	}
 	
-	void Awake(){
-		mainMesh = GetComponent<MeshRenderer> ();
+	void Awake () {
 		UpdateDeckDisplay ();
 	}
 	
-	public void UpdateDeckDisplay()
-	{
+	public void UpdateDeckDisplay () {
 		int deckSize = DeckCount ();
 		if (deckSize > 0)
-			mainMesh.enabled = true;
+			GetComponent<MeshRenderer> ().enabled = true;
 		else
-			mainMesh.enabled = false;
+			GetComponent<MeshRenderer> ().enabled = false;
 		
-		for (int i=0; i < ExtraCards.Length; i++)
-		{
+		for (int i = 0; i < ExtraCards.Length; i++) {
 			MeshRenderer mesh = ExtraCards[i];
-			if (deckSize > i+1)
+			if (deckSize > i + 1)
 				mesh.enabled = true;
 			else
 				mesh.enabled = false;
@@ -73,8 +65,7 @@ public class Deck : BasicAnimator {
 public class DebugDeckActions : Deck {
 	
 	//get cards in deck for viewing 
-	public GameObject[] GetDeck()
-	{
+	public GameObject[] GetDeck () {
 		return CardList.ToArray();
 	}
 }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class PlayerActions : MonoBehaviour {
 
+	public delegate void AnimationCompletionCallback();
+
 	public Deck MainDeck;
 	public DiscardDeck DiscardPile;
 	public HandActions Hand;
@@ -19,6 +21,7 @@ public class PlayerActions : MonoBehaviour {
 				GameObject cardToAdd = GameObject.Instantiate(OriginalCard, MainDeck.transform.position, MainDeck.transform.rotation) as GameObject;
 				cardToAdd.GetComponent<Card>().CurrentCardLocation = CardLocation.CardLocationDeck;
 				cardToAdd.GetComponent<Card>().PlayerManager = this;
+				cardToAdd.GetComponent<Renderer>().enabled = false;
 
 				Vector3 pos = cardToAdd.transform.position;
 				pos.z = 1;
@@ -39,12 +42,15 @@ public class PlayerActions : MonoBehaviour {
 		return DiscardPile.CardList;
 	}
 
-	public void RemoveDiscardPile () {
+	public void RemoveDiscardPile (AnimationCompletionCallback completionCallback) {
 		Vector3 curPos = DiscardPile.transform.position;
-		DiscardPile.QuadraticOutMoveTo (DiscardPile.transform.position, MainDeck.transform.position, 1.0f, () => {
+		DiscardPile.QuadraticOutMoveTo (DiscardPile.transform.position, MainDeck.transform.position, 0.25f, () => {
 			DiscardPile.RemoveAllCards ();
 			DiscardPile.UpdateDeckDisplay ();
 			DiscardPile.transform.position = curPos;
+			if (completionCallback != null) {
+				completionCallback ();
+			}
 		});
 	}
 	
@@ -54,14 +60,19 @@ public class PlayerActions : MonoBehaviour {
 		}
 
 		card.CurrentCardLocation = CardLocation.CardLocationDiscard;
+		Hand.RemoveCard (card.gameObject);
 		card.QuadraticOutMoveTo (card.transform.position, DiscardPile.transform.position, 1.0f, () => {
 			DiscardPile.AddCard (card.gameObject);
-			Hand.RemoveCard (card.gameObject);
+			card.GetComponent<Renderer>().enabled = false;
 		});
 	}
 
 	public void AddCardToHand (GameObject card) {
 		Hand.AddCard (card);
+	}
+
+	public void ShowObstacleTargetsUI () {
+		
 	}
 
 	public void EndTurn () {
