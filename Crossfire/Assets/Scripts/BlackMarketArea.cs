@@ -19,10 +19,10 @@ public class BlackMarketArea : BasicArea {
 			List<GameObject> cardList = new List<GameObject>();
 			for (int i = 0; i < 10; i++) {
 				GameObject cardToAdd = GameObject.Instantiate(BasicCard, MarketDeck.transform.position, MarketDeck.transform.rotation) as GameObject;
-				cardToAdd.transform.parent = transform;
-				Vector3 pos = cardToAdd.transform.position;
-				pos.z = 100f;
-				cardToAdd.transform.position = pos;
+				//parent card for easier debugging
+				cardToAdd.transform.parent = MarketDeck.transform;
+				cardToAdd.GetComponent<Card>().AreaManager = this;
+				cardToAdd.GetComponent<Renderer>().enabled = false;
 				//set card location
 				Card cardComp = cardToAdd.GetComponent<Card>();
 				cardComp.CurrentCardLocation = CardLocation.CardLocationMarketDeck;
@@ -45,6 +45,7 @@ public class BlackMarketArea : BasicArea {
 				break;
 			needsUpdate = true;
 			card.transform.position = MarketDeck.transform.position;
+			card.transform.parent = transform;
 			CardList.Add(card);
 		}
 
@@ -75,6 +76,14 @@ public class BlackMarketArea : BasicArea {
 		
 	}
 
+	override public void MoveCard (Card card) {
+		//move card to player hand
+		GameObject hand = GameObject.FindGameObjectWithTag ("Player");
+		CardList.Remove (card.gameObject);
+		card.gameObject.transform.parent = hand.transform;
+		hand.GetComponent<HandActions> ().AddCard (card.gameObject);
+	}
+
 	public void AnimateTarget(GameObject target, float rate) {
 		CardList.Add (target);
 		UpdateDeckDisplay (rate);
@@ -94,6 +103,7 @@ public class BlackMarketArea : BasicArea {
 		foreach (GameObject cardObject in CardList) 
 		{
 			Card card = cardObject.GetComponent<Card>();
+			card.GetComponent<Renderer>().enabled = true;
 			float x = startPointX + (objectWidth + CardSpacing) * (index % Columns);
 			int currentRow = index / Columns;
 			float y = startPointY - (objectHeight + CardSpacing) * currentRow;//subtract so that the cards go down the y axis

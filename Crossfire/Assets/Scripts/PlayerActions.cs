@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerActions : MonoBehaviour {
+public class PlayerActions : BasicArea {
 
 	public delegate void AnimationCompletionCallback();
 
@@ -20,8 +20,9 @@ public class PlayerActions : MonoBehaviour {
 			for (int i = 0; i < 5; i++) {
 				GameObject cardToAdd = GameObject.Instantiate(OriginalCard, MainDeck.transform.position, MainDeck.transform.rotation) as GameObject;
 				cardToAdd.GetComponent<Card>().CurrentCardLocation = CardLocation.CardLocationDeck;
-				cardToAdd.GetComponent<Card>().PlayerManager = this;
+				cardToAdd.GetComponent<Card>().AreaManager = this;
 				cardToAdd.GetComponent<Renderer>().enabled = false;
+				cardToAdd.transform.parent = MainDeck.transform;
 
 				Vector3 pos = cardToAdd.transform.position;
 				pos.z = 1;
@@ -53,8 +54,9 @@ public class PlayerActions : MonoBehaviour {
 			}
 		});
 	}
-	
-	public void MoveCardToDiscardFromHand (Card card) {
+
+	//MoveCardToDiscardFromHand
+	override public void MoveCard (Card card) {
 		if (DiscardPile.ContainsCard (card)) {
 			return;
 		}
@@ -77,5 +79,14 @@ public class PlayerActions : MonoBehaviour {
 
 	public void EndTurn () {
 
+	}
+
+	override public void OnFocusEnter()
+	{
+		
+	}
+	override public void OnFocusExit()
+	{
+		
 	}
 }

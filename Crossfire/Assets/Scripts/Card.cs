@@ -7,7 +7,7 @@ public enum CardLocation {CardLocationDeck = 0, CardLocationDiscard, CardLocatio
 public class Card : BasicAnimator {
 
 	public CardLocation CurrentCardLocation;
-	public PlayerActions PlayerManager;
+	public BasicArea AreaManager;
 
 	// Use this for initialization
 	void Start () {
@@ -18,9 +18,10 @@ public class Card : BasicAnimator {
 	}
 
 	void OnMouseDown () {
-		if (CurrentCardLocation == CardLocation.CardLocationCurrentPlayer) {
+		if (CurrentCardLocation == CardLocation.CardLocationCurrentPlayer ||
+		    CurrentCardLocation == CardLocation.CardLocationMarketField) {
 			// Move to discard pile
-			PlayerManager.MoveCardToDiscardFromHand(this);
+			AreaManager.MoveCard(this);
 		}
 	}
 }
