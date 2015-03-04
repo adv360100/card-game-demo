@@ -10,6 +10,7 @@ public class PlayerActions : MonoBehaviour {
 	public DiscardDeck DiscardPile;
 	public HandActions Hand;
 	public GameObject PlayField;
+	public GameObject ObstacleSection;
 	public GameObject OriginalCard;
 
 	// Use this for initialization
