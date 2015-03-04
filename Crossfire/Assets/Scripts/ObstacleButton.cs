@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Obstacle : MonoBehaviour {
+public class ObstacleButton : MonoBehaviour {
 
-	public uint identifiassdasder;
-	public string name;
+	public uint id;
 
 	// Use this for initialization
 	void Start () {

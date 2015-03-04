@@ -28,6 +28,7 @@ GameObject:
   - 222: {fileID: 22206260}
   - 114: {fileID: 11406262}
   - 114: {fileID: 11406260}
+  - 114: {fileID: 11447698}
   m_Layer: 5
   m_Name: Obstacle Button
   m_TagString: Untagged
@@ -134,6 +135,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11447698
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eb85c9deb3b58f48bbb1e8c752bf838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &22206258
 CanvasRenderer:
   m_ObjectHideFlags: 1
