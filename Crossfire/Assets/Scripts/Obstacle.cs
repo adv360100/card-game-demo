@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Obstacle : MonoBehaviour {
 
-	public uint identifiassdasder;
+	public uint id;
 	public string name;
 
 	// Use this for initialization
