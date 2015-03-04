@@ -21,4 +21,9 @@ public abstract class BasicArea : MonoBehaviour {
 	{
 		
 	}
+
+	virtual public void MoveCard (Card card) {
+
+	}
+
 }
