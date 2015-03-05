@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class HandActions : BasicAnimator {
 
 	public List<GameObject> CardList = new List<GameObject>();
-	public PlayerActions PlayerManager;
+	public PlayerArea PlayerManager;
 
 	// Use this for initialization
 	void Start () {

@@ -18,6 +18,16 @@ public class Card : BasicAnimator {
 	}
 
 	void OnMouseDown () {
+		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<MoveCamera> ().ZoomOnObject (renderer);
+//		if (CurrentCardLocation == CardLocation.CardLocationCurrentPlayer ||
+//		    CurrentCardLocation == CardLocation.CardLocationMarketField) {
+//			// Move to discard pile
+//			AreaManager.MoveCard(this);
+//		}
+	}
+
+	override protected void OnDoubleClick()
+	{
 		if (CurrentCardLocation == CardLocation.CardLocationCurrentPlayer ||
 		    CurrentCardLocation == CardLocation.CardLocationMarketField) {
 			// Move to discard pile

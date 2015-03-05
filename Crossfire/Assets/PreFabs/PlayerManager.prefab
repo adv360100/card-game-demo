@@ -82,7 +82,7 @@ GameObject:
   - 114: {fileID: 11487890}
   m_Layer: 0
   m_Name: PlayerManager
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -866,13 +866,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 187878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73eaa51b4e2842f49b46a519aae5af86, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e97743e348e0534eba966dacb50295d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainDeck: {fileID: 11487888}
   DiscardPile: {fileID: 11487892}
+  MainDeck: {fileID: 11487888}
   Hand: {fileID: 11487886}
   PlayField: {fileID: 0}
+  ObstacleSection: {fileID: 187884}
   OriginalCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
 --- !u!114 &11487892
 MonoBehaviour:
@@ -899,9 +900,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 187884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d13c3f6eec943488542628c6ce6105, type: 3}
+  m_Script: {fileID: 11500000, guid: c3a37cd84ec54ac4aacee099f2eab3aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -16,7 +16,9 @@ public class MarketDeck : Deck {
 			//shuffle discard into deck and try draw again
 			AddCards(MarketArea.GetDiscardPile());
 			ShuffleDeck(CardList.ToArray());
-			MarketArea.RemoveDiscardPile();
+			MarketArea.RemoveDiscardPile(()=>{
+				//do nothing
+			});
 		}
 		
 		GameObject topCard = CardList [CardList.Count - 1];

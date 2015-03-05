@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BlackMarketArea : BasicArea {
-
-	public Deck MarketDeck;
-	public DiscardDeck DiscardDeck;
+	
 	public GameObject BasicCard;
 	public List<GameObject> CardList; //cards in the market area
 	public int Columns = 3;
@@ -14,13 +12,13 @@ public class BlackMarketArea : BasicArea {
 
 	// Use this for initialization
 	void Start () {
-		if (MarketDeck != null)
+		if (MainDeck != null)
 		{
 			List<GameObject> cardList = new List<GameObject>();
 			for (int i = 0; i < 10; i++) {
-				GameObject cardToAdd = GameObject.Instantiate(BasicCard, MarketDeck.transform.position, MarketDeck.transform.rotation) as GameObject;
+				GameObject cardToAdd = GameObject.Instantiate(BasicCard, MainDeck.transform.position, MainDeck.transform.rotation) as GameObject;
 				//parent card for easier debugging
-				cardToAdd.transform.parent = MarketDeck.transform;
+				cardToAdd.transform.parent = MainDeck.transform;
 				cardToAdd.GetComponent<Card>().AreaManager = this;
 				cardToAdd.GetComponent<Renderer>().enabled = false;
 				//set card location
@@ -30,8 +28,8 @@ public class BlackMarketArea : BasicArea {
 
 			}
 			
-			MarketDeck.AddCards(cardList);
-			MarketDeck.UpdateDeckDisplay();
+			MainDeck.AddCards(cardList);
+			MainDeck.UpdateDeckDisplay();
 		}
 	}
 
@@ -40,11 +38,11 @@ public class BlackMarketArea : BasicArea {
 		bool needsUpdate = false;
 		while (CardList.Count < CardMax)
 		{
-			GameObject card = MarketDeck.DrawCard();
+			GameObject card = MainDeck.DrawCard();
 			if(card == null)
 				break;
 			needsUpdate = true;
-			card.transform.position = MarketDeck.transform.position;
+			card.transform.position = MainDeck.transform.position;
 			card.transform.parent = transform;
 			CardList.Add(card);
 		}
@@ -54,16 +52,7 @@ public class BlackMarketArea : BasicArea {
 	}
 	
 	public List<GameObject> GetDiscardPile () {
-		return DiscardDeck.CardList;
-	}
-
-	public void RemoveDiscardPile () {
-		Vector3 curPos = DiscardDeck.transform.position;
-		DiscardDeck.QuadraticOutMoveTo(DiscardDeck.transform.position, MarketDeck.transform.position, 1.0f, () => {
-			DiscardDeck.RemoveAllCards();
-			DiscardDeck.UpdateDeckDisplay();
-			DiscardDeck.transform.position = curPos;
-		});
+		return DiscardPile.CardList;
 	}
 
 	override public void OnFocusEnter()
@@ -77,16 +66,13 @@ public class BlackMarketArea : BasicArea {
 	}
 
 	override public void MoveCard (Card card) {
-		//move card to player hand
-		GameObject hand = GameObject.FindGameObjectWithTag ("Player");
+		//move card to current player hand
+		BasicArea playerArea = GameManager.GetCurrentPlayerArea();
+		card.AreaManager = playerArea;
 		CardList.Remove (card.gameObject);
-		card.gameObject.transform.parent = hand.transform;
-		hand.GetComponent<HandActions> ().AddCard (card.gameObject);
-	}
-
-	public void AnimateTarget(GameObject target, float rate) {
-		CardList.Add (target);
-		UpdateDeckDisplay (rate);
+		card.gameObject.transform.parent = playerArea.gameObject.transform;
+		card.CurrentCardLocation = CardLocation.CardLocationCurrentPlayer;
+		playerArea.gameObject.GetComponent<PlayerArea> ().AddCardToHand (card.gameObject);
 	}
 
 	void UpdateDeckDisplay(float animationDuration)
@@ -98,8 +84,8 @@ public class BlackMarketArea : BasicArea {
 		float objectHeight = CardList [0].renderer.bounds.size.y;
 		int index = 0;
 		//find start point
-		float startPointX = MarketDeck.transform.position.x + objectWidth + CardSpacing;
-		float startPointY = MarketDeck.transform.position.y;
+		float startPointX = MainDeck.transform.position.x + objectWidth + CardSpacing;
+		float startPointY = MainDeck.transform.position.y;
 		foreach (GameObject cardObject in CardList) 
 		{
 			Card card = cardObject.GetComponent<Card>();
@@ -107,7 +93,7 @@ public class BlackMarketArea : BasicArea {
 			float x = startPointX + (objectWidth + CardSpacing) * (index % Columns);
 			int currentRow = index / Columns;
 			float y = startPointY - (objectHeight + CardSpacing) * currentRow;//subtract so that the cards go down the y axis
-			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, MarketDeck.transform.position.z), animationDuration, () => { card.CurrentCardLocation = CardLocation.CardLocationMarketField; });
+			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, MainDeck.transform.position.z), animationDuration, () => { card.CurrentCardLocation = CardLocation.CardLocationMarketField; });
 			index++;
 		}
 	}
