@@ -8,6 +8,27 @@ public class BasicAnimator : MonoBehaviour {
 	private delegate void UpdateFunction(float deltaTime);
 	private UpdateFunction MyUpdateFunction = null;
 
+
+	float doubleClickStart = 0;
+	
+	void OnMouseUp()
+	{
+		if ((Time.time - doubleClickStart) < 0.3f)
+		{
+			this.OnDoubleClick();
+			doubleClickStart = -1;
+		}
+		else
+		{
+			doubleClickStart = Time.time;
+		}
+	}
+	
+	virtual protected void OnDoubleClick()
+	{
+		Debug.Log("Double Clicked!");
+	}
+
 	// Use this for initialization
 	void Start () {
 	
@@ -15,6 +36,9 @@ public class BasicAnimator : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected void Update () {
+
+
+
 		if (MyUpdateFunction != null) {
 			MyUpdateFunction(Time.deltaTime);
 		}
