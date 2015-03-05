@@ -2,12 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerActions : BasicArea {
-
-	public delegate void AnimationCompletionCallback();
-
-	public Deck MainDeck;
-	public DiscardDeck DiscardPile;
+public class PlayerArea : BasicArea {
+	
 	public HandActions Hand;
 	public GameObject PlayField;
 	public GameObject ObstacleSection;
@@ -42,18 +38,6 @@ public class PlayerActions : BasicArea {
 
 	public List<GameObject> GetDiscardPile () {
 		return DiscardPile.CardList;
-	}
-
-	public void RemoveDiscardPile (AnimationCompletionCallback completionCallback) {
-		Vector3 curPos = DiscardPile.transform.position;
-		DiscardPile.QuadraticOutMoveTo (DiscardPile.transform.position, MainDeck.transform.position, 0.25f, () => {
-			DiscardPile.RemoveAllCards ();
-			DiscardPile.UpdateDeckDisplay ();
-			DiscardPile.transform.position = curPos;
-			if (completionCallback != null) {
-				completionCallback ();
-			}
-		});
 	}
 
 	//MoveCardToDiscardFromHand
