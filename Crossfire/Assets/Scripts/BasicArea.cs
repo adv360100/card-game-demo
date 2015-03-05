@@ -13,12 +13,11 @@ public abstract class BasicArea : MonoBehaviour {
 	
 	}
 
-	virtual public void OnFocusEnter()
-	{
+	virtual public void OnFocusEnter () {
 
 	}
-	virtual public void OnFocusExit()
-	{
+
+	virtual public void OnFocusExit () {
 		
 	}
 
