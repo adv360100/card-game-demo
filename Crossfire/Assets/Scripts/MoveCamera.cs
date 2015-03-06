@@ -11,6 +11,7 @@ public class MoveCamera : MonoBehaviour {
 	private float OriginalOrthographicSize;
 	private Transform ZoomedObject;
 	private Vector3 ZoomedObjectOldPos;
+	private IEnumerator coroutine;
 
 	// Use this for initialization
 	void Start () {
@@ -52,6 +53,9 @@ public class MoveCamera : MonoBehaviour {
 		{
 			ZoomedObject = null;
 			//unzoom
+			if(coroutine != null)
+				StopCoroutine(coroutine);
+
 			camera.orthographicSize = OriginalOrthographicSize;
 			MoveToArea(CurrentAreaIndex);
 			return;
@@ -66,6 +70,23 @@ public class MoveCamera : MonoBehaviour {
 		float h = target.bounds.size.y;
 	
 		//adjust camera size
-		camera.orthographicSize = Mathf.Max (w, h) * .5f;
+		coroutine = ChangeCameraSize (Mathf.Max (w, h) * .5f);
+		StartCoroutine (coroutine);
+	}
+
+	IEnumerator ChangeCameraSize(float size)
+	{
+		float start = camera.orthographicSize;
+		float diff = Mathf.Abs(size - start);
+		//float absDiff = Mathf.Abs(diff);
+
+		for (float f = 0f; f < 1f; f += 0.1f) {
+
+			camera.orthographicSize = start - diff * f;
+			yield return null;
+		}
+
+		camera.orthographicSize = size;
+
 	}
 }
