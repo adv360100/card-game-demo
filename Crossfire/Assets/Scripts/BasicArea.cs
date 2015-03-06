@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class BasicArea : MonoBehaviour {
+public class BasicArea : MonoBehaviour {
 
 	public delegate void AnimationCompletionCallback();
 	public DiscardDeck DiscardPile;

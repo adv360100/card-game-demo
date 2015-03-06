@@ -82,7 +82,7 @@ GameObject:
   - 4: {fileID: 479436}
   - 114: {fileID: 11479444}
   m_Layer: 0
-  m_Name: BlackMarketManager
+  m_Name: ObstacleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ GameObject:
   - 23: {fileID: 2379438}
   - 114: {fileID: 11479446}
   m_Layer: 0
-  m_Name: MarketDeck
+  m_Name: MainDeck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -748,16 +748,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 179436}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a69ea7e0bf8342468b9394b9da2455b, type: 3}
+  m_Script: {fileID: 11500000, guid: 009f2986f7b40ed47b40f37fdfddafa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DiscardPile: {fileID: 11479448}
   MainDeck: {fileID: 11479446}
-  BasicCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
-  CardList: []
-  Columns: 3
-  CardMax: 6
-  CardSpacing: 2
 --- !u!114 &11479446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -766,7 +761,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 179438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd900ac5d09f45c419e7753f62150611, type: 3}
+  m_Script: {fileID: 11500000, guid: d9ae54f7bcfd86249b805c8de0c38acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CardList: []
@@ -775,7 +770,6 @@ MonoBehaviour:
   - {fileID: 2379448}
   - {fileID: 2379432}
   - {fileID: 2379434}
-  MarketArea: {fileID: 0}
 --- !u!114 &11479448
 MonoBehaviour:
   m_ObjectHideFlags: 1
