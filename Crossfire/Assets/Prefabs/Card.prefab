@@ -9,10 +9,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 419836}
   - 33: {fileID: 3319836}
+  - 65: {fileID: 6519836}
   - 23: {fileID: 2319836}
   - 114: {fileID: 11419836}
-  - 64: {fileID: 6430366}
-  - 65: {fileID: 6519836}
   m_Layer: 0
   m_Name: Card
   m_TagString: EditorOnly
@@ -59,22 +58,9 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119836}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &6430366
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 119836}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!65 &6519836
 BoxCollider:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119836}
@@ -96,7 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentCardLocation: 0
-  PlayerManager: {fileID: 0}
+  AreaManager: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

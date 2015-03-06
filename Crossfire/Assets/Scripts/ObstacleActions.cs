@@ -7,6 +7,7 @@ public class ObstacleActions : MonoBehaviour {
 
 	static readonly string kObstacleTag = "Obstacle";
 	static readonly int kButtonPadding = 10;
+	static readonly Vector3 kFirstButtonPos = new Vector3(0, 90, 0);
 
 	public GameObject OriginalObstacleButton;
 
@@ -43,9 +44,9 @@ public class ObstacleActions : MonoBehaviour {
 			Vector3 buttonPos = Vector3.zero;
 			if (ButtonList.Count > 0) {
 				buttonPos = ButtonList[ButtonList.Count - 1].transform.localPosition;
-				buttonPos.y -= ButtonList[ButtonList.Count - 1].GetComponent<RectTransform> ().sizeDelta.y;
+				buttonPos.y -= ButtonList[ButtonList.Count - 1].GetComponent<RectTransform> ().sizeDelta.y + kButtonPadding;
 			} else {
-				buttonPos = new Vector3(0, 90, 0);
+				buttonPos = kFirstButtonPos;
 			}
 
 			GameObject buttonToAdd = GameObject.Instantiate(OriginalObstacleButton, Vector3.zero, OriginalObstacleButton.transform.rotation) as GameObject;
