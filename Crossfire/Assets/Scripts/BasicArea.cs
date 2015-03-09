@@ -15,7 +15,8 @@ public class BasicArea : MonoBehaviour {
 		{
 			List<GameObject> cardList = new List<GameObject>();
 			for (int i = 0; i < 10; i++) {
-				GameObject cardToAdd = GameObject.Instantiate(BasicCard, MainDeck.transform.position, MainDeck.transform.rotation) as GameObject;
+				Vector3 newPos = new Vector3(MainDeck.transform.position.x, MainDeck.transform.position.y, MainDeck.transform.position.z + 1);
+				GameObject cardToAdd = GameObject.Instantiate(BasicCard, newPos, MainDeck.transform.rotation) as GameObject;
 				//parent card for easier debugging
 				cardToAdd.transform.parent = MainDeck.transform;
 				cardToAdd.GetComponent<Card>().AreaManager = this;

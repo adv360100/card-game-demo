@@ -2,7 +2,7 @@
 using System.Collections;
 
 public enum CardLocation {CardLocationDeck = 0, CardLocationDiscard, CardLocationCurrentPlayer, CardLocationOtherPlayer, 
-							CardLocationMarketDeck, CardLocationMarketField};
+							CardLocationMarketDeck, CardLocationMarketField, CardLocationCrossfireDeck};
 
 public class Card : BasicAnimator {
 
