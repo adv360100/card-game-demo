@@ -12,6 +12,7 @@ public class MoveCamera : MonoBehaviour {
 	private Transform ZoomedObject;
 	private Vector3 ZoomedObjectOldPos;
 	private IEnumerator coroutine;
+	private float ZoomSpeed = 2f;
 
 	// Use this for initialization
 	void Start () {
@@ -49,14 +50,17 @@ public class MoveCamera : MonoBehaviour {
 
 	public void ZoomOnObject(Renderer target)
 	{
-		if (target == null)
+		if (target == null || target.gameObject.transform == ZoomedObject)
 		{
 			ZoomedObject = null;
 			//unzoom
 			if(coroutine != null)
+			{
 				StopCoroutine(coroutine);
-
-			camera.orthographicSize = OriginalOrthographicSize;
+				coroutine = null;
+			}
+			coroutine = ChangeCameraSize (OriginalOrthographicSize);
+			StartCoroutine (coroutine);
 			MoveToArea(CurrentAreaIndex);
 			return;
 		}
@@ -77,16 +81,18 @@ public class MoveCamera : MonoBehaviour {
 	IEnumerator ChangeCameraSize(float size)
 	{
 		float start = camera.orthographicSize;
-		float diff = Mathf.Abs(size - start);
-		//float absDiff = Mathf.Abs(diff);
+		float diff = size - start;
 
-		for (float f = 0f; f < 1f; f += 0.1f) {
-
-			camera.orthographicSize = start - diff * f;
+		while (Mathf.Abs(diff) > .1f) {
+			start = camera.orthographicSize;
+			diff = size - start;
+			camera.orthographicSize = start + diff * ZoomSpeed * Time.deltaTime;
 			yield return null;
 		}
 
 		camera.orthographicSize = size;
+		StopCoroutine(coroutine);
+		coroutine = null;
 
 	}
 }
