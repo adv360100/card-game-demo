@@ -823,6 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardList: []
+  Manager: {fileID: 0}
   ExtraCards:
   - {fileID: 2361976}
   - {fileID: 2361980}
@@ -840,12 +841,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e97743e348e0534eba966dacb50295d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BasicCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
   DiscardPile: {fileID: 11461980}
   MainDeck: {fileID: 11461976}
   Hand: {fileID: 11461974}
   PlayField: {fileID: 0}
-  ObstacleSection: {fileID: 0}
-  OriginalCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
+  ObstacleSection: {fileID: 11481256}
 --- !u!114 &11461980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -858,6 +859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardList: []
+  Manager: {fileID: 0}
   ExtraCards:
   - {fileID: 2361974}
   - {fileID: 2361964}

@@ -6,8 +6,7 @@ public class PlayerArea : BasicArea {
 	
 	public HandActions Hand;
 	public GameObject PlayField;
-	public GameObject ObstacleSection;
-	public GameObject OriginalCard;
+	public HandActions ObstacleSection;
 
 	// Use this for initialization
 	void Start () {
@@ -15,8 +14,7 @@ public class PlayerArea : BasicArea {
 		if (MainDeck != null) { 
 			List<GameObject> cardList = new List<GameObject>();
 			for (int i = 0; i < 5; i++) {
-				GameObject cardToAdd = GameObject.Instantiate(OriginalCard, MainDeck.transform.position, MainDeck.transform.rotation) as GameObject;
-				cardToAdd.GetComponent<Card>().CurrentCardLocation = CardLocation.CardLocationDeck;
+				GameObject cardToAdd = GameObject.Instantiate(BasicCard, MainDeck.transform.position, MainDeck.transform.rotation) as GameObject;
 				cardToAdd.GetComponent<Card>().AreaManager = this;
 				cardToAdd.GetComponent<Renderer>().enabled = false;
 				cardToAdd.transform.parent = MainDeck.transform;
@@ -36,17 +34,12 @@ public class PlayerArea : BasicArea {
 	
 	}
 
-	public List<GameObject> GetDiscardPile () {
-		return DiscardPile.CardList;
-	}
-
 	//MoveCardToDiscardFromHand
 	override public void MoveCard (Card card) {
 		if (DiscardPile.ContainsCard (card)) {
 			return;
 		}
 
-		card.CurrentCardLocation = CardLocation.CardLocationDiscard;
 		Hand.RemoveCard (card.gameObject);
 		card.QuadraticOutMoveTo (card.transform.position, DiscardPile.transform.position, 1.0f, () => {
 			DiscardPile.AddCard (card.gameObject);
@@ -66,12 +59,11 @@ public class PlayerArea : BasicArea {
 
 	}
 
-	override public void OnFocusEnter()
-	{
+	override public void OnFocusEnter () {
 		
 	}
-	override public void OnFocusExit()
-	{
+
+	override public void OnFocusExit () {
 		
 	}
 }

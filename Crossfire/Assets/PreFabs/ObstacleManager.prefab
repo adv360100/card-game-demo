@@ -253,7 +253,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.25, y: 132.759995, z: 1}
+  m_LocalPosition: {x: 40, y: 15, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 479438}
@@ -267,7 +267,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.6000004, y: -.600000024, z: 0}
+  m_LocalPosition: {x: -32.7000008, y: -32.2000008, z: 0}
   m_LocalScale: {x: 14, y: 9, z: 1}
   m_Children:
   - {fileID: 479434}
@@ -319,7 +319,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179446}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14, y: -17.6000004, z: 0}
+  m_LocalPosition: {x: -33.0999985, y: -49.2000008, z: 0}
   m_LocalScale: {x: 14, y: 9, z: 1}
   m_Children:
   - {fileID: 479442}
@@ -751,6 +751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009f2986f7b40ed47b40f37fdfddafa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BasicCard: {fileID: 171410, guid: d98119c35dc69b54c8b6482fefdaf507, type: 2}
   DiscardPile: {fileID: 11479448}
   MainDeck: {fileID: 11479446}
 --- !u!114 &11479446
@@ -761,15 +762,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 179438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ae54f7bcfd86249b805c8de0c38acd, type: 3}
+  m_Script: {fileID: 11500000, guid: 175754f9507d4a640aa2658c4275f797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CardList: []
+  Manager: {fileID: 11479444}
   ExtraCards:
   - {fileID: 2379436}
   - {fileID: 2379448}
   - {fileID: 2379432}
   - {fileID: 2379434}
+  MyGameManager: {fileID: 0}
 --- !u!114 &11479448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -782,6 +785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardList: []
+  Manager: {fileID: 11479444}
   ExtraCards:
   - {fileID: 2379442}
   - {fileID: 2379440}

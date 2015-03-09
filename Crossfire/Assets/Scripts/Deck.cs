@@ -6,14 +6,36 @@ using System.Collections.Generic;
 public class Deck : BasicAnimator {
 
 	public List<GameObject> CardList = new List<GameObject>();
+	public BasicArea Manager;
 	public MeshRenderer[] ExtraCards; //the deck 'stack' cards for when there are more than one card in the deck
+
+	public GameObject DrawCard () {
+		if (CardList.Count <= 0) {
+			if (Manager.GetDiscardPile().Count <= 0) {
+				return null;
+			}
+
+			//shuffle discard into deck and try draw again
+			ShuffleDeck (CardList.ToArray ());
+			List<GameObject> discardPile = new List<GameObject> (Manager.GetDiscardPile ());
+			Manager.RemoveDiscardPile (() => {
+				AddCards (discardPile);
+				OnMouseDown ();
+			});
+			return null;
+		}
+		
+		GameObject topCard = CardList [CardList.Count - 1];
+		topCard.GetComponent<Renderer>().enabled = true;
+		CardList.Remove (topCard);
+		return topCard;
+	}
+
+	virtual public void OnMouseDown () {
+	}
 
 	public int DeckCount () {
 		return CardList.Count;
-	}
-
-	virtual public GameObject DrawCard () {
-		return null;
 	}
 
 	public void AddCards (IEnumerable<GameObject> cardsToAdd) {
