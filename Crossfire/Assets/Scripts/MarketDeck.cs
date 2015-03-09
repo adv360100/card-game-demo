@@ -3,29 +3,4 @@ using System.Collections;
 
 public class MarketDeck : Deck {
 
-	public BlackMarketArea MarketArea;
-
-	override public GameObject DrawCard()
-	{
-		if (CardList.Count <= 0)
-		{
-			if(MarketArea.GetDiscardPile().Count <= 0)
-			{
-				return null;
-			}
-			//shuffle discard into deck and try draw again
-			AddCards(MarketArea.GetDiscardPile());
-			ShuffleDeck(CardList.ToArray());
-			MarketArea.RemoveDiscardPile(()=>{
-				//do nothing
-			});
-		}
-		
-		GameObject topCard = CardList [CardList.Count - 1];
-		topCard.GetComponent<Card>().CurrentCardLocation = CardLocation.CardLocationMarketField;
-		CardList.Remove (topCard);
-		UpdateDeckDisplay ();
-		return topCard;
-	}
-
 }

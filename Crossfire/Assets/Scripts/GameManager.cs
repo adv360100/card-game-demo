@@ -4,7 +4,10 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
+	static public GameManager Instance;
+
 	public Text InstructionsText;
+	public PlayerArea MyPlayer; // The player on this machine
 
 	private enum GamePhases {GamePhasesCrossfire = 0, GamePhasesPlayer, GamePhasesEnd, GamePhasesMAX};
 	private enum PlayerPhases {PlayerPhasesPlay = 0, PlayerPhasesApplyDamage, PlayerPhasesTakeDamage, PlayerPhasesDraw, PlayerPhasesBuy, PlayerPhasesEnd, PlayerPhasesMAX};
@@ -19,43 +22,42 @@ public class GameManager : MonoBehaviour {
 		//TODO: find out the number of players
 		NumOfPlayers = 4;
 
+		if (Instance == null) {
+			Instance = this;
+		} else {
+			DestroyObject(this);
+			return;
+		}
 
 		DrawCrossFire ();
 	}
 
-	void DrawCrossFire()
-	{
+	void DrawCrossFire () {
 		InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " draw Crossfire card";
 		//first player can
 	}
 
-	void PlayCards()
-	{
+	void PlayCards () {
 		InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " play cards from your hand";
 	}
 
-	void ApplyDamage()
-	{
+	void ApplyDamage () {
 		InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " apply damage";
 	}
 
-	void TakeDamage()
-	{
+	void TakeDamage () {
 		InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " take damage from obstacles";
 	}
 
-	void DrawCards()
-	{
+	void DrawCards () {
 		InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " draw 2 cards from your deak";
 	}
 
-	void BuyCards()
-	{
+	void BuyCards () {
 		InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " can buy from the Black Market";
 	}
 
-	void EndTurn()
-	{
+	void EndTurn () {
 		InstructionsText.text = "End Turn";
 		CurPlayerIndex++;
 		if (CurPlayerIndex >= NumOfPlayers) {
@@ -67,8 +69,7 @@ public class GameManager : MonoBehaviour {
 		NextStep ();
 	}
 
-	void EndRound()
-	{
+	void EndRound () {
 		InstructionsText.text = "End Round";
 		FirstPlayerIndex++;
 		if (FirstPlayerIndex >= NumOfPlayers) {
@@ -79,8 +80,7 @@ public class GameManager : MonoBehaviour {
 		NextStep ();
 	}
 
-	public void NextStep()
-	{
+	public void NextStep () {
 
 		if (FirstPlayerIndex == CurPlayerIndex && CurPlayerPhase == PlayerPhases.PlayerPhasesEnd) {
 			CurGamePhase++;
@@ -89,50 +89,52 @@ public class GameManager : MonoBehaviour {
 		}
 		switch (CurGamePhase) {
 		case GamePhases.GamePhasesCrossfire:
-			DrawCrossFire();
+			DrawCrossFire ();
 			break;
 		case GamePhases.GamePhasesPlayer:
-			NextPlayerStep();
+			NextPlayerStep ();
 			break;
 		case GamePhases.GamePhasesEnd:
-			EndRound();
+			EndRound ();
 			break;
 		}
 	}
 
-	void NextPlayerStep()
-	{
+	void NextPlayerStep () {
 		CurPlayerPhase++;
 		if (CurPlayerPhase == PlayerPhases.PlayerPhasesMAX)
 			CurPlayerPhase = 0;
 
 		switch (CurPlayerPhase) {
 		case PlayerPhases.PlayerPhasesPlay:
-			PlayCards();
+			PlayCards ();
 			break;
 		case PlayerPhases.PlayerPhasesApplyDamage:
-			ApplyDamage();
+			ApplyDamage ();
 			break;
 		case PlayerPhases.PlayerPhasesTakeDamage:
-			TakeDamage();
+			TakeDamage ();
 			break;
 		case PlayerPhases.PlayerPhasesDraw:
-			DrawCards();
+			DrawCards ();
 			break;
 		case PlayerPhases.PlayerPhasesBuy:
-			BuyCards();
+			BuyCards ();
 			break;
 		case PlayerPhases.PlayerPhasesEnd:
-			EndTurn();
+			EndTurn ();
 			break;
 		}
 	}
 
-	public static BasicArea GetCurrentPlayerArea()
-	{
+	public static BasicArea GetCurrentPlayerArea () {
 		GameObject player = GameObject.FindGameObjectWithTag ("Player");
 		//TODO: do some real stuff
 
 		return player.GetComponent<BasicArea> ();
+	}
+
+	public void AddObstacleToMyPlayer (GameObject card) {
+		MyPlayer.ObstacleSection.AddCard (card);
 	}
 }

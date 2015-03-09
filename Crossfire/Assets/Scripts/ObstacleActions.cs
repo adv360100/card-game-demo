@@ -26,7 +26,7 @@ public class ObstacleActions : MonoBehaviour {
 		}
 
 		for (int i = 0; i < obstacles.Length; i++) {
-			Obstacle obstacle = obstacles[i].GetComponent<Obstacle> ();
+			Card obstacle = obstacles[i].GetComponent<Card> ();
 
 			bool found = false;
 			for (int j = 0; j < ButtonList.Count; j++) {
@@ -50,7 +50,7 @@ public class ObstacleActions : MonoBehaviour {
 			}
 
 			GameObject buttonToAdd = GameObject.Instantiate(OriginalObstacleButton, Vector3.zero, OriginalObstacleButton.transform.rotation) as GameObject;
-			buttonToAdd.GetComponentInChildren<Text> ().text = obstacle.ObstacleName;
+			buttonToAdd.GetComponentInChildren<Text> ().text = obstacle.name;
 			buttonToAdd.GetComponent<ObstacleButton> ().ID = obstacle.ID;
 			buttonToAdd.GetComponent<ObstacleButton> ().ObstacleManager = this;
 			buttonToAdd.transform.SetParent (transform);

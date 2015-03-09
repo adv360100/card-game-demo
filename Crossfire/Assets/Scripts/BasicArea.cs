@@ -11,8 +11,7 @@ public class BasicArea : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (MainDeck != null)
-		{
+		if (MainDeck != null) {
 			List<GameObject> cardList = new List<GameObject>();
 			for (int i = 0; i < 10; i++) {
 				Vector3 newPos = new Vector3(MainDeck.transform.position.x, MainDeck.transform.position.y, MainDeck.transform.position.z + 1);
@@ -21,11 +20,7 @@ public class BasicArea : MonoBehaviour {
 				cardToAdd.transform.parent = MainDeck.transform;
 				cardToAdd.GetComponent<Card>().AreaManager = this;
 				cardToAdd.GetComponent<Renderer>().enabled = false;
-				//set card location
-				Card cardComp = cardToAdd.GetComponent<Card>();
-				cardComp.CurrentCardLocation = CardLocation.CardLocationMarketDeck;
 				cardList.Add(cardToAdd);
-				
 			}
 			
 			MainDeck.AddCards(cardList);
@@ -62,4 +57,7 @@ public class BasicArea : MonoBehaviour {
 		});
 	}
 
+	public List<GameObject> GetDiscardPile () {
+		return DiscardPile.CardList;
+	}
 }

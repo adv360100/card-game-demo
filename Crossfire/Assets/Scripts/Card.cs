@@ -1,37 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum CardLocation {CardLocationDeck = 0, CardLocationDiscard, CardLocationCurrentPlayer, CardLocationOtherPlayer, 
-							CardLocationMarketDeck, CardLocationMarketField, CardLocationCrossfireDeck};
-
 public class Card : BasicAnimator {
 
-	public CardLocation CurrentCardLocation;
+	public uint ID;
 	public BasicArea AreaManager;
+	public Texture FrontTexture;
 
 	// Use this for initialization
 	void Start () {
+		ID = (uint)Random.Range (0, 100);
 	}
 
 	void Awake () {
-		CurrentCardLocation = CardLocation.CardLocationDeck;
 	}
 
-	void OnMouseDown () {
-		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<MoveCamera> ().ZoomOnObject (renderer);
-//		if (CurrentCardLocation == CardLocation.CardLocationCurrentPlayer ||
-//		    CurrentCardLocation == CardLocation.CardLocationMarketField) {
-//			// Move to discard pile
-//			AreaManager.MoveCard(this);
-//		}
-	}
-
-	override protected void OnDoubleClick()
-	{
-		if (CurrentCardLocation == CardLocation.CardLocationCurrentPlayer ||
-		    CurrentCardLocation == CardLocation.CardLocationMarketField) {
-			// Move to discard pile
+	void OnMouseOver () {
+		if (Input.GetMouseButtonDown (0)) { // Left click
 			AreaManager.MoveCard(this);
+		} else if (Input.GetMouseButtonDown (1)) { // Right click
+			GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<MoveCamera> ().ZoomOnObject (renderer);
 		}
 	}
 }

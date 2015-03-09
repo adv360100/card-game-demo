@@ -49,28 +49,26 @@ public class BlackMarketArea : BasicArea {
 		if (needsUpdate)
 			UpdateDeckDisplay (1f);
 	}
-	
-	public List<GameObject> GetDiscardPile () {
-		return DiscardPile.CardList;
-	}
 
-	override public void OnFocusEnter()
-	{
+	override public void OnFocusEnter () {
 		
 	}
 
-	override public void OnFocusExit()
-	{
+	override public void OnFocusExit () {
 		
 	}
 
 	override public void MoveCard (Card card) {
 		//move card to current player hand
 		BasicArea playerArea = GameManager.GetCurrentPlayerArea();
+
+		if (playerArea != GameManager.Instance.MyPlayer) {
+			card.GetComponent<Renderer> ().material.SetTexture (0, MainDeck.GetComponent<Renderer> ().material.GetTexture(0));
+		}
+
 		card.AreaManager = playerArea;
 		CardList.Remove (card.gameObject);
 		card.gameObject.transform.parent = playerArea.gameObject.transform;
-		card.CurrentCardLocation = CardLocation.CardLocationCurrentPlayer;
 		playerArea.gameObject.GetComponent<PlayerArea> ().AddCardToHand (card.gameObject);
 	}
 
@@ -92,7 +90,7 @@ public class BlackMarketArea : BasicArea {
 			float x = startPointX + (objectWidth + CardSpacing) * (index % Columns);
 			int currentRow = index / Columns;
 			float y = startPointY - (objectHeight + CardSpacing) * currentRow;//subtract so that the cards go down the y axis
-			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, MainDeck.transform.position.z), animationDuration, () => { card.CurrentCardLocation = CardLocation.CardLocationMarketField; });
+			card.QuadraticOutMoveTo (card.transform.position, new Vector3(x, y, MainDeck.transform.position.z), animationDuration, () => { });
 			index++;
 		}
 	}
