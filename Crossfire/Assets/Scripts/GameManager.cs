@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 
 	public Text InstructionsText;
 	public PlayerArea MyPlayer; // The player on this machine
+	public PlayerArea[] Players = new PlayerArea[4];
 
 	private enum GamePhases {GamePhasesCrossfire = 0, GamePhasesPlayer, GamePhasesEnd, GamePhasesMAX};
 	private enum PlayerPhases {PlayerPhasesPlay = 0, PlayerPhasesApplyDamage, PlayerPhasesTakeDamage, PlayerPhasesDraw, PlayerPhasesBuy, PlayerPhasesEnd, PlayerPhasesMAX};
@@ -127,11 +128,8 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public static BasicArea GetCurrentPlayerArea () {
-		GameObject player = GameObject.FindGameObjectWithTag ("Player");
-		//TODO: do some real stuff
-
-		return player.GetComponent<BasicArea> ();
+	public static PlayerArea GetCurrentPlayerArea () {
+		return Instance.Players[Instance.CurPlayerIndex];
 	}
 
 	public void AddObstacleToMyPlayer (GameObject card) {
