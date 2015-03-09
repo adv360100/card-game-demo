@@ -4,34 +4,33 @@ using System.Collections.Generic;
 
 public class BlackMarketArea : BasicArea {
 	
-	public GameObject BasicCard;
 	public List<GameObject> CardList; //cards in the market area
 	public int Columns = 3;
 	public int CardMax = 6;
 	public float CardSpacing = 2f;
 
 	// Use this for initialization
-	void Start () {
-		if (MainDeck != null)
-		{
-			List<GameObject> cardList = new List<GameObject>();
-			for (int i = 0; i < 10; i++) {
-				GameObject cardToAdd = GameObject.Instantiate(BasicCard, MainDeck.transform.position, MainDeck.transform.rotation) as GameObject;
-				//parent card for easier debugging
-				cardToAdd.transform.parent = MainDeck.transform;
-				cardToAdd.GetComponent<Card>().AreaManager = this;
-				cardToAdd.GetComponent<Renderer>().enabled = false;
-				//set card location
-				Card cardComp = cardToAdd.GetComponent<Card>();
-				cardComp.CurrentCardLocation = CardLocation.CardLocationMarketDeck;
-				cardList.Add(cardToAdd);
-
-			}
-			
-			MainDeck.AddCards(cardList);
-			MainDeck.UpdateDeckDisplay();
-		}
-	}
+//	void Start () {
+//		if (MainDeck != null)
+//		{
+//			List<GameObject> cardList = new List<GameObject>();
+//			for (int i = 0; i < 10; i++) {
+//				GameObject cardToAdd = GameObject.Instantiate(BasicCard, MainDeck.transform.position, MainDeck.transform.rotation) as GameObject;
+//				//parent card for easier debugging
+//				cardToAdd.transform.parent = MainDeck.transform;
+//				cardToAdd.GetComponent<Card>().AreaManager = this;
+//				cardToAdd.GetComponent<Renderer>().enabled = false;
+//				//set card location
+//				Card cardComp = cardToAdd.GetComponent<Card>();
+//				cardComp.CurrentCardLocation = CardLocation.CardLocationMarketDeck;
+//				cardList.Add(cardToAdd);
+//
+//			}
+//			
+//			MainDeck.AddCards(cardList);
+//			MainDeck.UpdateDeckDisplay();
+//		}
+//	}
 
 	void Update()
 	{

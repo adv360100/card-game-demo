@@ -395,8 +395,8 @@ Transform:
   m_Children:
   - {fileID: 2031818497}
   - {fileID: 969234198}
-  - {fileID: 827820125}
   - {fileID: 354870045}
+  - {fileID: 827820125}
   m_Father: {fileID: 0}
   m_RootOrder: 5
 --- !u!114 &97052500
@@ -410,6 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009f2986f7b40ed47b40f37fdfddafa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BasicCard: {fileID: 0}
   DiscardPile: {fileID: 0}
   MainDeck: {fileID: 0}
 --- !u!1 &130592465
@@ -1290,11 +1291,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 479436, guid: 3223e404a0f36cd44b2c4b32dc82140c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 479436, guid: 3223e404a0f36cd44b2c4b32dc82140c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -15
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 479436, guid: 3223e404a0f36cd44b2c4b32dc82140c, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1318,8 +1319,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 479436, guid: 3223e404a0f36cd44b2c4b32dc82140c, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11479444, guid: 3223e404a0f36cd44b2c4b32dc82140c, type: 2}
+      propertyPath: BasicCard
+      value: 
+      objectReference: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3223e404a0f36cd44b2c4b32dc82140c, type: 2}
   m_RootGameObject: {fileID: 354870044}
@@ -1352,7 +1357,7 @@ Transform:
   m_GameObject: {fileID: 353374252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -13.6000004, y: -.600000024, z: 0}
-  m_LocalScale: {x: 9, y: 14, z: 1}
+  m_LocalScale: {x: 14, y: 9, z: 1}
   m_Children:
   - {fileID: 1661402841}
   - {fileID: 214828732}
@@ -1391,7 +1396,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c389389700346c1429d5b1bd8279f88d, type: 2}
+  - {fileID: 2100000, guid: 9badf54c31b7ae348bbfae67bfa29218, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1444,13 +1449,13 @@ Transform:
   m_PrefabInternal: {fileID: 341468205}
   m_GameObject: {fileID: 354870044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: -15, z: 1}
+  m_LocalPosition: {x: 40, y: 15, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1883896862}
   - {fileID: 1976339159}
   m_Father: {fileID: 97052499}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!114 &354870046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1463,6 +1468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009f2986f7b40ed47b40f37fdfddafa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BasicCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
   DiscardPile: {fileID: 1976339160}
   MainDeck: {fileID: 1883896863}
 --- !u!1 &396673002
@@ -2512,13 +2518,13 @@ Transform:
   m_PrefabInternal: {fileID: 1124580186}
   m_GameObject: {fileID: 827820124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23, y: -15, z: 1}
+  m_LocalPosition: {x: 62, y: 15, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1205884301}
   - {fileID: 725654830}
   m_Father: {fileID: 97052499}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!114 &827820126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2531,6 +2537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009f2986f7b40ed47b40f37fdfddafa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BasicCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
   DiscardPile: {fileID: 725654831}
   MainDeck: {fileID: 1205884302}
 --- !u!1 &834652210
@@ -2706,7 +2713,7 @@ Transform:
   m_GameObject: {fileID: 926972753}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -14, y: -17.6000004, z: 0}
-  m_LocalScale: {x: 9, y: 14, z: 1}
+  m_LocalScale: {x: 14, y: 9, z: 1}
   m_Children:
   - {fileID: 1919787281}
   - {fileID: 1411624794}
@@ -2944,7 +2951,7 @@ Transform:
   m_PrefabInternal: {fileID: 1265793271}
   m_GameObject: {fileID: 969234197}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -43, y: -15, z: 1}
+  m_LocalPosition: {x: 16, y: 15, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 353374253}
@@ -2963,6 +2970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009f2986f7b40ed47b40f37fdfddafa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BasicCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
   DiscardPile: {fileID: 926972755}
   MainDeck: {fileID: 353374254}
 --- !u!1 &985339329
@@ -3163,11 +3171,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 479436, guid: 446b4d1885e33f84aa18eb8b23e801ba, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -23
+      value: 62
       objectReference: {fileID: 0}
     - target: {fileID: 479436, guid: 446b4d1885e33f84aa18eb8b23e801ba, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -15
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 479436, guid: 446b4d1885e33f84aa18eb8b23e801ba, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3191,8 +3199,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 479436, guid: 446b4d1885e33f84aa18eb8b23e801ba, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11479444, guid: 446b4d1885e33f84aa18eb8b23e801ba, type: 2}
+      propertyPath: BasicCard
+      value: 
+      objectReference: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 446b4d1885e33f84aa18eb8b23e801ba, type: 2}
   m_RootGameObject: {fileID: 827820124}
@@ -3534,11 +3546,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 479436, guid: ad685ec1a6c2a0f449945a0a57706711, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -43
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 479436, guid: ad685ec1a6c2a0f449945a0a57706711, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -15
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 479436, guid: ad685ec1a6c2a0f449945a0a57706711, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3564,6 +3576,30 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 479438, guid: ad685ec1a6c2a0f449945a0a57706711, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 479438, guid: ad685ec1a6c2a0f449945a0a57706711, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 479446, guid: ad685ec1a6c2a0f449945a0a57706711, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 479446, guid: ad685ec1a6c2a0f449945a0a57706711, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2379438, guid: ad685ec1a6c2a0f449945a0a57706711, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9badf54c31b7ae348bbfae67bfa29218, type: 2}
+    - target: {fileID: 11479444, guid: ad685ec1a6c2a0f449945a0a57706711, type: 2}
+      propertyPath: BasicCard
+      value: 
+      objectReference: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad685ec1a6c2a0f449945a0a57706711, type: 2}
   m_RootGameObject: {fileID: 969234197}
@@ -4261,6 +4297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e97743e348e0534eba966dacb50295d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BasicCard: {fileID: 0}
   DiscardPile: {fileID: 1489433147}
   MainDeck: {fileID: 1619819473}
   Hand: {fileID: 2031445624}
@@ -5564,7 +5601,7 @@ Transform:
   m_PrefabInternal: {fileID: 2058066044}
   m_GameObject: {fileID: 2031818496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -43, y: 20, z: 1}
+  m_LocalPosition: {x: -43, y: 15, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1874044454}
@@ -5583,9 +5620,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a69ea7e0bf8342468b9394b9da2455b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BasicCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
   DiscardPile: {fileID: 522887156}
   MainDeck: {fileID: 1874044455}
-  BasicCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
   CardList: []
   Columns: 3
   CardMax: 6
@@ -5603,7 +5640,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 479436, guid: babe3ad845050b74abb295e6421cc670, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 479436, guid: babe3ad845050b74abb295e6421cc670, type: 2}
       propertyPath: m_LocalPosition.z
