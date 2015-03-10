@@ -253,7 +253,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.25, y: 132.759995, z: 1}
+  m_LocalPosition: {x: 33, y: 15, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 479438}
@@ -268,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 179438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -13.6000004, y: -.600000024, z: 0}
-  m_LocalScale: {x: 9, y: 14, z: 1}
+  m_LocalScale: {x: 14, y: 9, z: 1}
   m_Children:
   - {fileID: 479434}
   - {fileID: 479448}
@@ -320,7 +320,7 @@ Transform:
   m_GameObject: {fileID: 179446}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -14, y: -17.6000004, z: 0}
-  m_LocalScale: {x: 9, y: 14, z: 1}
+  m_LocalScale: {x: 14, y: 9, z: 1}
   m_Children:
   - {fileID: 479442}
   - {fileID: 479440}
@@ -432,7 +432,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c389389700346c1429d5b1bd8279f88d, type: 2}
+  - {fileID: 2100000, guid: 9badf54c31b7ae348bbfae67bfa29218, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -512,7 +512,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 9a8e014c647296e45a66ccd81d3ba500, type: 2}
+  - {fileID: 2100000, guid: d76f48791b9216c4e9ad5976b4a2871e, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -751,6 +751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009f2986f7b40ed47b40f37fdfddafa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BasicCard: {fileID: 161042, guid: 3cdef1eef07fa2946b41a61b385f81e8, type: 2}
   DiscardPile: {fileID: 11479448}
   MainDeck: {fileID: 11479446}
 --- !u!114 &11479446
@@ -761,10 +762,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 179438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ae54f7bcfd86249b805c8de0c38acd, type: 3}
+  m_Script: {fileID: 11500000, guid: 933826ca3bc21e345bb84b7f572b5da7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CardList: []
+  Manager: {fileID: 11479444}
   ExtraCards:
   - {fileID: 2379436}
   - {fileID: 2379448}
@@ -782,6 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardList: []
+  Manager: {fileID: 11479444}
   ExtraCards:
   - {fileID: 2379442}
   - {fileID: 2379440}

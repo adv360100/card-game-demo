@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//TODO: find out the number of players
-		NumOfPlayers = 4;
+		NumOfPlayers = 1;
 
 		if (Instance == null) {
 			Instance = this;
@@ -51,7 +51,14 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void DrawCards () {
-		InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " draw 2 cards from your deak";
+		if (GetCurrentPlayerArea ().Hand.CardList.Count > 3)
+		{
+			NextStep ();
+		} 
+		else
+		{
+			InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " draw 2 cards from your deck";
+		}
 	}
 
 	void BuyCards () {
