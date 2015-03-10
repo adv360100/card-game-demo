@@ -54,11 +54,7 @@ public class MoveCamera : MonoBehaviour {
 		{
 			ZoomedObject = null;
 			//unzoom
-			if(coroutine != null)
-			{
-				StopCoroutine(coroutine);
-				coroutine = null;
-			}
+			StopMyCoroutine ();
 			coroutine = ChangeCameraSize (OriginalOrthographicSize);
 			StartCoroutine (coroutine);
 			MoveToArea(CurrentAreaIndex);
@@ -74,6 +70,7 @@ public class MoveCamera : MonoBehaviour {
 		float h = target.bounds.size.y;
 	
 		//adjust camera size
+		StopMyCoroutine ();
 		coroutine = ChangeCameraSize (Mathf.Max (w, h) * .5f);
 		StartCoroutine (coroutine);
 	}
@@ -91,8 +88,16 @@ public class MoveCamera : MonoBehaviour {
 		}
 
 		camera.orthographicSize = size;
-		StopCoroutine(coroutine);
-		coroutine = null;
+		StopMyCoroutine ();
 
+	}
+
+	void StopMyCoroutine()
+	{
+		if(coroutine != null)
+		{
+			StopCoroutine(coroutine);
+			coroutine = null;
+		}
 	}
 }
