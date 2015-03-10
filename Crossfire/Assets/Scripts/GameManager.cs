@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 	public Text InstructionsText;
 	public BasicArea ObstacleArea;
 	public PlayerArea MyPlayer; // The player on this machine
+	public PlayerArea[] Players = new PlayerArea[4];
 
 	private enum GamePhases {GamePhasesCrossfire = 0, GamePhasesPlayer, GamePhasesEnd, GamePhasesMAX};
 	private enum PlayerPhases {PlayerPhasesPlay = 0, PlayerPhasesApplyDamage, PlayerPhasesTakeDamage, PlayerPhasesDraw, PlayerPhasesBuy, PlayerPhasesEnd, PlayerPhasesMAX};
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//TODO: find out the number of players
-		NumOfPlayers = 4;
+		NumOfPlayers = 1;
 
 		if (Instance == null) {
 			Instance = this;
@@ -51,7 +52,14 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void DrawCards () {
-		InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " draw 2 cards from your deak";
+		if (GetCurrentPlayerArea ().Hand.CardList.Count > 3)
+		{
+			NextStep ();
+		} 
+		else
+		{
+			InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " draw 2 cards from your deck";
+		}
 	}
 
 	void BuyCards () {
@@ -128,11 +136,8 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public static BasicArea GetCurrentPlayerArea () {
-		GameObject player = GameObject.FindGameObjectWithTag ("Player");
-		//TODO: do some real stuff
-
-		return player.GetComponent<BasicArea> ();
+	public static PlayerArea GetCurrentPlayerArea () {
+		return Instance.Players[Instance.CurPlayerIndex];
 	}
 
 	public void AddObstacleToMyPlayer (GameObject card) {
