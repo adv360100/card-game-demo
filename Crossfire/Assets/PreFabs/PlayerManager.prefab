@@ -823,7 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardList: []
-  Manager: {fileID: 0}
+  Manager: {fileID: 11461978}
   ExtraCards:
   - {fileID: 2361976}
   - {fileID: 2361980}

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ObstacleActions : MonoBehaviour {
 
-	static readonly string kObstacleTag = "Obstacle";
+	public static readonly string kObstacleTag = "Obstacle";
 	static readonly int kButtonPadding = 10;
 	static readonly Vector3 kFirstButtonPos = new Vector3(0, 90, 0);
 

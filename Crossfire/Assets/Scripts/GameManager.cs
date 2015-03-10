@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 	static public GameManager Instance;
 
 	public Text InstructionsText;
+	public BasicArea ObstacleArea;
 	public PlayerArea MyPlayer; // The player on this machine
 	public PlayerArea[] Players = new PlayerArea[4];
 
@@ -143,5 +144,19 @@ public class GameManager : MonoBehaviour {
 
 	public void AddObstacleToMyPlayer (GameObject card) {
 		MyPlayer.ObstacleSection.AddCard (card);
+	}
+
+	public void DiscardObstacle (GameObject card) {
+		if (ObstacleArea.DiscardPile.ContainsCard (card.GetComponent<Card> ())) {
+			return;
+		}
+
+		ObstacleArea.DiscardPile.AddCard (card);
+
+		card.GetComponent<Card> ().QuadraticOutMoveTo (card.transform.position, ObstacleArea.DiscardPile.transform.position, 1.0f, () => {
+			ObstacleArea.DiscardPile.AddCard (card.gameObject);
+			card.tag = "";
+			card.GetComponent<Renderer>().enabled = false;
+		});
 	}
 }

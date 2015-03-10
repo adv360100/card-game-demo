@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class ObstacleDeck : Deck {
-
-	public GameManager MyGameManager;
-
+	
 	override public void OnMouseDown () {
 		GameObject card = DrawCard ();
 		if (card == null) {
@@ -12,7 +10,9 @@ public class ObstacleDeck : Deck {
 		}
 		
 		card.transform.position = transform.position;
-		MyGameManager.AddObstacleToMyPlayer (card);
+		card.tag = ObstacleActions.kObstacleTag;
+		card.GetComponent<Card> ().AreaManager = GameManager.Instance.MyPlayer;
+		GameManager.Instance.AddObstacleToMyPlayer (card);
 		
 		UpdateDeckDisplay ();
 	}

@@ -10,7 +10,7 @@ public class BasicArea : MonoBehaviour {
 	public Deck MainDeck;
 
 	// Use this for initialization
-	void Start () {
+	virtual public void Start () {
 		if (MainDeck != null) {
 			List<GameObject> cardList = new List<GameObject>();
 			for (int i = 0; i < 10; i++) {
