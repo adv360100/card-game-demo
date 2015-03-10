@@ -8,43 +8,22 @@ public class PlayerArea : BasicArea {
 	public GameObject PlayField;
 	public HandActions ObstacleSection;
 
-	// Use this for initialization
-	void Start () {
-		// Create the starting deck
-		if (MainDeck != null) { 
-			List<GameObject> cardList = new List<GameObject>();
-			for (int i = 0; i < 5; i++) {
-				GameObject cardToAdd = GameObject.Instantiate(BasicCard, MainDeck.transform.position, MainDeck.transform.rotation) as GameObject;
-				cardToAdd.GetComponent<Card>().AreaManager = this;
-				cardToAdd.GetComponent<Renderer>().enabled = false;
-				cardToAdd.transform.parent = MainDeck.transform;
-
-				Vector3 pos = cardToAdd.transform.position;
-				pos.z = 1;
-				cardToAdd.transform.position = pos;
-				cardList.Add(cardToAdd);
-			}
-
-			MainDeck.AddCards(cardList);
-		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	//MoveCardToDiscardFromHand
 	override public void MoveCard (Card card) {
-		if (DiscardPile.ContainsCard (card)) {
-			return;
+		if (card.tag == ObstacleActions.kObstacleTag) {
+			ObstacleSection.RemoveCard (card.gameObject);
+			GameManager.Instance.DiscardObstacle (card.gameObject);
+		} else {
+			if (DiscardPile.ContainsCard (card)) {
+				return;
+			}
+			
+			Hand.RemoveCard (card.gameObject);
+			card.QuadraticOutMoveTo (card.transform.position, DiscardPile.transform.position, 1.0f, () => {
+				DiscardPile.AddCard (card.gameObject);
+				card.GetComponent<Renderer>().enabled = false;
+			});
 		}
-
-		Hand.RemoveCard (card.gameObject);
-		card.QuadraticOutMoveTo (card.transform.position, DiscardPile.transform.position, 1.0f, () => {
-			DiscardPile.AddCard (card.gameObject);
-			card.GetComponent<Renderer>().enabled = false;
-		});
 	}
 
 	public void AddCardToHand (GameObject card) {
@@ -53,10 +32,6 @@ public class PlayerArea : BasicArea {
 
 	public void ShowObstacleTargetsUI () {
 		
-	}
-
-	public void EndTurn () {
-
 	}
 
 	override public void OnFocusEnter () {
