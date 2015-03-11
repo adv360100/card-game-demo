@@ -12,7 +12,7 @@ public class MoveCamera : MonoBehaviour {
 	private Transform ZoomedObject;
 	private Vector3 ZoomedObjectOldPos;
 	private IEnumerator coroutine;
-	private float ZoomSpeed = 2f;
+	private float ZoomSpeed = 1f;
 
 	// Use this for initialization
 	void Start () {
@@ -75,15 +75,13 @@ public class MoveCamera : MonoBehaviour {
 		StartCoroutine (coroutine);
 	}
 
-	IEnumerator ChangeCameraSize(float size)
-	{
+	IEnumerator ChangeCameraSize(float size) {
 		float start = camera.orthographicSize;
 		float diff = size - start;
 
-		while (Mathf.Abs(diff) > .1f) {
+		while (Mathf.Abs(camera.orthographicSize - size) > .2f) {
 			start = camera.orthographicSize;
-			diff = size - start;
-			camera.orthographicSize = start + diff * ZoomSpeed * Time.deltaTime;
+			camera.orthographicSize = diff * Time.deltaTime / ZoomSpeed + start;
 			yield return null;
 		}
 
