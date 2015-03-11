@@ -25,10 +25,12 @@ public class ObstacleButton : MonoBehaviour {
 		ObstacleManager.UnselectAllObstacles ();
 		GetComponent<Image> ().color = SelectedColor;
 		Selected = true;
+		ObstacleManager.TintObstacle (ID);
 	}
 
 	public void UnselectObstacle () {
 		GetComponent<Image> ().color = UnselectedColor;
 		Selected = false;
+		ObstacleManager.UntintObstacle (ID);
 	}
 }
