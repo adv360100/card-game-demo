@@ -63,6 +63,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void BuyCards () {
+		//TODO: check if current player has money
+		//TODO: check if can even buy anything in the market
 		InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " can buy from the Black Market";
 	}
 
