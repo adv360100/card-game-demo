@@ -53,8 +53,8 @@ public class PlayerArea : BasicArea {
 				Obstacle ob = gameobject.GetComponent<Obstacle>();
 				if(ob.ID == i)
 				{
-					ob.CardList.Add(c);
-					c.transform.parent = ob.transform;
+					Hand.RemoveCard(c.gameObject);
+					ob.PlayCard(c);
 					break;
 				}
 			}
