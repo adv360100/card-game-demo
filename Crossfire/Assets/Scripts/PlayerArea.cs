@@ -14,15 +14,16 @@ public class PlayerArea : BasicArea {
 			ObstacleSection.RemoveCard (card.gameObject);
 			GameManager.Instance.DiscardObstacle (card.gameObject);
 		} else {
-			if (DiscardPile.ContainsCard (card)) {
-				return;
-			}
-			
-			Hand.RemoveCard (card.gameObject);
-			card.QuadraticOutMoveTo (card.transform.position, DiscardPile.transform.position, 1.0f, () => {
-				DiscardPile.AddCard (card.gameObject);
-				card.GetComponent<Renderer>().enabled = false;
-			});
+			AddCardToObstacle(card);
+//			if (DiscardPile.ContainsCard (card)) {
+//				return;
+//			}
+//			
+//			Hand.RemoveCard (card.gameObject);
+//			card.QuadraticOutMoveTo (card.transform.position, DiscardPile.transform.position, 1.0f, () => {
+//				DiscardPile.AddCard (card.gameObject);
+//				card.GetComponent<Renderer>().enabled = false;
+//			});
 		}
 	}
 
@@ -40,5 +41,22 @@ public class PlayerArea : BasicArea {
 
 	override public void OnFocusExit () {
 		
+	}
+
+	void AddCardToObstacle(Card c)
+	{
+		uint i = GameManager.Instance.ObstaclePanel.selectedObstacleID;
+		if(i > 0)
+		{
+			foreach(GameObject gameobject in ObstacleSection.CardList)
+			{
+				Obstacle ob = gameobject.GetComponent<Obstacle>();
+				if(ob.ID == i)
+				{
+					ob.CardList.Add(c);
+					break;
+				}
+			}
+	    }
 	}
 }

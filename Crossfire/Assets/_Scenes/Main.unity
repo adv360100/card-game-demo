@@ -3838,6 +3838,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  ObstaclePanel: {fileID: 1968797942}
 --- !u!4 &1350447939
 Transform:
   m_ObjectHideFlags: 0

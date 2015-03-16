@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+//panel
 public class ObstacleActions : MonoBehaviour {
 
 	public static readonly string kObstacleTag = "Obstacle";
+	public GameObject OriginalObstacleButton;
+	[HideInInspector]public uint selectedObstacleID = 0;
+	
 	static readonly int kButtonPadding = 10;
 	static readonly Vector3 kFirstButtonPos = new Vector3(0, 90, 0);
-
-	public GameObject OriginalObstacleButton;
-
+	
 	private List<GameObject> ButtonList = new List<GameObject> ();
 
 	// Use this for initialization
