@@ -152,11 +152,10 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 
-		ObstacleArea.DiscardPile.AddCard (card);
-
 		card.GetComponent<Card> ().QuadraticOutMoveTo (card.transform.position, ObstacleArea.DiscardPile.transform.position, 1.0f, () => {
 			ObstacleArea.DiscardPile.AddCard (card.gameObject);
 			card.tag = "";
+			ObstacleActions.Instance.CheckObstacleButtons ();
 			card.GetComponent<Renderer>().enabled = false;
 		});
 	}

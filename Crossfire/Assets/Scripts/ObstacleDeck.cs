@@ -15,5 +15,6 @@ public class ObstacleDeck : Deck {
 		GameManager.Instance.AddObstacleToMyPlayer (card);
 		
 		UpdateDeckDisplay ();
+		ObstacleActions.Instance.CheckObstacleButtons ();
 	}
 }

@@ -19,4 +19,10 @@ public class DiscardDeck : Deck {
 	public bool ContainsCard (Card card) {
 		return CardList.Contains (card.gameObject);
 	}
+
+	void OnMouseOver () {
+		if (Input.GetMouseButtonDown (1)) { // Right click
+			GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<MoveCamera> ().ZoomOnObject (renderer);
+		}
+	}
 }
