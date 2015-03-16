@@ -54,6 +54,7 @@ public class PlayerArea : BasicArea {
 				if(ob.ID == i)
 				{
 					ob.CardList.Add(c);
+					c.transform.parent = ob.transform;
 					break;
 				}
 			}
