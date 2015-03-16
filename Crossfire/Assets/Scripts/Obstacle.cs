@@ -11,7 +11,24 @@ public class Obstacle : Card {
 	public void PlayCard(Card card)
 	{
 		CardList.Add(card);
+		card.AttachedObstacle = this;
 		card.transform.parent = transform;
+		UpdateDeckDisplay (1f);
+	}
+
+	public void RemoveCard(Card card)
+	{
+		CardList.Remove (card);
+		card.AttachedObstacle = null;
+		UpdateDeckDisplay (1f);
+	}
+
+	public void RemoveAllCards()
+	{
+		CardList.ForEach (delegate(Card obj) {
+			obj.AttachedObstacle = null;
+		});
+		CardList.Clear ();
 		UpdateDeckDisplay (1f);
 	}
 
@@ -19,9 +36,7 @@ public class Obstacle : Card {
 	{
 		if (CardList.Count == 0)
 			return;
-		
-//		float objectWidth = CardList [0].renderer.bounds.size.x;
-//		float objectHeight = CardList [0].renderer.bounds.size.y;
+	
 		int index = 0;
 		//find start point
 		float startPointX = transform.position.x;

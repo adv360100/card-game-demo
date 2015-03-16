@@ -12,18 +12,26 @@ public class PlayerArea : BasicArea {
 	override public void MoveCard (Card card) {
 		if (card.tag == ObstacleActions.kObstacleTag) {
 			ObstacleSection.RemoveCard (card.gameObject);
+			Obstacle ob = card as Obstacle;
+			ob.CardList.ForEach(delegate(Card obj) {
+				//animate player cards to discard
+				obj.QuadraticOutMoveTo (obj.transform.position, DiscardPile.transform.position, 1.0f, () => {
+					DiscardPile.AddCard (obj.gameObject);
+					obj.GetComponent<Renderer>().enabled = false;
+				});
+			});
+
+
+			ob.RemoveAllCards();
 			GameManager.Instance.DiscardObstacle (card.gameObject);
 		} else {
+			if (Hand.CardList.Contains (card.gameObject) == false ) {
+				card.AttachedObstacle.RemoveCard(card);
+				AddCardToHand(card.gameObject);
+				return;
+			}
+
 			AddCardToObstacle(card);
-//			if (DiscardPile.ContainsCard (card)) {
-//				return;
-//			}
-//			
-//			Hand.RemoveCard (card.gameObject);
-//			card.QuadraticOutMoveTo (card.transform.position, DiscardPile.transform.position, 1.0f, () => {
-//				DiscardPile.AddCard (card.gameObject);
-//				card.GetComponent<Renderer>().enabled = false;
-//			});
 		}
 	}
 

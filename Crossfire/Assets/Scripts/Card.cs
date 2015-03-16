@@ -6,6 +6,7 @@ public class Card : BasicAnimator {
 	public uint ID;
 	public BasicArea AreaManager;
 	public Texture FrontTexture;
+	public Obstacle AttachedObstacle;
 
 	// Use this for initialization
 	void Start () {
