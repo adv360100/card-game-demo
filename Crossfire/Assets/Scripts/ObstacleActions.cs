@@ -14,7 +14,8 @@ public class ObstacleActions : MonoBehaviour {
 	List<GameObject> ButtonList = new List<GameObject> (8);
 
 	public GameObject OriginalObstacleButton;
-	
+	public uint selectedObstacleID;
+
 	// Use this for initialization
 	void Start () {
 		if (Instance == null) {
@@ -23,6 +24,8 @@ public class ObstacleActions : MonoBehaviour {
 			DestroyObject(this);
 			return;
 		}
+
+		selectedObstacleID = 0;
 	}
 	
 	// Update is called once per frame

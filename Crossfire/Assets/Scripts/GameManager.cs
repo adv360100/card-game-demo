@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 	public BasicArea BlackMarketArea;
 	public PlayerArea MyPlayer; // The player on this machine
 	public PlayerArea[] Players = new PlayerArea[4];
+	public ObstacleActions ObstaclePanel;
 
 	private enum GamePhases {GamePhasesCrossfire = 0, GamePhasesPlayer, GamePhasesEnd, GamePhasesMAX};
 	private enum PlayerPhases {PlayerPhasesPlay = 0, PlayerPhasesApplyDamage, PlayerPhasesTakeDamage, PlayerPhasesDraw, PlayerPhasesBuy, PlayerPhasesEnd, PlayerPhasesMAX};

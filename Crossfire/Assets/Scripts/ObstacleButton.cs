@@ -26,6 +26,7 @@ public class ObstacleButton : MonoBehaviour {
 		GetComponent<Image> ().color = SelectedColor;
 		Selected = true;
 		ObstacleManager.TintObstacle (ID);
+		ObstacleManager.selectedObstacleID = ID;
 	}
 
 	public void UnselectObstacle () {

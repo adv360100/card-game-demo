@@ -12,17 +12,26 @@ public class PlayerArea : BasicArea {
 	override public void MoveCard (Card card) {
 		if (card.tag == ObstacleActions.kObstacleTag) {
 			ObstacleSection.RemoveCard (card.gameObject);
+			Obstacle ob = card as Obstacle;
+			ob.CardList.ForEach(delegate(Card obj) {
+				//animate player cards to discard
+				obj.QuadraticOutMoveTo (obj.transform.position, DiscardPile.transform.position, 1.0f, () => {
+					DiscardPile.AddCard (obj.gameObject);
+					obj.GetComponent<Renderer>().enabled = false;
+				});
+			});
+
+
+			ob.RemoveAllCards();
 			GameManager.Instance.DiscardObstacle (card.gameObject);
 		} else {
-			if (DiscardPile.ContainsCard (card)) {
+			if (Hand.CardList.Contains (card.gameObject) == false ) {
+				card.AttachedObstacle.RemoveCard(card);
+				AddCardToHand(card.gameObject);
 				return;
 			}
-			
-			Hand.RemoveCard (card.gameObject);
-			card.QuadraticOutMoveTo (card.transform.position, DiscardPile.transform.position, 1.0f, () => {
-				DiscardPile.AddCard (card.gameObject);
-				card.GetComponent<Renderer>().enabled = false;
-			});
+
+			AddCardToObstacle(card);
 		}
 	}
 
@@ -40,5 +49,23 @@ public class PlayerArea : BasicArea {
 
 	override public void OnFocusExit () {
 		
+	}
+
+	void AddCardToObstacle(Card c)
+	{
+		uint i = GameManager.Instance.ObstaclePanel.selectedObstacleID;
+		if(i > 0)
+		{
+			foreach(GameObject gameobject in ObstacleSection.CardList)
+			{
+				Obstacle ob = gameobject.GetComponent<Obstacle>();
+				if(ob.ID == i)
+				{
+					Hand.RemoveCard(c.gameObject);
+					ob.PlayCard(c);
+					break;
+				}
+			}
+	    }
 	}
 }

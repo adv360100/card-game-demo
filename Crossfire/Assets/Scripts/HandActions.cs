@@ -14,6 +14,7 @@ public class HandActions : BasicAnimator {
 
 	public void AddCard (GameObject card) {
 		CardList.Add (card);
+		card.transform.parent = transform;
 		UpdateDeckDisplay ();
 	}
 
