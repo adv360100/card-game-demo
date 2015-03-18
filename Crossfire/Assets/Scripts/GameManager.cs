@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 
 	public Text InstructionsText;
 	public BasicArea ObstacleArea;
+	public BasicArea BlackMarketArea;
 	public PlayerArea MyPlayer; // The player on this machine
 	public PlayerArea[] Players = new PlayerArea[4];
 
@@ -27,10 +28,11 @@ public class GameManager : MonoBehaviour {
 		if (Instance == null) {
 			Instance = this;
 		} else {
-			DestroyObject(this);
+			DestroyObject (this);
 			return;
 		}
 
+//		BlackMarketArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("Player Cards"));
 		DrawCrossFire ();
 	}
 

@@ -1,0 +1,12 @@
+[
+	{
+		"name": "Lightning Bolt",
+		"texture": "lightning-bolt",
+		"quantity": 2
+	},
+	{
+		"name": "Mark",
+		"texture": "mark",
+		"quantity": 5
+	}
+]

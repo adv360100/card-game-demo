@@ -253,7 +253,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.25, y: 132.759995, z: 1}
+  m_LocalPosition: {x: -43, y: 15, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 479438}
@@ -751,9 +751,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a69ea7e0bf8342468b9394b9da2455b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BasicCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
   DiscardPile: {fileID: 11479448}
   MainDeck: {fileID: 11479446}
-  BasicCard: {fileID: 119836, guid: 8361e772ca62a3041aef07f95a6af0b6, type: 2}
   CardList: []
   Columns: 3
   CardMax: 6
@@ -770,12 +770,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardList: []
+  Manager: {fileID: 11479444}
   ExtraCards:
   - {fileID: 2379436}
   - {fileID: 2379448}
   - {fileID: 2379432}
   - {fileID: 2379434}
-  MarketArea: {fileID: 0}
 --- !u!114 &11479448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -788,6 +788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardList: []
+  Manager: {fileID: 11479444}
   ExtraCards:
   - {fileID: 2379442}
   - {fileID: 2379440}
