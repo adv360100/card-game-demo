@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 	static public GameManager Instance;
 
 	public Text InstructionsText;
+	public Text PlayerInfoText;
 	public BasicArea ObstacleArea;
 	public PlayerArea MyPlayer; // The player on this machine
 	public PlayerArea[] Players = new PlayerArea[4];
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 
+		SetPlayerInfo ();
 		DrawCrossFire ();
 	}
 
@@ -158,5 +160,14 @@ public class GameManager : MonoBehaviour {
 			ObstacleActions.Instance.CheckObstacleButtons ();
 			card.GetComponent<Renderer>().enabled = false;
 		});
+	}
+
+	void SetPlayerInfo()
+	{
+		string str = PersistantManager.GetInstance ().SelectedRace.ToString ();
+		str += " " + PersistantManager.GetInstance ().SelectedRole.ToString ();
+		str = str.Replace ("Race", "");
+		str = str.Replace("Role","");
+		PlayerInfoText.text = str;
 	}
 }
