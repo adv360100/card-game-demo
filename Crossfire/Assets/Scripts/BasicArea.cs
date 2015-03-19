@@ -60,4 +60,27 @@ public class BasicArea : MonoBehaviour {
 	public List<GameObject> GetDiscardPile () {
 		return DiscardPile.CardList;
 	}
+
+	public void SetMainDeck (List<GameObject> cards) {
+		if (MainDeck != null) {
+			List<GameObject> cardList = new List<GameObject> ();
+			for (int i = 0; i < cards.Count; i++) {
+				Vector3 newPos = new Vector3 (MainDeck.transform.position.x, MainDeck.transform.position.y, MainDeck.transform.position.z + 1);
+				GameObject cardToAdd = GameObject.Instantiate (BasicCard, newPos, MainDeck.transform.rotation) as GameObject;
+				//parent card for easier debugging
+				cardToAdd.transform.parent = MainDeck.transform;
+				cardToAdd.name = cards[i].name;
+				cardToAdd.GetComponent<Card> ().ID = cards[i].GetComponent<Card> ().ID;
+				cardToAdd.GetComponent<Card> ().FrontTexture = cards[i].GetComponent<Card> ().FrontTexture;
+				cardToAdd.GetComponent<Card> ().AreaManager = this;
+				cardToAdd.GetComponent<Renderer> ().enabled = false;
+				cardToAdd.GetComponent<Renderer> ().material.SetTexture (0, cards[i].GetComponent<Card> ().FrontTexture);
+				cardList.Add (cardToAdd);
+				Destroy (cards[i]);
+			}
+			
+			MainDeck.AddCards (cardList);
+			MainDeck.UpdateDeckDisplay ();
+		}
+	}
 }
