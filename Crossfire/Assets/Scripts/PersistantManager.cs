@@ -25,7 +25,7 @@ public class PersistantManager : MonoBehaviour {
 	{
 		if(Instance == null)
 		{
-			GameObject obj = new GameObject("PersistantManager");
+			GameObject obj = new GameObject("Managers");
 			obj.AddComponent<PersistantManager>();
 			//Instance should be updated in awake
 		}

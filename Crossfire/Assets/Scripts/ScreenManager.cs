@@ -22,7 +22,10 @@ public class ScreenManager : MonoBehaviour {
 	//Animator State and Transition names we need to check against.
 	const string k_OpenTransitionName = "Open";
 	const string k_ClosedStateName = "Closed";
-	
+
+	private Stack<Animator> m_PrevList = new Stack<Animator>();
+	private bool m_SaveHistory = true;
+
 	public void OnEnable()
 	{
 		//We cache the Hash to the "Open" Parameter, so we can feed to Animator.SetBool.
@@ -38,7 +41,7 @@ public class ScreenManager : MonoBehaviour {
 	//It also takes care of handling the navigation, setting the new Selected element.
 	public void OpenPanel (Animator anim)
 	{
-		if (m_Open == anim)
+		if (anim == null || anim.gameObject == null || m_Open == anim)
 			return;
 		
 		//Activate the new Screen hierarchy so we can animate it.
@@ -47,11 +50,17 @@ public class ScreenManager : MonoBehaviour {
 		var newPreviouslySelected = EventSystem.current.currentSelectedGameObject;
 		//Move the Screen to front.
 		anim.transform.SetAsLastSibling();
+
+		if(m_SaveHistory && m_Open != null)
+			m_PrevList.Push(m_Open);
 		
+		m_SaveHistory = true;
+
+		//close the current panel
 		CloseCurrent();
 		
 		m_PreviouslySelected = newPreviouslySelected;
-		
+
 		//Set the new Screen as then open one.
 		m_Open = anim;
 		//Start the open animation
@@ -138,4 +147,14 @@ public class ScreenManager : MonoBehaviour {
 	{
 		Application.LoadLevel(1);
 	}
+
+	public void OpenPreviousPanel()
+	{
+		if (m_PrevList.Count == 0)
+			return;
+		Animator p = m_PrevList.Pop ();
+		m_SaveHistory = false;
+		OpenPanel (p);
+	}
+
 }
