@@ -17,6 +17,7 @@ public class PlayersPanel : MonoBehaviour {
 	
 	}
 
+	[RPC]
 	public void AddPlayer(string name)
 	{
 		GameObject player = Instantiate (TextObject) as GameObject;

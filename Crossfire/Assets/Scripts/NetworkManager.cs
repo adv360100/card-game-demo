@@ -6,8 +6,7 @@ public class NetworkManager : MonoBehaviour {
 
 	public Text MyIPText;
 	public InputField HostPort;
-	public Text LobbyNameText;
-	public Animator LobbyController;
+	public GameLobby Lobby;
 
 	private string GameName;
 	private string IPAddress;
@@ -57,10 +56,10 @@ public class NetworkManager : MonoBehaviour {
 
 	void JoinLobby()
 	{
-		LobbyNameText.text = GameName;
-		SM.OpenPanel (LobbyController);
-		PlayersPanel p = GetComponent<PlayersPanel> ();
-		p.AddPlayer (PlayerName);
+		string subtitle = Network.player.ipAddress + " port:" + RemotePort.ToString();
+		networkView.RPC ("SetupLobby", RPCMode.AllBuffered, new object[]{GameName,subtitle});
+		SM.OpenPanel (Lobby.LobbyController);
+		networkView.RPC ("AddPlayer", RPCMode.AllBuffered, PlayerName);
 	}
 
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
@@ -100,5 +99,19 @@ public class NetworkManager : MonoBehaviour {
 	public void SetPlayerName(string n)
 	{
 		PlayerName = n;
+	}
+
+	[RPC]
+	void AddPlayer(string name)
+	{
+		PlayersPanel p = GetComponent<PlayersPanel> ();
+		p.AddPlayer (name);
+	}
+
+	[RPC]
+	void SetupLobby(string title, string subtitle)
+	{
+		Lobby.LobbyNameText.text = title;
+		Lobby.IPText.text = subtitle;
 	}
 }
