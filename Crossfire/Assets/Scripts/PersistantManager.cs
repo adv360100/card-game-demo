@@ -1,7 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PersistantManager : MonoBehaviour {
+
+	public struct PlayerInfo {
+		public string Name;
+		public NetworkPlayer Player;
+		public Races Race;
+		public Roles Role;
+		public bool IsReady;
+	}
 
 	static private PersistantManager Instance = null;
 
@@ -9,6 +18,7 @@ public class PersistantManager : MonoBehaviour {
 	public enum Roles {RoleUnknown = 0, RoleStreetSamurai, RoleMage, RoleDecker, RoleFace}; 
 	[HideInInspector]public Races SelectedRace = Races.RaceUnknown + 1;
 	[HideInInspector]public Roles SelectedRole = Roles.RoleUnknown + 1;
+	[HideInInspector]public List<PlayerInfo> Players = null;
 
 	// Use this for initialization
 	void Awake () {
@@ -42,4 +52,53 @@ public class PersistantManager : MonoBehaviour {
 	{
 		SelectedRace = Races.RaceUnknown + i;
 	}
+
+	[RPC]
+	public void AddPlayer(string name, NetworkPlayer player)
+	{
+		PlayerInfo p = new PlayerInfo ();
+		p.Name = name;
+		p.Player = player;
+		p.Race = Races.RaceUnknown;
+		p.Role = Roles.RoleUnknown;
+		p.IsReady = false;
+		Players.Add (p);
+	}
+
+	[RPC]
+	public void RemovePlayer(NetworkPlayer player)
+	{
+		int index = -1;
+		foreach (PlayerInfo p in Players) {
+			index++;
+			if(p.Player == player)
+			{
+				break;
+			}
+		}
+
+		if (index >= 0) {
+			Players.RemoveAt(index);
+		}
+	}
+
+
+	public PlayerInfo GetPlayerInfo(NetworkPlayer player)
+	{
+		int index = -1;
+		foreach (PlayerInfo p in Players) {
+			index++;
+			if(p.Player == player)
+			{
+				break;
+			}
+		}
+		
+		if (index >= 0) {
+			return Players[index];
+		}
+
+		return new PlayerInfo();
+	}
+
 }

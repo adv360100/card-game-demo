@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class NetworkManager : MonoBehaviour {
 
-	public Text MyIPText;
 	public InputField HostPort;
 	public GameLobby Lobby;
 	public GameHostList MasterGameListManager;
@@ -12,14 +11,12 @@ public class NetworkManager : MonoBehaviour {
 	private string GameTypeName = "ShadowrunCrossfireCoopDeckBuildingGame"; //unique ID
 	private string GameName;
 	private string Password = "";
-	private string PlayerName;
 	private int RemotePort = 25000;
 	private int NumOfConnections = 4; //players
 	private ScreenManager SM;
 
 	// Use this for initialization
 	void Start () {
-		MyIPText.text = Network.player.ipAddress;
 		HostPort.text = RemotePort.ToString ();
 		SM = GetComponent<ScreenManager> ();
 	}
@@ -69,35 +66,52 @@ public class NetworkManager : MonoBehaviour {
 
 	void OnServerInitialized() {
 		Debug.Log("Server initialized and ready");
-		string subtitle = Network.player.ipAddress + " port:" + RemotePort.ToString();
-		networkView.RPC ("SetupLobby", RPCMode.AllBuffered, new object[]{GameName,subtitle});
+		networkView.RPC ("SetupLobby", RPCMode.AllBuffered, new object[]{GameName});
+		PersistantManager.GetInstance ().AddPlayer ("Host", Network.player);
 		JoinLobby ();
 	}
 
 	void OnConnectedToServer() {
 		Debug.Log("Connected to server");
+		networkView.RPC ("AddPlayer", RPCMode.Server, new object[]{"Player", Network.player});
 		JoinLobby ();
 	}
 
 	void JoinLobby()
 	{
 		SM.OpenPanel (Lobby.LobbyController);
-		if (Network.isServer)
-			AddPlayer (PlayerName);
-		else
-			networkView.RPC ("AddPlayer", RPCMode.Server,PlayerName);
+//		if (Network.isServer)
+//			AddPlayer (PlayerName);
+//		else
+//			networkView.RPC ("AddPlayer", RPCMode.Server,PlayerName);
 	}
 
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
 		if (Network.isServer)
 			Debug.Log("Local server connection disconnected");
-		else
-			if (info == NetworkDisconnection.LostConnection)
+		else if (info == NetworkDisconnection.LostConnection)
 				Debug.Log("Lost connection to the server");
 		else
 			Debug.Log("Successfully diconnected from the server");
 
 		SM.OpenPreviousPanel();
+	}
+
+	void OnPlayerDisconnected(NetworkPlayer player) {
+		Debug.Log("Clean up after player " + player);
+		PersistantManager.GetInstance ().RemovePlayer (player);
+		Network.RemoveRPCs(player);
+		Network.DestroyPlayerObjects(player);
+	}
+
+	public void DisconnectFromServer()
+	{
+		if (Network.isClient)
+			Network.Disconnect ();
+		else {
+			Network.Disconnect();
+			MasterServer.UnregisterHost();
+		}
 	}
 
 	public void SetGameName(string n)
@@ -117,11 +131,6 @@ public class NetworkManager : MonoBehaviour {
 		Password = p;
 	}
 
-	public void SetPlayerName(string n)
-	{
-		PlayerName = n;
-	}
-
 	[RPC]
 	void GetPlayerList(byte[] Namesdata)
 	{
@@ -131,16 +140,15 @@ public class NetworkManager : MonoBehaviour {
 	[RPC]
 	void AddPlayer(string name)
 	{
-		PlayersPanel p = GetComponent<PlayersPanel> ();
-		p.AddPlayer (name);
+		//PlayersPanel p = GetComponent<PlayersPanel> ();
+		//p.AddPlayer (name);
 
 		//networkView.RPC ("GetPlayerList", RPCMode.All, ms.ToArray());
 	}
 
 	[RPC]
-	void SetupLobby(string title, string subtitle)
+	void SetupLobby(string title)
 	{
 		Lobby.LobbyNameText.text = title;
-		Lobby.IPText.text = subtitle;
 	}
 }
