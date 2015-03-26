@@ -166,7 +166,9 @@ PlayerSettings:
   psp2PackagedResourcesPath: 
   flashStrippingLevel: 2
   spritePackerPolicy: 
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: GamePanel
+    2: GamePanel
   metroPackageName: Crossfire
   metroPackageLogo: 
   metroPackageLogo140: 

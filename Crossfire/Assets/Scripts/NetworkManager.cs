@@ -7,9 +7,10 @@ public class NetworkManager : MonoBehaviour {
 	public Text MyIPText;
 	public InputField HostPort;
 	public GameLobby Lobby;
+	public GameHostList MasterGameListManager;
 
+	private string GameTypeName = "ShadowrunCrossfireCoopDeckBuildingGame"; //unique ID
 	private string GameName;
-	private string IPAddress;
 	private string Password = "";
 	private string PlayerName;
 	private int RemotePort = 25000;
@@ -31,13 +32,35 @@ public class NetworkManager : MonoBehaviour {
 	public void LaunchServer() {
 		//TODO check for vaild game name
 
+
 		Network.incomingPassword = Password;
-		//bool useNat = !Network.HavePublicAddress();
-		Network.InitializeServer(NumOfConnections, RemotePort, false);
+		bool useNat = !Network.HavePublicAddress();
+		Network.InitializeServer(NumOfConnections, RemotePort, useNat);
+		MasterServer.RegisterHost (GameTypeName, GameName,"This is a tech demo");
 	}
 
-	public void ConnectToServer() {
-		Network.Connect(IPAddress, RemotePort, Password);
+	public static void ConnectToServer(HostData host,string password) {
+		Network.Connect(host,password);
+	}
+
+	public void RefreshHostList()
+	{
+		MasterServer.RequestHostList(GameTypeName);
+		Debug.Log ("Fetching game list");
+	}
+	
+	void OnMasterServerEvent(MasterServerEvent msEvent)
+	{
+		switch (msEvent) {
+		case MasterServerEvent.HostListReceived:
+			Debug.Log ("Found " + MasterServer.PollHostList().Length + " games");
+			MasterGameListManager.AddHostGames(MasterServer.PollHostList ());
+			break;
+		case MasterServerEvent.RegistrationFailedNoServer:
+			Debug.Log ("There is no server");
+			break;
+		}
+
 	}
 
 	void OnFailedToConnect(NetworkConnectionError error) {
@@ -46,6 +69,8 @@ public class NetworkManager : MonoBehaviour {
 
 	void OnServerInitialized() {
 		Debug.Log("Server initialized and ready");
+		string subtitle = Network.player.ipAddress + " port:" + RemotePort.ToString();
+		networkView.RPC ("SetupLobby", RPCMode.AllBuffered, new object[]{GameName,subtitle});
 		JoinLobby ();
 	}
 
@@ -56,10 +81,11 @@ public class NetworkManager : MonoBehaviour {
 
 	void JoinLobby()
 	{
-		string subtitle = Network.player.ipAddress + " port:" + RemotePort.ToString();
-		networkView.RPC ("SetupLobby", RPCMode.AllBuffered, new object[]{GameName,subtitle});
 		SM.OpenPanel (Lobby.LobbyController);
-		networkView.RPC ("AddPlayer", RPCMode.AllBuffered, PlayerName);
+		if (Network.isServer)
+			AddPlayer (PlayerName);
+		else
+			networkView.RPC ("AddPlayer", RPCMode.Server,PlayerName);
 	}
 
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
@@ -77,11 +103,6 @@ public class NetworkManager : MonoBehaviour {
 	public void SetGameName(string n)
 	{
 		GameName = n;
-	}
-
-	public void SetIP(string i)
-	{
-		IPAddress = i;
 	}
 
 	public void SetPort(string p)
@@ -102,10 +123,18 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	[RPC]
+	void GetPlayerList(byte[] Namesdata)
+	{
+
+	}
+
+	[RPC]
 	void AddPlayer(string name)
 	{
 		PlayersPanel p = GetComponent<PlayersPanel> ();
 		p.AddPlayer (name);
+
+		//networkView.RPC ("GetPlayerList", RPCMode.All, ms.ToArray());
 	}
 
 	[RPC]
