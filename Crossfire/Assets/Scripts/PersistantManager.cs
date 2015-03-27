@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PersistantManager : MonoBehaviour {
 
-	public struct PlayerInfo {
+	public class PlayerInfo {
 		public string Name;
 		public NetworkPlayer Player;
 		public Races Race;
@@ -18,7 +18,7 @@ public class PersistantManager : MonoBehaviour {
 	public enum Roles {RoleUnknown = 0, RoleStreetSamurai, RoleMage, RoleDecker, RoleFace}; 
 	[HideInInspector]public Races SelectedRace = Races.RaceUnknown + 1;
 	[HideInInspector]public Roles SelectedRole = Roles.RoleUnknown + 1;
-	[HideInInspector]public List<PlayerInfo> Players = null;
+	[HideInInspector]public List<PlayerInfo> Players = new List<PlayerInfo> ();
 
 	// Use this for initialization
 	void Awake () {
@@ -54,7 +54,7 @@ public class PersistantManager : MonoBehaviour {
 	}
 
 	[RPC]
-	public void AddPlayer(string name, NetworkPlayer player)
+	public void AddPlayer(NetworkPlayer player, string name)
 	{
 		PlayerInfo p = new PlayerInfo ();
 		p.Name = name;

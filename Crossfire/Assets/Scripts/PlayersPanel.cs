@@ -21,7 +21,7 @@ public class PlayersPanel : MonoBehaviour {
 	}
 
 	[RPC]
-	public void AddPlayer(string name)
+	public void AddPlayerName(string name)
 	{
 		if (PlayerNameList.Contains (name))
 			return;//skip as it is already in the list//Note: need to test 

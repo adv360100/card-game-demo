@@ -1711,8 +1711,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 329783340}
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1373574433}
+        m_MethodName: PressedActionButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4974,10 +4974,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LobbyNameText: {fileID: 103213934}
   LobbyController: {fileID: 1373574430}
-  ActionButton: {fileID: 0}
+  ActionButtonText: {fileID: 2027989065}
   GameStartCountdown: 3
-  RolesSection: {fileID: 0}
-  RacesSection: {fileID: 0}
+  RolesSection: {fileID: 926171144}
+  RacesSection: {fileID: 2011716898}
 --- !u!148 &1373574434
 NetworkView:
   m_ObjectHideFlags: 0
