@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Armored Troopers",
+		"texture": "armored-troopers",
+		"quantity": 1
+	},
+	{
+		"name": "Chromed Samurai",
+		"texture": "chromed-samurai",
+		"quantity": 1
+	},
+	{
+		"name": "Drone Rigger",
+		"texture": "drone-rigger",
+		"quantity": 1
+	},
+	{
+		"name": "knight Errant Field Agent",
+		"texture": "knight-errant-field-agent",
+		"quantity": 1
+	},
+	{
+		"name": "Lightning Mage",
+		"texture": "lightning-mage",
+		"quantity": 1
+	},
+	{
+		"name": "Security Chief",
+		"texture": "security-chief",
+		"quantity": 1
+	},
+	{
+		"name": "Spirit of Fire",
+		"texture": "spirit-of-fire",
+		"quantity": 1
+	},
+	{
+		"name": "Warded Decker",
+		"texture": "warded-decker",
+		"quantity": 1
+	}
+]
