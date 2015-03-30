@@ -6,11 +6,13 @@ using System.Collections;
 using System.Collections.Generic;
 using SimpleJSON;
 
+public enum CardIDs { CardIDPlayerCards = 1, CardIDObstacles = 10000, CardIDHardObstacles = 20000, CardIDCrossfire = 30000 }; 
+
 public class JSONImporter : MonoBehaviour {
 
 	private const string kResourcesPath = "Assets/Resources/";
 
-	static public List<GameObject> LoadAllFromFolder (string path) {
+	static public List<GameObject> LoadAllFromFolder (string path, uint startingID) {
 		DirectoryInfo info = new DirectoryInfo (kResourcesPath + path);
 		FileInfo[] fileInfo = info.GetFiles ();
 		List<GameObject> cards = new List<GameObject> (28);
@@ -20,7 +22,7 @@ public class JSONImporter : MonoBehaviour {
 			if (extensions[extensions.Length - 1] == "cards") {
 				JSONNode json = Load (kResourcesPath + path + "/" + file.Name);
 				if (json != null) {
-					uint id = 1;
+					uint id = startingID;
 //					Debug.Log ("json.Count: " + json.Count);
 //					Debug.Log ("json[i]['quantity']: " + json[0]["quantity"]);
 //					Debug.Log ("json[i]['name']: " + json[0]["name"]);

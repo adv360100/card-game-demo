@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour {
 
 	public Text InstructionsText;
 	public Text PlayerInfoText;
-	public BasicArea ObstacleArea;
-	public BasicArea BlackMarketArea;
+	public ObstacleArea ObstacleArea;
+	public BlackMarketArea BlackMarketArea;
+	public BasicArea CrossfireArea;
 	public PlayerArea MyPlayer; // The player on this machine
 	public PlayerArea[] Players = new PlayerArea[4];
 	public ObstacleActions ObstaclePanel;
+	public bool IsSyncing = true;
 
 	private enum GamePhases {GamePhasesCrossfire = 0, GamePhasesPlayer, GamePhasesEnd, GamePhasesMAX};
 	private enum PlayerPhases {PlayerPhasesPlay = 0, PlayerPhasesApplyDamage, PlayerPhasesTakeDamage, PlayerPhasesDraw, PlayerPhasesBuy, PlayerPhasesEnd, PlayerPhasesMAX};
@@ -34,10 +36,79 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 
+		BlackMarketArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("Player Cards", (uint)CardIDs.CardIDPlayerCards));
+		ObstacleArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("Obstacles", (uint)CardIDs.CardIDObstacles));
+		ObstacleArea.SetHardDeck (JSONImporter.LoadAllFromFolder ("Hard Obstacles", (uint)CardIDs.CardIDHardObstacles));
+		CrossfireArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("Crossfire", (uint)CardIDs.CardIDCrossfire));
+
+		if (Network.isServer) {
+
+			MyPlayer.SetMainDeck (BlackMarketArea.PullPlayerDeck (PersistantManager.Roles.RoleFace, MyPlayer));
+			MyPlayer.ShuffleMainDeck ();
+//			MyPlayer.SetMainDeck (BlackMarketArea.PullPlayerDeck (PersistantManager.Players[0].role, MyPlayer));
+//			networkView.RPC ("SetPlayerDeck", RPCMode.Others, BlackMarketArea.PullPlayerDeck (PersistantManager.Players[1].role, players[1]));
+
+			BlackMarketArea.ShuffleMainDeck ();
+			ObstacleArea.ShuffleMainDeck ();
+			ObstacleArea.ShuffleHardDeck ();
+			CrossfireArea.ShuffleMainDeck ();
+
+			networkView.RPC ("SetBlackMarketDeckOrder", RPCMode.Others, ArrayToString (BlackMarketArea.GetMainDeckOrder ()));
+			networkView.RPC ("SetObstacleDeckOrder", RPCMode.Others, ArrayToString (ObstacleArea.GetMainDeckOrder ()));
+			networkView.RPC ("SetHardObstacleDeckOrder", RPCMode.Others, ArrayToString (ObstacleArea.GetHardDeckOrder ()));
+			networkView.RPC ("SetCrossfireDeckOrder", RPCMode.Others, ArrayToString (CrossfireArea.GetMainDeckOrder ()));
+
+			IsSyncing = false;
+		}
+
 		SetPlayerInfo ();
 		DrawCrossFire ();
 	}
 
+	[RPC]
+	void SetBlackMarketDeckOrder (string order) {
+		BlackMarketArea.SetMainDeckOrder (StringToArray (order));
+	}
+
+	[RPC]
+	void SetObstacleDeckOrder (string order) {
+		ObstacleArea.SetMainDeckOrder (StringToArray (order));
+	}
+
+	[RPC]
+	void SetHardObstacleDeckOrder (string order) {
+		ObstacleArea.SetHardDeckOrder (StringToArray (order));
+	}
+
+	[RPC]
+	void SetCrossfireDeckOrder (string order) {
+		CrossfireArea.SetMainDeckOrder (StringToArray (order));
+		IsSyncing = false;
+	}
+
+	string ArrayToString (uint[] array) {
+		string str = "";
+		foreach (var item in array) {
+			if (str != "") {
+				str += ",";
+			}
+			str += item.ToString ();
+		}
+
+		return str;
+	}
+
+	uint[] StringToArray (string str) {
+		string[] strArray = str.Split (',');
+		uint[] uintArray = new uint[strArray.Length];
+
+		for (int i = 0; i < strArray.Length; i++) {
+			uintArray[i] = uint.Parse (strArray[i]);
+		}
+
+		return uintArray;
+	}
+	
 	void DrawCrossFire () {
 		InstructionsText.text = "Player " + (CurPlayerIndex + 1) + " draw Crossfire card";
 		//first player can

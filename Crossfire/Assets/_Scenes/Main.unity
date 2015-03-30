@@ -4444,6 +4444,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1350447939}
   - 114: {fileID: 1350447938}
+  - 148: {fileID: 1350447940}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4466,6 +4467,7 @@ MonoBehaviour:
   PlayerInfoText: {fileID: 1325133156}
   ObstacleArea: {fileID: 354870046}
   BlackMarketArea: {fileID: 2031818498}
+  CrossfireArea: {fileID: 969234199}
   MyPlayer: {fileID: 1574937355}
   Players:
   - {fileID: 1574937355}
@@ -4485,6 +4487,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!148 &1350447940
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1350447937}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 1350447938}
+  m_ViewID:
+    m_ID: 1
+    m_Type: 1
 --- !u!1 &1411624793
 GameObject:
   m_ObjectHideFlags: 0

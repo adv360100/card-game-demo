@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,21 +11,6 @@ public class BasicArea : MonoBehaviour {
 
 	// Use this for initialization
 	virtual public void Start () {
-		if (MainDeck != null) {
-			List<GameObject> cardList = new List<GameObject>();
-			for (int i = 0; i < 10; i++) {
-				Vector3 newPos = new Vector3(MainDeck.transform.position.x, MainDeck.transform.position.y, MainDeck.transform.position.z + 1);
-				GameObject cardToAdd = GameObject.Instantiate(BasicCard, newPos, MainDeck.transform.rotation) as GameObject;
-				//parent card for easier debugging
-				cardToAdd.transform.parent = MainDeck.transform;
-				cardToAdd.GetComponent<Card>().AreaManager = this;
-				cardToAdd.GetComponent<Renderer>().enabled = false;
-				cardList.Add(cardToAdd);
-			}
-			
-			MainDeck.AddCards(cardList);
-			MainDeck.UpdateDeckDisplay();
-		}
 	}
 	
 	// Update is called once per frame
@@ -61,14 +46,22 @@ public class BasicArea : MonoBehaviour {
 		return DiscardPile.CardList;
 	}
 
+	public void ShuffleMainDeck () {
+		MainDeck.Shuffle ();
+	}
+
 	public void SetMainDeck (List<GameObject> cards) {
-		if (MainDeck != null) {
+		SetDeck (cards, MainDeck);
+	}
+
+	protected void SetDeck (List<GameObject> cards, Deck deck) {
+		if (deck != null) {
 			List<GameObject> cardList = new List<GameObject> ();
 			for (int i = 0; i < cards.Count; i++) {
-				Vector3 newPos = new Vector3 (MainDeck.transform.position.x, MainDeck.transform.position.y, MainDeck.transform.position.z + 1);
-				GameObject cardToAdd = GameObject.Instantiate (BasicCard, newPos, MainDeck.transform.rotation) as GameObject;
+				Vector3 newPos = new Vector3 (deck.transform.position.x, deck.transform.position.y, deck.transform.position.z + 1);
+				GameObject cardToAdd = GameObject.Instantiate (BasicCard, newPos, deck.transform.rotation) as GameObject;
 				//parent card for easier debugging
-				cardToAdd.transform.parent = MainDeck.transform;
+				cardToAdd.transform.parent = deck.transform;
 				cardToAdd.name = cards[i].name;
 				cardToAdd.GetComponent<Card> ().ID = cards[i].GetComponent<Card> ().ID;
 				cardToAdd.GetComponent<Card> ().FrontTexture = cards[i].GetComponent<Card> ().FrontTexture;
@@ -79,8 +72,39 @@ public class BasicArea : MonoBehaviour {
 				Destroy (cards[i]);
 			}
 			
-			MainDeck.AddCards (cardList);
-			MainDeck.UpdateDeckDisplay ();
+			deck.AddCards (cardList);
 		}
+	}
+
+	public uint[] GetMainDeckOrder () {
+		return GetDeckOrder (MainDeck);
+	}
+
+	public void SetMainDeckOrder (uint[] order) {
+		SetDeckOrder (MainDeck, order);
+	}
+
+	public void SetDeckOrder (Deck deck, uint[] order) {
+		List<GameObject> cardList = new List<GameObject> (order.Length);
+		for (int i = 0; i < order.Length; i++) {
+			foreach (GameObject item in deck.CardList) {
+				Card card = item.GetComponent<Card> ();
+				if (card.ID == order[i]) {
+					cardList.Add (item);
+					break;
+				}
+			}
+		}
+
+		deck.CardList = cardList;
+		deck.UpdateDeckDisplay ();
+	}
+
+	protected uint[] GetDeckOrder (Deck deck) {
+		uint[] order = new uint[deck.DeckCount ()];
+		for (int i = 0; i < deck.DeckCount (); i++) {
+			order[i] = deck.CardList[i].GetComponent<Card> ().ID;
+		}
+		return order;
 	}
 }
