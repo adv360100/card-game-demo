@@ -366,7 +366,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 926171151}
+      - m_Target: {fileID: 1373574433}
         m_MethodName: SetRole
         m_Mode: 3
         m_Arguments:
@@ -527,7 +527,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 329783343}
+      - m_Target: {fileID: 1373574433}
         m_MethodName: SetRace
         m_Mode: 3
         m_Arguments:
@@ -1269,7 +1269,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 329783343}
+      - m_Target: {fileID: 1373574433}
         m_MethodName: SetRace
         m_Mode: 3
         m_Arguments:
@@ -1380,7 +1380,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 329783343}
+      - m_Target: {fileID: 1373574433}
         m_MethodName: SetRace
         m_Mode: 3
         m_Arguments:
@@ -2145,7 +2145,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 926171151}
+      - m_Target: {fileID: 1373574433}
         m_MethodName: SetRole
         m_Mode: 3
         m_Arguments:
@@ -3088,7 +3088,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 329783343}
+      - m_Target: {fileID: 1373574433}
         m_MethodName: SetRace
         m_Mode: 3
         m_Arguments:
@@ -3199,7 +3199,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 329783343}
+      - m_Target: {fileID: 1373574433}
         m_MethodName: SetRace
         m_Mode: 3
         m_Arguments:
@@ -3312,7 +3312,6 @@ GameObject:
   - 114: {fileID: 926171146}
   - 114: {fileID: 926171148}
   - 114: {fileID: 926171147}
-  - 114: {fileID: 926171151}
   m_Layer: 5
   m_Name: RoleSelection
   m_TagString: Untagged
@@ -3414,17 +3413,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 926171144}
---- !u!114 &926171151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 926171144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb7f9072028b8464ba0279378d935b7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &987632723
 GameObject:
   m_ObjectHideFlags: 0
@@ -5381,7 +5369,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 926171151}
+      - m_Target: {fileID: 1373574433}
         m_MethodName: SetRole
         m_Mode: 3
         m_Arguments:
@@ -6547,7 +6535,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 926171151}
+      - m_Target: {fileID: 1373574433}
         m_MethodName: SetRole
         m_Mode: 3
         m_Arguments:
