@@ -6,13 +6,17 @@ public class GameLobby : MonoBehaviour {
 
 	public Text LobbyNameText;
 	public Animator LobbyController;
-	public Text ActionButton;
+	public Text ActionButtonText;
 	public int GameStartCountdown = 3;
 	public GameObject RolesSection;
 	public GameObject RacesSection;
 
 	private Toggle[] RolesToggleArray;
 	private Toggle[] RacesToggleArray;
+	private string ReadyStr = "Ready";
+	private string UnreadyStr = "Unready";
+	private string StartStr = "Start";
+	private bool PlayerIsReady = false;
 
 	// Use this for initialization
 	void Start () {
@@ -44,9 +48,23 @@ public class GameLobby : MonoBehaviour {
 		
 	}
 
+	public void SetupLobby(bool isServer)
+	{
+		if (isServer) {
+			ActionButtonText.text = StartStr;
+		} else {
+			ActionButtonText.text = ReadyStr;
+			PlayerIsReady = false;
+		}
+	}
+
 	public void PressedActionButton()
 	{
 		if (Network.isServer) {
+			//ready the host
+			PersistantManager.PlayerInfo p = PersistantManager.GetInstance().GetPlayerInfo(Network.player);
+			p.IsReady = true;
+
 			//do nothing if players are not ready
 			bool ready = PersistantManager.GetInstance().Players.TrueForAll(delegate(PersistantManager.PlayerInfo obj) {
 				return obj.IsReady;
@@ -55,20 +73,29 @@ public class GameLobby : MonoBehaviour {
 			//if all is ready then start count down
 			if(ready)
 			{
-
+				Application.LoadLevel(1);
+				return;
 			}else{
 
 			}
 		} else {
 			//toggle ready
+			PlayerIsReady = !PlayerIsReady;
+			networkView.RPC("SetPlayerReady",RPCMode.Server,new object[]{PlayerIsReady});
+			if (PlayerIsReady) {
+				ActionButtonText.text = UnreadyStr;
+			} else {
+				ActionButtonText.text = ReadyStr;
+			}
 		}
 
 	}
-
+	
 	[RPC]
-	void PlayerIsReady(bool isReady)
+	void SetPlayerReady(bool isReady,NetworkMessageInfo info)
 	{
-
+		PersistantManager.PlayerInfo p = PersistantManager.GetInstance().GetPlayerInfo(info.sender);
+		p.IsReady = !p.IsReady;
 	}
 
 	[RPC]

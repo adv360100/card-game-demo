@@ -8,7 +8,7 @@ public class NetworkManager : MonoBehaviour {
 	public GameLobby Lobby;
 	public GameHostList MasterGameListManager;
 
-	private string GameTypeName = "ShadowrunCrossfireCoopDeckBuildingGame"; //unique ID
+	private string GameTypeName = "ADVShadowrunCrossfireCoopDeckBuildingGame2520912987"; //unique ID
 	private string GameName;
 	private string Password = "";
 	private int RemotePort = 25000;
@@ -20,15 +20,9 @@ public class NetworkManager : MonoBehaviour {
 		HostPort.text = RemotePort.ToString ();
 		SM = GetComponent<ScreenManager> ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	public void LaunchServer() {
 		//TODO check for vaild game name
-
 
 		Network.incomingPassword = Password;
 		bool useNat = !Network.HavePublicAddress();
@@ -67,19 +61,20 @@ public class NetworkManager : MonoBehaviour {
 	void OnServerInitialized() {
 		Debug.Log("Server initialized and ready");
 		networkView.RPC ("SetupLobby", RPCMode.AllBuffered, new object[]{GameName});
-		PersistantManager.GetInstance ().AddPlayer ("Host", Network.player);
+		PersistantManager.GetInstance ().AddPlayer (Network.player, "Host");
 		JoinLobby ();
 	}
 
 	void OnConnectedToServer() {
 		Debug.Log("Connected to server");
-		networkView.RPC ("AddPlayer", RPCMode.Server, new object[]{"Player", Network.player});
+		PersistantManager.GetInstance().networkView.RPC ("AddPlayer", RPCMode.Server, new object[]{Network.player,"Player"});
 		JoinLobby ();
 	}
 
 	void JoinLobby()
 	{
 		SM.OpenPanel (Lobby.LobbyController);
+		Lobby.SetupLobby (Network.isServer);
 //		if (Network.isServer)
 //			AddPlayer (PlayerName);
 //		else
@@ -137,14 +132,7 @@ public class NetworkManager : MonoBehaviour {
 
 	}
 
-	[RPC]
-	void AddPlayer(string name)
-	{
-		//PlayersPanel p = GetComponent<PlayersPanel> ();
-		//p.AddPlayer (name);
 
-		//networkView.RPC ("GetPlayerList", RPCMode.All, ms.ToArray());
-	}
 
 	[RPC]
 	void SetupLobby(string title)
