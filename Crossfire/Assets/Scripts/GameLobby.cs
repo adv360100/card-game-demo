@@ -20,10 +20,19 @@ public class GameLobby : MonoBehaviour {
 	private bool PlayerIsReady = false;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		RolesToggleArray = RolesSection.GetComponentsInChildren<Toggle> (true);//include inactive
-//		RacesToggleArray = RacesSection.GetComponentsInChildren<Toggle> (true);//include inactive
+		RacesToggleArray = RacesSection.GetComponentsInChildren<Toggle> (true);//include inactive
 
+	}
+
+	void ResetLobby()
+	{
+		foreach (Toggle t in RolesToggleArray) {
+			t.isOn = false;
+			t.interactable = true;
+		}
+		RacesToggleArray [0].isOn = true;
 	}
 
 	public void SetRace(int i)
@@ -57,6 +66,7 @@ public class GameLobby : MonoBehaviour {
 
 	public void SetupLobby(bool isServer)
 	{
+		ResetLobby ();
 		if (isServer) {
 			ActionButtonText.text = StartStr;
 		} else {

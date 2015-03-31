@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameHostList : MonoBehaviour {
 
 	public GameObject OriginalGamePanel;
+	public Button JoinBtn;
 
 	private int Index = 0;
 	private HostData[] HostList;
@@ -25,6 +27,7 @@ public class GameHostList : MonoBehaviour {
 
 	public void AddHostGame(HostData host)
 	{
+		Index++;
 		GameObject theObject = Instantiate (OriginalGamePanel) as GameObject;
 		GamePanel panel = theObject.GetComponent<GamePanel> ();
 		panel.UpdatePanel (Index, host);
@@ -41,11 +44,13 @@ public class GameHostList : MonoBehaviour {
 		}
 
 		Index = 0;
+		OnGameSelected (null);
 	}
 
 	void OnGameSelected(GamePanel obj)
 	{
 		SelectedGame = obj;
+		JoinBtn.interactable = (obj != null) ? true : false;
 	}
 
 	public void JoinPressed()
