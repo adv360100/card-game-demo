@@ -22,7 +22,7 @@ public class GameLobby : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		RolesToggleArray = RolesSection.GetComponentsInChildren<Toggle> (true);//include inactive
-		RacesToggleArray = RacesSection.GetComponentsInChildren<Toggle> (true);//include inactive
+//		RacesToggleArray = RacesSection.GetComponentsInChildren<Toggle> (true);//include inactive
 
 	}
 
@@ -43,9 +43,16 @@ public class GameLobby : MonoBehaviour {
 
 	}
 
-	public void UpdateGroup(Toggle[] array)
+	//incase a player drops need to unselect his role if he selected one
+	public void PlayerDroppedOut(NetworkPlayer player)
 	{
+	 	PersistantManager.PlayerInfo pi = PersistantManager.GetInstance ().GetPlayerInfo (player);
+		if (pi.Role != PersistantManager.Roles.RoleUnknown) {
+			int role = (int)pi.Role;
+			RolesToggleArray [role - 1].interactable = true;
+			networkView.RPC ("SetRoleAction", RPCMode.Others, new object[]{role,true,Network.player});
 
+		}
 	}
 
 	public void SetupLobby(bool isServer)
@@ -55,6 +62,8 @@ public class GameLobby : MonoBehaviour {
 		} else {
 			ActionButtonText.text = ReadyStr;
 			PlayerIsReady = false;
+			networkView.RPC ("RequestLobbyInfo", RPCMode.Server, null);
+
 		}
 	}
 
@@ -90,7 +99,19 @@ public class GameLobby : MonoBehaviour {
 		}
 
 	}
-	
+
+	[RPC]
+	void RequestLobbyInfo(NetworkMessageInfo info)
+	{
+		int index = 1;
+		foreach (Toggle t in RolesToggleArray) {
+			bool isSelectable = (t.interactable && !t.isOn);
+			if(isSelectable == false)//only send info on the ones that are already selected
+				networkView.RPC ("SetRoleAction", info.sender, new object[]{index,isSelectable,Network.player});
+			index++;
+		}
+	}
+
 	[RPC]
 	void SetPlayerReady(bool isReady,NetworkMessageInfo info)
 	{
@@ -112,7 +133,7 @@ public class GameLobby : MonoBehaviour {
 		}
 
 		if (player == Network.player)
-			return;//skip
+			return;//skip if self
 
 		RolesToggleArray [role - 1].interactable = interactable;
 
