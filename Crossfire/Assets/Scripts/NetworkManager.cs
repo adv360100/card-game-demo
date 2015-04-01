@@ -63,6 +63,7 @@ public class NetworkManager : MonoBehaviour {
 		networkView.RPC ("SetupLobby", RPCMode.AllBuffered, new object[]{GameName});
 		PersistantManager.GetInstance ().AddPlayer (Network.player, ProfileManager.LoadPlayerInfo ());
 		networkView.RPC ("AddPlayer", RPCMode.OthersBuffered, new object[]{Network.player, ProfileManager.LoadPlayerInfo ().ToString()});
+		networkView.RPC ("AddPlayerName", RPCMode.OthersBuffered, PersistantManager.GetInstance ().GetPlayerInfo (Network.player).Name);
 		JoinLobby ();
 	}
 
@@ -76,10 +77,9 @@ public class NetworkManager : MonoBehaviour {
 	void JoinLobby () {
 		SM.OpenPanel (Lobby.LobbyController);
 		Lobby.SetupLobby (Network.isServer);
-		if (Network.isServer)
-			GetComponent<PlayersPanel> ().AddPlayerName (PersistantManager.GetInstance ().GetPlayerInfo (Network.player).Name);
-		else
-			networkView.RPC ("AddPlayerName", RPCMode.Server, PersistantManager.GetInstance ().GetPlayerInfo (Network.player).Name);
+		GetComponent<PlayersPanel> ().AddPlayerName (PersistantManager.GetInstance ().GetPlayerInfo (Network.player).Name);
+		if (Network.isClient)
+			networkView.RPC ("AddPlayerName", RPCMode.Others, PersistantManager.GetInstance ().GetPlayerInfo (Network.player).Name);
 	}
 
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
