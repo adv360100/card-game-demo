@@ -61,24 +61,23 @@ public class NetworkManager : MonoBehaviour {
 	void OnServerInitialized() {
 		Debug.Log("Server initialized and ready");
 		networkView.RPC ("SetupLobby", RPCMode.AllBuffered, new object[]{GameName});
-		PersistantManager.GetInstance ().AddPlayer (Network.player, "Host");
+		PersistantManager.GetInstance ().AddPlayer (Network.player, ProfileManager.LoadPlayerInfo ());
 		JoinLobby ();
 	}
 
 	void OnConnectedToServer() {
 		Debug.Log("Connected to server");
-		PersistantManager.GetInstance().networkView.RPC ("AddPlayer", RPCMode.Server, new object[]{Network.player,"Player"});
+		PersistantManager.GetInstance().networkView.RPC ("AddPlayer", RPCMode.Server, new object[]{Network.player,  ProfileManager.LoadPlayerInfo ()});
 		JoinLobby ();
 	}
 
-	void JoinLobby()
-	{
+	void JoinLobby () {
 		SM.OpenPanel (Lobby.LobbyController);
 		Lobby.SetupLobby (Network.isServer);
-//		if (Network.isServer)
-//			AddPlayer (PlayerName);
-//		else
-//			networkView.RPC ("AddPlayer", RPCMode.Server,PlayerName);
+		if (Network.isServer)
+			GetComponent<PlayersPanel> ().AddPlayerName (PersistantManager.GetInstance ().GetPlayerInfo (Network.player).Name);
+		else
+			networkView.RPC ("AddPlayerName", RPCMode.Server, PersistantManager.GetInstance ().GetPlayerInfo (Network.player).Name);
 	}
 
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
@@ -88,6 +87,8 @@ public class NetworkManager : MonoBehaviour {
 				Debug.Log("Lost connection to the server");
 		else
 			Debug.Log("Successfully diconnected from the server");
+
+		PersistantManager.GetInstance ().Players.Clear ();
 
 		if(Network.isClient)
 			RefreshHostList ();
