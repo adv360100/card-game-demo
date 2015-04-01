@@ -43,9 +43,8 @@ public class GameManager : MonoBehaviour {
 
 		if (Network.isServer) {
 
-			MyPlayer.SetMainDeck (BlackMarketArea.PullPlayerDeck (PersistantManager.Roles.RoleFace, MyPlayer));
+			MyPlayer.SetMainDeck (BlackMarketArea.PullPlayerDeck (PersistantManager.GetInstance ().Players[0], MyPlayer));
 			MyPlayer.ShuffleMainDeck ();
-//			MyPlayer.SetMainDeck (BlackMarketArea.PullPlayerDeck (PersistantManager.Players[0].role, MyPlayer));
 //			networkView.RPC ("SetPlayerDeck", RPCMode.Others, BlackMarketArea.PullPlayerDeck (PersistantManager.Players[1].role, players[1]));
 
 			BlackMarketArea.ShuffleMainDeck ();
