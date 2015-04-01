@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class GameLobby : MonoBehaviour {
@@ -19,42 +20,60 @@ public class GameLobby : MonoBehaviour {
 	private bool PlayerIsReady = false;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		RolesToggleArray = RolesSection.GetComponentsInChildren<Toggle> (true);//include inactive
 		RacesToggleArray = RacesSection.GetComponentsInChildren<Toggle> (true);//include inactive
 
+	}
+
+	void ResetLobby()
+	{
+		foreach (Toggle t in RolesToggleArray) {
+			t.isOn = false;
+			t.interactable = true;
+		}
+		RacesToggleArray [0].isOn = true;
 	}
 
 	public void SetRace(int i)
 	{
 		//PersistantManager.GetInstance().SetRole(i);
 		if (Network.isServer)
-			SetRace (i, Network.player);
+			SetRaceAction (i, Network.player);
 		else
-			networkView.RPC ("SetRace", RPCMode.Server, new object[]{i,Network.player});
+			networkView.RPC ("SetRaceAction", RPCMode.Server, new object[]{i,Network.player});
 	}
 
 	public void SetRole(int i)
 	{
 		//PersistantManager.GetInstance().SetRole(i);
-		if (Network.isServer)
-			SetRole (i, Network.player);
-		else
-			networkView.RPC ("SetRole", RPCMode.Server, new object[]{i,Network.player});
+		bool interactable = !(RolesToggleArray [i - 1].isOn);
+		networkView.RPC ("SetRoleAction", RPCMode.All, new object[]{i,interactable,Network.player});
+
 	}
-	
-	public void UpdateGroup(Toggle[] array)
+
+	//incase a player drops need to unselect his role if he selected one
+	public void PlayerDroppedOut(NetworkPlayer player)
 	{
-		
+	 	PersistantManager.PlayerInfo pi = PersistantManager.GetInstance ().GetPlayerInfo (player);
+		if (pi.Role != PersistantManager.Roles.RoleUnknown) {
+			int role = (int)pi.Role;
+			RolesToggleArray [role - 1].interactable = true;
+			networkView.RPC ("SetRoleAction", RPCMode.Others, new object[]{role,true,Network.player});
+
+		}
 	}
 
 	public void SetupLobby(bool isServer)
 	{
+		ResetLobby ();
 		if (isServer) {
 			ActionButtonText.text = StartStr;
 		} else {
 			ActionButtonText.text = ReadyStr;
 			PlayerIsReady = false;
+			networkView.RPC ("RequestLobbyInfo", RPCMode.Server, null);
+
 		}
 	}
 
@@ -90,7 +109,19 @@ public class GameLobby : MonoBehaviour {
 		}
 
 	}
-	
+
+	[RPC]
+	void RequestLobbyInfo(NetworkMessageInfo info)
+	{
+		int index = 1;
+		foreach (Toggle t in RolesToggleArray) {
+			bool isSelectable = (t.interactable && !t.isOn);
+			if(isSelectable == false)//only send info on the ones that are already selected
+				networkView.RPC ("SetRoleAction", info.sender, new object[]{index,isSelectable,Network.player});
+			index++;
+		}
+	}
+
 	[RPC]
 	void SetPlayerReady(bool isReady,NetworkMessageInfo info)
 	{
@@ -99,14 +130,27 @@ public class GameLobby : MonoBehaviour {
 	}
 
 	[RPC]
-	void SetRole(int role, NetworkPlayer player)
+	void SetRoleAction(int role, bool interactable, NetworkPlayer player)
 	{
-		PersistantManager.PlayerInfo p = PersistantManager.GetInstance ().GetPlayerInfo (player);
-		p.Role = PersistantManager.Roles.RoleUnknown + role;
+		if (Network.isServer) {
+			PersistantManager.PlayerInfo p = PersistantManager.GetInstance ().GetPlayerInfo (player);
+			if (p.Role == PersistantManager.Roles.RoleUnknown + role)
+				p.Role = PersistantManager.Roles.RoleUnknown;
+			else
+				p.Role = PersistantManager.Roles.RoleUnknown + role;
+
+
+		}
+
+		if (player == Network.player)
+			return;//skip if self
+
+		RolesToggleArray [role - 1].interactable = interactable;
+
 	}
 
 	[RPC]
-	void SetRace(int race, NetworkPlayer player)
+	void SetRaceAction(int race, NetworkPlayer player)
 	{
 		PersistantManager.PlayerInfo p = PersistantManager.GetInstance ().GetPlayerInfo (player);
 		p.Race = PersistantManager.Races.RaceUnknown + race;

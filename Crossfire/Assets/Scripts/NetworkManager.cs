@@ -89,11 +89,15 @@ public class NetworkManager : MonoBehaviour {
 		else
 			Debug.Log("Successfully diconnected from the server");
 
+		if(Network.isClient)
+			RefreshHostList ();
 		SM.OpenPreviousPanel();
 	}
 
 	void OnPlayerDisconnected(NetworkPlayer player) {
 		Debug.Log("Clean up after player " + player);
+		if (Lobby != null)
+			Lobby.PlayerDroppedOut (player);
 		PersistantManager.GetInstance ().RemovePlayer (player);
 		Network.RemoveRPCs(player);
 		Network.DestroyPlayerObjects(player);
@@ -101,10 +105,10 @@ public class NetworkManager : MonoBehaviour {
 
 	public void DisconnectFromServer()
 	{
-		if (Network.isClient)
-			Network.Disconnect ();
-		else {
-			Network.Disconnect();
+		Network.Disconnect ();
+
+		if (Network.isServer)
+		{
 			MasterServer.UnregisterHost();
 		}
 	}
