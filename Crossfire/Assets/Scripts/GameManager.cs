@@ -36,9 +36,9 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 
-		BlackMarketArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("Player Cards", (uint)CardIDs.CardIDPlayerCards));
+		BlackMarketArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("PlayerCards", (uint)CardIDs.CardIDPlayerCards));
 		ObstacleArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("Obstacles", (uint)CardIDs.CardIDObstacles));
-		ObstacleArea.SetHardDeck (JSONImporter.LoadAllFromFolder ("Hard Obstacles", (uint)CardIDs.CardIDHardObstacles));
+		ObstacleArea.SetHardDeck (JSONImporter.LoadAllFromFolder ("HardObstacles", (uint)CardIDs.CardIDHardObstacles));
 		CrossfireArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("Crossfire", (uint)CardIDs.CardIDCrossfire));
 
 		if (Network.isServer) {
