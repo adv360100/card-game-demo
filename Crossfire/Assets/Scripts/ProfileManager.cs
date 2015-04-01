@@ -43,14 +43,14 @@ public class ProfileManager : MonoBehaviour {
 		}
 	}
 
-	public PersistantManager.PlayerInfo LoadPlayerInfo () {
+	public static JSONNode LoadPlayerInfo () {
 		try {
 			StreamReader reader = new StreamReader (kResourcesPath, System.Text.Encoding.Default);
 			using (reader) {
 				JSONNode json = JSON.Parse (reader.ReadToEnd ());
 				reader.Close ();
 
-				return PersistantManager.PlayerInfo.PlayerInfoFromJSON (json);
+				return json;
 			}
 		} catch (System.Exception ex) {
 			Debug.Log (ex);
