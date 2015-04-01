@@ -92,7 +92,7 @@ public class GameLobby : MonoBehaviour {
 			//if all is ready then start count down
 			if(ready)
 			{
-				Application.LoadLevel(1);
+				networkView.RPC("StartGame",RPCMode.All,null);
 				return;
 			}else{
 
@@ -108,6 +108,12 @@ public class GameLobby : MonoBehaviour {
 			}
 		}
 
+	}
+
+	[RPC]
+	void StartGame()
+	{
+		Application.LoadLevel (1);
 	}
 
 	[RPC]
