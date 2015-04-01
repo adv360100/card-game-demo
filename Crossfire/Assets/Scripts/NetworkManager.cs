@@ -62,12 +62,14 @@ public class NetworkManager : MonoBehaviour {
 		Debug.Log("Server initialized and ready");
 		networkView.RPC ("SetupLobby", RPCMode.AllBuffered, new object[]{GameName});
 		PersistantManager.GetInstance ().AddPlayer (Network.player, ProfileManager.LoadPlayerInfo ());
+		networkView.RPC ("AddPlayer", RPCMode.OthersBuffered, new object[]{Network.player, ProfileManager.LoadPlayerInfo ().ToString()});
 		JoinLobby ();
 	}
 
 	void OnConnectedToServer() {
 		Debug.Log("Connected to server");
-		PersistantManager.GetInstance().networkView.RPC ("AddPlayer", RPCMode.Server, new object[]{Network.player,  ProfileManager.LoadPlayerInfo ()});
+		//todo: get others info
+		PersistantManager.GetInstance().networkView.RPC ("AddPlayer", RPCMode.Server, new object[]{Network.player,  ProfileManager.LoadPlayerInfo ().ToString()});
 		JoinLobby ();
 	}
 
