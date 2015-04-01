@@ -65,8 +65,7 @@ public class PersistantManager : MonoBehaviour {
 	}
 
 	[RPC]
-	public void AddPlayer(NetworkPlayer player, string json)
-	{
+	public void AddPlayer (NetworkPlayer player, string json) {
 		AddPlayer (player, JSON.Parse (json));
 	}
 

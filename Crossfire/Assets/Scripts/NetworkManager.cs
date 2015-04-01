@@ -70,6 +70,7 @@ public class NetworkManager : MonoBehaviour {
 	void OnConnectedToServer() {
 		Debug.Log("Connected to server");
 		//todo: get others info
+		PersistantManager.GetInstance ().AddPlayer (Network.player, ProfileManager.LoadPlayerInfo ());
 		PersistantManager.GetInstance().networkView.RPC ("AddPlayer", RPCMode.Server, new object[]{Network.player,  ProfileManager.LoadPlayerInfo ().ToString()});
 		JoinLobby ();
 	}
