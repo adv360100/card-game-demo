@@ -8,6 +8,9 @@ public class ScreenManager : MonoBehaviour {
 	
 	//Screen to open automatically at the start of the Scene
 	public Animator initiallyOpen;
+
+	//Screen to open automatically at the start of the Scene if no profile has been created
+	public Animator profileScreen;
 	
 	//Currently Open Screen
 	private Animator m_Open;
@@ -34,7 +37,12 @@ public class ScreenManager : MonoBehaviour {
 		//If set, open the initial Screen now.
 		if (initiallyOpen == null)
 			return;
-		OpenPanel(initiallyOpen);
+
+		if (ProfileManager.ProfileExists ()) {
+			OpenPanel (initiallyOpen);
+		} else {
+			OpenPanel (profileScreen);
+		}
 	}
 	
 	//Closes the currently open panel and opens the provided one.

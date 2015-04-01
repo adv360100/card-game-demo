@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using SimpleJSON;
 
 public class PersistantManager : MonoBehaviour {
 
@@ -10,6 +11,16 @@ public class PersistantManager : MonoBehaviour {
 		public Races Race;
 		public Roles Role;
 		public bool IsReady;
+
+		static public PlayerInfo PlayerInfoFromJSON (JSONNode json) {
+			PlayerInfo newPlayer = new PlayerInfo ();
+			newPlayer.Name = json[ProfileManager.kNameKey];
+			newPlayer.Player = new NetworkPlayer ();
+			newPlayer.Race = Races.RaceUnknown;
+			newPlayer.Role = Roles.RoleUnknown;
+			newPlayer.IsReady = false;
+			return newPlayer;
+		}
 	}
 
 	static private PersistantManager Instance = null;
@@ -23,7 +34,7 @@ public class PersistantManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		if (Instance != null) {
-			DestroyObject(gameObject);
+			DestroyObject (gameObject);
 			return;
 		}
 
@@ -100,5 +111,4 @@ public class PersistantManager : MonoBehaviour {
 
 		return new PlayerInfo();
 	}
-
 }
