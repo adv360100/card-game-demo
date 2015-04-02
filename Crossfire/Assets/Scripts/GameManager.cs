@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -12,7 +13,7 @@ public class GameManager : MonoBehaviour {
 	public BlackMarketArea BlackMarketArea;
 	public BasicArea CrossfireArea;
 	public PlayerArea MyPlayer; // The player on this machine
-	public PlayerArea[] Players = new PlayerArea[4];
+	public PlayerArea[] Players;
 	public ObstacleActions ObstaclePanel;
 	public bool IsSyncing = true;
 
@@ -26,8 +27,8 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//TODO: find out the number of players
-		NumOfPlayers = 1;
+		List<PersistantManager.PlayerInfo> playerInfos = PersistantManager.GetInstance ().Players;
+		NumOfPlayers = playerInfos.Count;
 
 		if (Instance == null) {
 			Instance = this;
@@ -36,16 +37,25 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 
+		// Load all the decks
 		BlackMarketArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("PlayerCards", (uint)CardIDs.CardIDPlayerCards));
 		ObstacleArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("Obstacles", (uint)CardIDs.CardIDObstacles));
 		ObstacleArea.SetHardDeck (JSONImporter.LoadAllFromFolder ("HardObstacles", (uint)CardIDs.CardIDHardObstacles));
 		CrossfireArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("Crossfire", (uint)CardIDs.CardIDCrossfire));
 
 		if (Network.isServer) {
+			MyPlayer = Players[0];
+			if (NumOfPlayers > 1) {
+				for (int i = 1; i < NumOfPlayers; i++) {
+					networkView.RPC ("SetMyPlayer", PersistantManager.GetInstance ().Players[i].Player, Players[i].networkView.viewID);
+				}
+			}
 
-			MyPlayer.SetMainDeck (BlackMarketArea.PullPlayerDeck (PersistantManager.GetInstance ().Players[0], MyPlayer));
-			MyPlayer.ShuffleMainDeck ();
-//			networkView.RPC ("SetPlayerDeck", RPCMode.Others, BlackMarketArea.PullPlayerDeck (PersistantManager.Players[1].role, players[1]));
+			for (int i = 0; i < Players.Length; i++) {
+				Players[i].SetMainDeck (BlackMarketArea.PullPlayerDeck (playerInfos[i].Role, Players[i]));
+				Players[i].ShuffleMainDeck ();
+				networkView.RPC ("SetPlayerDeckOrder", RPCMode.Others, new object[] {ArrayToString (Players[i].GetMainDeckOrder ()), Players[i].networkView.viewID});
+			}
 
 			BlackMarketArea.ShuffleMainDeck ();
 			ObstacleArea.ShuffleMainDeck ();
@@ -62,6 +72,11 @@ public class GameManager : MonoBehaviour {
 
 		SetPlayerInfo ();
 		DrawCrossFire ();
+	}
+
+	[RPC]
+	void SetPlayerDeckOrder (string order, NetworkViewID id) {
+		GetPlayerAreaForNetworkViewID (id).SetMainDeckOrder (StringToArray (order));
 	}
 
 	[RPC]
@@ -83,6 +98,16 @@ public class GameManager : MonoBehaviour {
 	void SetCrossfireDeckOrder (string order) {
 		CrossfireArea.SetMainDeckOrder (StringToArray (order));
 		IsSyncing = false;
+	}
+
+	[RPC]
+	void SetMyPlayer (NetworkViewID id) {
+		for (int i = 0; i < Players.Length; i++) {
+			if (Players[i].networkView.viewID == id) {
+				MyPlayer = Players[i];
+				return;
+			}
+		}
 	}
 
 	string ArrayToString (uint[] array) {
@@ -241,4 +266,14 @@ public class GameManager : MonoBehaviour {
 		str = str.Replace("Role","");
 		PlayerInfoText.text = str;
 	}
+
+	public PlayerArea GetPlayerAreaForNetworkViewID (NetworkViewID id) {
+		for (int i = 0; i < Players.Length; i++) {
+			if (Players[i].networkView.viewID == id) {
+				return Players[i];
+			}
+		}
+	}
+
+	public 
 }

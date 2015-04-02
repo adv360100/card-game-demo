@@ -8,10 +8,12 @@ public class ProfileManager : MonoBehaviour {
 
 	public string DisplayName = "";
 	public Button CreateButton;
+	public Text NameTextInput;
 
 	public const string kNameKey = "name";
 
 	private const string kResourcesPath = "Assets/Resources/Profile";
+	private const int kMaxNameLength = 64;
 
 	public static bool ProfileExists () {
 //		FileInfo info = new FileInfo (kResourcesPath);
@@ -19,6 +21,11 @@ public class ProfileManager : MonoBehaviour {
 	}
 
 	public void SetDisplayName (string name) {
+		if (name.Length > kMaxNameLength) {
+			name = name.Substring (0, kMaxNameLength);
+			NameTextInput.text = name;
+		}
+
 		DisplayName = name;
 
 		CreateButton.interactable = DisplayName != "";

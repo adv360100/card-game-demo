@@ -2075,6 +2075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: 
   CreateButton: {fileID: 804712173}
+  NameTextInput: {fileID: 1238946307}
 --- !u!1 &332241361
 GameObject:
   m_ObjectHideFlags: 0
@@ -3219,7 +3220,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -10, y: -70}
-  m_SizeDelta: {x: 0, y: 30}
+  m_SizeDelta: {x: 88.8888931, y: 30}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &773037990
 MonoBehaviour:
@@ -3732,7 +3733,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 10, y: -70}
-  m_SizeDelta: {x: 0, y: 30}
+  m_SizeDelta: {x: 22.6757374, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &854456068
 MonoBehaviour:
@@ -5160,7 +5161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1211089012
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7401,7 +7402,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1769073513
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7980,7 +7981,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 50, y: -70}
-  m_SizeDelta: {x: 0, y: 30}
+  m_SizeDelta: {x: 103.401367, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1927570340
 MonoBehaviour:
@@ -8110,7 +8111,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1953002510
 RectTransform:
   m_ObjectHideFlags: 0
