@@ -80,6 +80,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 461966}
   - 114: {fileID: 11461978}
+  - 148: {fileID: 14824718}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Player
@@ -878,6 +879,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardList: []
   PlayerManager: {fileID: 11461978}
+--- !u!148 &14824718
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161966}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 461966}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
