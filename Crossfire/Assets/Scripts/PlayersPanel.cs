@@ -10,16 +10,6 @@ public class PlayersPanel : MonoBehaviour {
 
 	private List<string> PlayerNameList = new List<string>();
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	[RPC]
 	public void AddPlayerName(string name)
 	{
