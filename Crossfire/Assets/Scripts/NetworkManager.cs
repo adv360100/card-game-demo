@@ -70,8 +70,8 @@ public class NetworkManager : MonoBehaviour {
 	void OnConnectedToServer() {
 		Debug.Log("Connected to server");
 		//todo: get others info
-		PersistantManager.GetInstance ().AddPlayer (Network.player, ProfileManager.LoadPlayerInfo ());
-		PersistantManager.GetInstance().networkView.RPC ("AddPlayer", RPCMode.Server, new object[]{Network.player,  ProfileManager.LoadPlayerInfo ().ToString()});
+//		PersistantManager.GetInstance ().AddPlayer (Network.player, ProfileManager.LoadPlayerInfo ());
+		PersistantManager.GetInstance().networkView.RPC ("AddPlayer", RPCMode.All, new object[]{Network.player,  ProfileManager.LoadPlayerInfo ().ToString()});
 		JoinLobby ();
 	}
 
@@ -102,7 +102,7 @@ public class NetworkManager : MonoBehaviour {
 		Debug.Log("Clean up after player " + player);
 		if (Lobby != null)
 			Lobby.PlayerDroppedOut (player);
-		PersistantManager.GetInstance ().RemovePlayer (player);
+		networkView.RPC ("RemovePlayer", RPCMode.All, new object[]{player});
 		Network.RemoveRPCs(player);
 		Network.DestroyPlayerObjects(player);
 	}

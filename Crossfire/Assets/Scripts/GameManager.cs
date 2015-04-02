@@ -189,9 +189,14 @@ public class GameManager : MonoBehaviour {
 
 		NextStep ();
 	}
-
+	
 	public void NextStep () {
+		networkView.RPC ("NextStepAction", RPCMode.All, null);
+	}
 
+	[RPC]
+	void NextStepAction () {
+		
 		if (FirstPlayerIndex == CurPlayerIndex && CurPlayerPhase == PlayerPhases.PlayerPhasesEnd) {
 			CurGamePhase++;
 			if (CurGamePhase == GamePhases.GamePhasesMAX)

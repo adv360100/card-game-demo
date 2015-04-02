@@ -4475,6 +4475,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   ObstaclePanel: {fileID: 1968797942}
+  IsSyncing: 1
 --- !u!4 &1350447939
 Transform:
   m_ObjectHideFlags: 0
@@ -4494,7 +4495,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1350447937}
   m_Enabled: 1
-  m_StateSynchronization: 1
+  m_StateSynchronization: 0
   m_Observed: {fileID: 1350447938}
   m_ViewID:
     m_ID: 1
