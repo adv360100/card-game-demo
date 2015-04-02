@@ -278,7 +278,7 @@ public class GameManager : MonoBehaviour {
 				return Players[i];
 			}
 		}
-	}
 
-	public 
+		return null;
+	}
 }
