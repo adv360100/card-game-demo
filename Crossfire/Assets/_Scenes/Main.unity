@@ -1799,7 +1799,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2953,7 +2953,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3274,6 +3274,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectedButton: {fileID: 452958076}
+  PlayerButtons:
+  - {fileID: 452958076}
+  - {fileID: 285704839}
+  - {fileID: 2019768338}
+  - {fileID: 511194480}
 --- !u!224 &593788818
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5526,9 +5531,9 @@ MonoBehaviour:
   TargetAreas:
   - {fileID: 1574937355}
   - {fileID: 97052500}
-  - {fileID: 97052500}
-  - {fileID: 97052500}
-  - {fileID: 97052500}
+  - {fileID: 2107405364}
+  - {fileID: 1187375502}
+  - {fileID: 1629418144}
 --- !u!1 &1187375501
 GameObject:
   m_ObjectHideFlags: 0
@@ -9594,7 +9599,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
