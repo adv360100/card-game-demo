@@ -25,7 +25,7 @@ public class PlayerDeck : Deck {
 	}
 
 	override public void OnMouseDown () {
-		GameManager.Instance.networkView.RPC ("DrawPlayerCard", RPCMode.All, null);
+		networkView.RPC ("DrawPlayerCard", RPCMode.All, null);
 	}
 
 	[RPC]

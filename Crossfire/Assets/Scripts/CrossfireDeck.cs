@@ -6,7 +6,7 @@ public class CrossfireDeck : Deck {
 	
 	override public void OnMouseDown()
 	{
-		GameManager.Instance.networkView.RPC ("DrawCrossfire", RPCMode.All, null);
+		networkView.RPC ("DrawCrossfire", RPCMode.All, null);
 	}
 
 	[RPC]

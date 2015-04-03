@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 
-			for (int i = 0; i < Players.Length; i++) {
+			for (int i = 0; i < NumOfPlayers; i++) {
 				Players[i].SetMainDeck (BlackMarketArea.PullPlayerDeck (playerInfos[i].Role, Players[i]));
 				Players[i].ShuffleMainDeck ();
 				networkView.RPC ("SetPlayerDeckOrder", RPCMode.Others, new object[] {ArrayToString (Players[i].GetMainDeckOrder ()), Players[i].networkView.viewID});

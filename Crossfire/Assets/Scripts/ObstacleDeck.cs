@@ -4,7 +4,7 @@ using System.Collections;
 public class ObstacleDeck : Deck {
 	
 	override public void OnMouseDown () {
-		GameManager.Instance.networkView.RPC ("DrawObstacle", RPCMode.All, new object[]{GameManager.Instance.MyPlayer.networkView.viewID});
+		networkView.RPC ("DrawObstacle", RPCMode.All, new object[]{GameManager.Instance.MyPlayer.networkView.viewID});
 	}
 
 	[RPC]
