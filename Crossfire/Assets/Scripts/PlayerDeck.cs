@@ -25,6 +25,12 @@ public class PlayerDeck : Deck {
 	}
 
 	override public void OnMouseDown () {
+		GameManager.Instance.networkView.RPC ("DrawPlayerCard", RPCMode.All, null);
+	}
+
+	[RPC]
+	void DrawPlayerCard()
+	{
 		GameObject[] cards = DrawCards (1);
 		foreach (GameObject cardObject in cards) {
 			if (cardObject == null) {
@@ -33,7 +39,7 @@ public class PlayerDeck : Deck {
 			cardObject.transform.position = transform.position;
 			PlayerManager.AddCardToHand (cardObject);
 		}
-	
+		
 		UpdateDeckDisplay ();
 	}
 }
