@@ -27,8 +27,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		List<PersistantManager.PlayerInfo> playerInfos = PersistantManager.GetInstance ().Players;
-		NumOfPlayers = playerInfos.Count;
+		NumOfPlayers = PersistantManager.GetInstance ().Players.Count;
 
 		if (Instance == null) {
 			Instance = this;
@@ -43,35 +42,50 @@ public class GameManager : MonoBehaviour {
 		ObstacleArea.SetHardDeck (JSONImporter.LoadAllFromFolder ("HardObstacles", (uint)CardIDs.CardIDHardObstacles));
 		CrossfireArea.SetMainDeck (JSONImporter.LoadAllFromFolder ("Crossfire", (uint)CardIDs.CardIDCrossfire));
 
+		networkView.RPC ("PlayerHasLoadedScene", RPCMode.Server, null);
 		if (Network.isServer) {
-			MyPlayer = Players[0];
-			if (NumOfPlayers > 1) {
-				for (int i = 1; i < NumOfPlayers; i++) {
-					networkView.RPC ("SetMyPlayer", PersistantManager.GetInstance ().Players[i].Player, Players[i].networkView.viewID);
-				}
-			}
-
-			for (int i = 0; i < NumOfPlayers; i++) {
-				Players[i].SetMainDeck (BlackMarketArea.PullPlayerDeck (playerInfos[i].Role, Players[i]));
-				Players[i].ShuffleMainDeck ();
-				networkView.RPC ("SetPlayerDeckOrder", RPCMode.Others, new object[] {ArrayToString (Players[i].GetMainDeckOrder ()), Players[i].networkView.viewID});
-			}
-
-			BlackMarketArea.ShuffleMainDeck ();
-			ObstacleArea.ShuffleMainDeck ();
-			ObstacleArea.ShuffleHardDeck ();
-			CrossfireArea.ShuffleMainDeck ();
-
-			networkView.RPC ("SetBlackMarketDeckOrder", RPCMode.Others, ArrayToString (BlackMarketArea.GetMainDeckOrder ()));
-			networkView.RPC ("SetObstacleDeckOrder", RPCMode.Others, ArrayToString (ObstacleArea.GetMainDeckOrder ()));
-			networkView.RPC ("SetHardObstacleDeckOrder", RPCMode.Others, ArrayToString (ObstacleArea.GetHardDeckOrder ()));
-			networkView.RPC ("SetCrossfireDeckOrder", RPCMode.Others, ArrayToString (CrossfireArea.GetMainDeckOrder ()));
-
-			IsSyncing = false;
+			// This does not get called on the server because the server does not respond to RPCMode.Server calls made by the server
+			PlayerHasLoadedScene ();
 		}
 
 		SetPlayerInfo ();
 		DrawCrossFire ();
+	}
+
+	static int PlayersLoaded = 0;
+	[RPC]
+	void PlayerHasLoadedScene () {
+		PlayersLoaded++;
+		if (NumOfPlayers == PlayersLoaded) {
+			if (Network.isServer) {
+				List<PersistantManager.PlayerInfo> playerInfos = PersistantManager.GetInstance ().Players;
+
+				MyPlayer = Players[0];
+				if (NumOfPlayers > 1) {
+					for (int i = 1; i < NumOfPlayers; i++) {
+						networkView.RPC ("SetMyPlayer", PersistantManager.GetInstance ().Players[i].Player, Players[i].networkView.viewID);
+					}
+				}
+				
+				for (int i = 0; i < NumOfPlayers; i++) {
+					Players[i].SetMainDeck (BlackMarketArea.PullPlayerDeck (playerInfos[i].Role, Players[i]));
+					Players[i].ShuffleMainDeck ();
+					networkView.RPC ("SetPlayerDeckOrder", RPCMode.Others, new object[] {ArrayToString (Players[i].GetMainDeckOrder ()), Players[i].networkView.viewID});
+				}
+				
+				BlackMarketArea.ShuffleMainDeck ();
+				ObstacleArea.ShuffleMainDeck ();
+				ObstacleArea.ShuffleHardDeck ();
+				CrossfireArea.ShuffleMainDeck ();
+				
+				networkView.RPC ("SetBlackMarketDeckOrder", RPCMode.Others, ArrayToString (BlackMarketArea.GetMainDeckOrder ()));
+				networkView.RPC ("SetObstacleDeckOrder", RPCMode.Others, ArrayToString (ObstacleArea.GetMainDeckOrder ()));
+				networkView.RPC ("SetHardObstacleDeckOrder", RPCMode.Others, ArrayToString (ObstacleArea.GetHardDeckOrder ()));
+				networkView.RPC ("SetCrossfireDeckOrder", RPCMode.Others, ArrayToString (CrossfireArea.GetMainDeckOrder ()));
+				
+				IsSyncing = false;
+			}
+		}
 	}
 
 	[RPC]
