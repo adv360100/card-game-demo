@@ -9,7 +9,7 @@ public class BlackMarketArea : BasicArea {
 	public int Columns = 3;
 	public int CardMax = 6;
 	public float CardSpacing = 2f;
-
+	
 	void Update () {
 		if (!GameManager.Instance.IsSyncing) {
 			bool needsUpdate = false;
@@ -104,10 +104,26 @@ public class BlackMarketArea : BasicArea {
 		return playerCards;
 	}
 
+	public List<GameObject> PullPlayerDeck (uint[] idsToPull, BasicArea newManager) {
+		List<GameObject> playerCards = new List<GameObject> (7);
+
+		for (int i = 0; i < idsToPull.Length; i++) {
+			playerCards.Add (PullPlayerCard (obj => {
+				return obj.GetComponent<Card> ().ID == idsToPull[i];
+			}, newManager));
+		}
+
+		return playerCards;
+	}
+
 	GameObject PullPlayerCard (string cardName, BasicArea newManager) {
-		GameObject temp = MainDeck.CardList.Find (delegate(GameObject obj) {
+		return PullPlayerCard (obj => {
 			return obj.name == cardName;
-		});
+		}, newManager);
+	}
+
+	GameObject PullPlayerCard (Predicate<GameObject> find, BasicArea newManager) {
+		GameObject temp = MainDeck.CardList.Find (find);
 
 		Card card = temp.GetComponent<Card> ();
 

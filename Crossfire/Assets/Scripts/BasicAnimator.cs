@@ -35,7 +35,7 @@ public class BasicAnimator : MonoBehaviour {
 
 
 		if (MyUpdateFunction != null) {
-			MyUpdateFunction(Time.deltaTime);
+			MyUpdateFunction (Time.deltaTime);
 		}
 	}
 

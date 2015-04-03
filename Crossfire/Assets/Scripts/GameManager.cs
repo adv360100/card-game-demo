@@ -90,7 +90,11 @@ public class GameManager : MonoBehaviour {
 
 	[RPC]
 	void SetPlayerDeckOrder (string order, NetworkViewID id) {
-		GetPlayerAreaForNetworkViewID (id).SetMainDeckOrder (StringToArray (order));
+		uint[] orderArray = StringToArray (order);
+		PlayerArea curArea = GetPlayerAreaForNetworkViewID (id);
+
+		curArea.SetMainDeck (BlackMarketArea.PullPlayerDeck (orderArray, curArea));
+		curArea.SetMainDeckOrder (orderArray);
 	}
 
 	[RPC]
