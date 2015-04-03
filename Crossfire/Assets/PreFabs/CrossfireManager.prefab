@@ -100,6 +100,7 @@ GameObject:
   - 64: {fileID: 6479438}
   - 23: {fileID: 2379438}
   - 114: {fileID: 11479446}
+  - 148: {fileID: 14876034}
   m_Layer: 0
   m_Name: MainDeck
   m_TagString: Untagged
@@ -790,6 +791,18 @@ MonoBehaviour:
   - {fileID: 2379440}
   - {fileID: 2379430}
   - {fileID: 2379444}
+--- !u!148 &14876034
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179438}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 479438}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -84,6 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AreaManager: {fileID: 0}
   FrontTexture: {fileID: 0}
+  AttachedObstacle: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
