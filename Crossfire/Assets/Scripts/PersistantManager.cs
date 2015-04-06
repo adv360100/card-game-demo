@@ -64,10 +64,6 @@ public class PersistantManager : MonoBehaviour {
 		SelectedRace = Races.RaceUnknown + i;
 	}
 
-	[RPC]
-	public void AddPlayer (NetworkPlayer player, string json) {
-		AddPlayer (player, JSON.Parse (json));
-	}
 
 	public void AddPlayer(NetworkPlayer player, JSONNode json)
 	{
@@ -80,7 +76,6 @@ public class PersistantManager : MonoBehaviour {
 		Players.Add (p);
 	}
 
-	[RPC]
 	public void RemovePlayer(NetworkPlayer player)
 	{
 		int index = -1;

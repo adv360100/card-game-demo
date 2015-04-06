@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using SimpleJSON;
 
 public class NetworkManager : MonoBehaviour {
 
@@ -141,7 +142,16 @@ public class NetworkManager : MonoBehaviour {
 
 	}
 
+	[RPC]
+	public void AddPlayer (NetworkPlayer player, string json) {
+		PersistantManager.GetInstance().AddPlayer (player, JSON.Parse (json));
+	}
 
+	[RPC]
+	public void RemovePlayer(NetworkPlayer player)
+	{
+		PersistantManager.GetInstance ().RemovePlayer (player);
+	}
 
 	[RPC]
 	void SetupLobby(string title)
