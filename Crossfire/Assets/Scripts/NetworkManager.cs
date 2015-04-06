@@ -45,7 +45,8 @@ public class NetworkManager : MonoBehaviour {
 		switch (msEvent) {
 		case MasterServerEvent.HostListReceived:
 			Debug.Log ("Found " + MasterServer.PollHostList().Length + " games");
-			MasterGameListManager.AddHostGames(MasterServer.PollHostList ());
+			if(MasterGameListManager != null)
+				MasterGameListManager.AddHostGames(MasterServer.PollHostList ());
 			break;
 		case MasterServerEvent.RegistrationFailedNoServer:
 			Debug.Log ("There is no server");
