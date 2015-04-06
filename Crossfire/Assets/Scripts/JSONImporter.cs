@@ -10,17 +10,21 @@ public enum CardIDs { CardIDPlayerCards = 1, CardIDObstacles = 10000, CardIDHard
 
 public class JSONImporter : MonoBehaviour {
 
-	private const string kResourcesPath = "Assets/Resources/";
+	private const string kResourcesPath = "Resources";
 
+	static string ThePath()
+	{
+		return Application.persistentDataPath + Path.DirectorySeparatorChar + kResourcesPath + Path.DirectorySeparatorChar;
+	}
 	static public List<GameObject> LoadAllFromFolder (string path, uint startingID) {
-		DirectoryInfo info = new DirectoryInfo (kResourcesPath + path);
+		DirectoryInfo info = new DirectoryInfo (ThePath() + path);
 		FileInfo[] fileInfo = info.GetFiles ();
 		List<GameObject> cards = new List<GameObject> (28);
 
 		foreach (FileInfo file in fileInfo) {
 			string[] extensions = file.Name.Split ('.');
 			if (extensions[extensions.Length - 1] == "cards") {
-				JSONNode json = Load (kResourcesPath + path + "/" + file.Name);
+				JSONNode json = Load (ThePath() + path + "/" + file.Name);
 				if (json != null) {
 					uint id = startingID;
 //					Debug.Log ("json.Count: " + json.Count);
