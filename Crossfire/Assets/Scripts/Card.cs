@@ -10,8 +10,6 @@ public class Card : BasicAnimator {
 
 	// Use this for initialization
 	void Start () {
-		//TODO: assign unique id
-		ID = (uint)Random.Range (1, 100);
 	}
 
 	void Awake () {
