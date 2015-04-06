@@ -113,7 +113,6 @@ public class GameLobby : MonoBehaviour {
 	[RPC]
 	void StartGame()
 	{
-		DestroyObject (PersistantManager.GetInstance ().gameObject.GetComponent<NetworkView> ());
 		Application.LoadLevel (1);
 	}
 

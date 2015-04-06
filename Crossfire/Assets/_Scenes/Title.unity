@@ -1973,7 +1973,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 329783341}
   - 114: {fileID: 329783340}
-  - 114: {fileID: 329783343}
   - 114: {fileID: 329783342}
   - 114: {fileID: 329783344}
   - 148: {fileID: 329783345}
@@ -2024,19 +2023,6 @@ MonoBehaviour:
   HostPort: {fileID: 1339401501}
   Lobby: {fileID: 1373574433}
   MasterGameListManager: {fileID: 157987211}
---- !u!114 &329783343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 329783339}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e330568ac5c6914c9658a8ee2e6fb1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SelectedRace: 1
-  SelectedRole: 1
 --- !u!114 &329783344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8511,6 +8497,47 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2071509368}
+--- !u!1 &2080261641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2080261643}
+  - 114: {fileID: 2080261642}
+  m_Layer: 0
+  m_Name: PersistantData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2080261642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2080261641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e330568ac5c6914c9658a8ee2e6fb1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelectedRace: 1
+  SelectedRole: 1
+--- !u!4 &2080261643
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2080261641}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 259.0112, y: 251.216232, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
 --- !u!1 &2100835066
 GameObject:
   m_ObjectHideFlags: 0
