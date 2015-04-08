@@ -43,7 +43,7 @@ public class HandActions : BasicAnimator {
 		float containerWidth = count * objectWidth;
 		int index = 0;
 		//find start point
-		float startPoint = containerWidth * -0.5f;
+		float startPoint = transform.position.x + containerWidth * -0.5f;
 		foreach (GameObject cardObject in CardList) {
 			Card card = cardObject.GetComponent<Card>();
 			card.QuadraticOutMoveTo(card.transform.position, new Vector3(startPoint + objectWidth * index, transform.position.y, transform.position.z), animationRate, null);
