@@ -9,7 +9,7 @@ public class Deck : BasicAnimator {
 	public BasicArea Manager;
 	public MeshRenderer[] ExtraCards; //the deck 'stack' cards for when there are more than one card in the deck
 
-	public GameObject DrawCard () {
+	virtual public GameObject DrawCard () {
 		if (CardList.Count <= 0) {
 			if (Manager.GetDiscardPile().Count <= 0) {
 				return null;

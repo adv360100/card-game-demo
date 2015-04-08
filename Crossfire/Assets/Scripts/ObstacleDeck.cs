@@ -24,4 +24,16 @@ public class ObstacleDeck : Deck {
 		UpdateDeckDisplay ();
 		ObstacleActions.Instance.CheckObstacleButtons ();
 	}
+
+	override public GameObject DrawCard () {
+		if (CardList.Count <= 0) {
+			return null;
+		}
+		
+		GameObject topCard = CardList [CardList.Count - 1];
+		topCard.GetComponent<Renderer>().enabled = true;
+		CardList.Remove (topCard);
+		return topCard;
+	}
+
 }
