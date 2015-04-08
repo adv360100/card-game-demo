@@ -17,8 +17,9 @@ public class ObstacleDeck : Deck {
 		
 		card.transform.position = transform.position;
 		card.tag = ObstacleActions.kObstacleTag;
-		card.GetComponent<Card> ().AreaManager = GameManager.Instance.GetPlayerAreaForNetworkViewID(viewID);
-		GameManager.Instance.AddObstacleToMyPlayer (card);
+		PlayerArea actingPlayerArea = GameManager.Instance.GetPlayerAreaForNetworkViewID (viewID);
+		card.GetComponent<Card> ().AreaManager = actingPlayerArea;
+		actingPlayerArea.ObstacleSection.AddCard (card);
 
 		UpdateDeckDisplay ();
 		ObstacleActions.Instance.CheckObstacleButtons ();

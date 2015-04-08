@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 	public ObstacleArea ObstacleArea;
 	public BlackMarketArea BlackMarketArea;
 	public BasicArea CrossfireArea;
-	public PlayerArea MyPlayer; // The player on this machine
+	public PlayerArea MyPlayer; // The player area on this machine
 	public PlayerArea[] Players;
 	public ObstacleActions ObstaclePanel;
 	public bool IsSyncing = true;
@@ -262,10 +262,6 @@ public class GameManager : MonoBehaviour {
 
 	public static PlayerArea GetCurrentPlayerArea () {
 		return Instance.Players[Instance.CurPlayerIndex];
-	}
-
-	public void AddObstacleToMyPlayer (GameObject card) {
-		MyPlayer.ObstacleSection.AddCard (card);
 	}
 
 	public void DiscardObstacle (GameObject card) {
