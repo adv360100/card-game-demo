@@ -37,13 +37,32 @@ public class BlackMarketArea : BasicArea {
 	}
 
 	override public void MoveCard (Card card) {
+		networkView.RPC ("BuyCard", RPCMode.All, new object[]{(int)card.ID});
+
+	}
+
+	[RPC]
+	void BuyCard(int cardID)
+	{
+		Card card = null;
+		foreach (GameObject obj in CardList) {
+			Card temp = obj.GetComponent<Card>();
+			if(temp.ID == cardID)
+			{
+				card = temp;
+				break;
+			}
+		}
+		if (card == null)
+			return;
+
 		//move card to current player hand
 		BasicArea playerArea = GameManager.GetCurrentPlayerArea();
-
+		
 		if (playerArea != GameManager.Instance.MyPlayer) {
 			card.GetComponent<Renderer> ().material.SetTexture (0, MainDeck.GetComponent<Renderer> ().material.GetTexture(0));
 		}
-
+		
 		card.AreaManager = playerArea;
 		CardList.Remove (card.gameObject);
 		card.gameObject.transform.parent = playerArea.gameObject.transform;

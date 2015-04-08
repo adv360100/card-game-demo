@@ -11,19 +11,7 @@ public class PlayerArea : BasicArea {
 	//MoveCardToDiscardFromHand
 	override public void MoveCard (Card card) {
 		if (card.tag == ObstacleActions.kObstacleTag) {
-			ObstacleSection.RemoveCard (card.gameObject);
-			Obstacle ob = card as Obstacle;
-			ob.CardList.ForEach(delegate(Card obj) {
-				//animate player cards to discard
-				obj.QuadraticOutMoveTo (obj.transform.position, DiscardPile.transform.position, 1.0f, () => {
-					DiscardPile.AddCard (obj.gameObject);
-					obj.GetComponent<Renderer>().enabled = false;
-				});
-			});
-
-
-			ob.RemoveAllCards();
-			GameManager.Instance.DiscardObstacle (card.gameObject);
+			networkView.RPC("RemoveObstacle",RPCMode.All,new object[]{(int)card.ID});
 		} else {
 			if (Hand.CardList.Contains (card.gameObject) == false ) {
 				card.AttachedObstacle.RemoveCard(card);
@@ -35,6 +23,35 @@ public class PlayerArea : BasicArea {
 		}
 	}
 
+	[RPC]
+	void RemoveObstacle(int cardID)
+	{
+		Card card = null;
+		foreach (GameObject obj in ObstacleSection.CardList) {
+			Card temp = obj.GetComponent<Card>();
+			if(temp.ID == cardID)
+			{
+				card = temp;
+				break;
+			}
+		}
+		if (card == null)
+			return;
+
+		ObstacleSection.RemoveCard (card.gameObject);
+		Obstacle ob = card as Obstacle;
+		ob.CardList.ForEach(delegate(Card obj) {
+			//animate player cards to discard
+			obj.QuadraticOutMoveTo (obj.transform.position, DiscardPile.transform.position, 1.0f, () => {
+				DiscardPile.AddCard (obj.gameObject);
+				obj.GetComponent<Renderer>().enabled = false;
+			});
+		});
+		
+		
+		ob.RemoveAllCards();
+		GameManager.Instance.DiscardObstacle (card.gameObject);
+	}
 	public void AddCardToHand (GameObject card) {
 		Hand.AddCard (card);
 	}

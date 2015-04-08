@@ -49,11 +49,14 @@ public class BasicAnimator : MonoBehaviour {
 		MyUpdateFunction = deltaTime => {
 			currentTime += deltaTime;
 			float fraction = currentTime / animationDuration;
+			if(currentTime > animationDuration)
+				fraction = 1f;
 
 			transform.position = CalclulateQuadraticOut (originalPosition, targetPosition, fraction);
 
 			if (Vector3.Distance(transform.position, targetPosition) <= 0.01f) {
 				transform.position = targetPosition;
+
 				if (completionCallback != null) {
 					completionCallback();
 				}
