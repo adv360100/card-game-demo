@@ -5556,10 +5556,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetAreas:
   - {fileID: 1574937355}
-  - {fileID: 97052500}
   - {fileID: 2107405364}
   - {fileID: 1187375502}
   - {fileID: 1629418144}
+  - {fileID: 97052500}
 --- !u!1 &1187375501
 GameObject:
   m_ObjectHideFlags: 0
@@ -6031,6 +6031,7 @@ MonoBehaviour:
   - {fileID: 1629418144}
   ObstaclePanel: {fileID: 1968797942}
   IsSyncing: 1
+  NumOfPlayers: 0
 --- !u!4 &1350447939
 Transform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class RadioToolbar : MonoBehaviour {
 
@@ -11,9 +12,18 @@ public class RadioToolbar : MonoBehaviour {
 	void Start () {
 		SelectedButton.gameObject.SetActive (false);
 
-		for (int i = PersistantManager.GetInstance ().Players.Count; i < PlayerButtons.Length; i++) {
-			PlayerButtons[i].gameObject.SetActive (false);
+		List<PersistantManager.PlayerInfo> players = PersistantManager.GetInstance ().Players;
+		for (int i = 0; i < PlayerButtons.Length; i++) {
+			if (i < players.Count) {
+				if (players[i] != PersistantManager.GetInstance ().GetPlayerInfo (Network.player)) {
+					PlayerButtons[i].GetComponentInChildren<Text> ().text = players[i].Name;
+				}
+			} else {
+				PlayerButtons[i].gameObject.SetActive (false);
+			}
 		}
+
+
 	}
 
 	public void SelectButton (Button btn) {
