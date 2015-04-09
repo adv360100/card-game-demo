@@ -11,6 +11,7 @@ public class GameLobby : MonoBehaviour {
 	public int GameStartCountdown = 3;
 	public GameObject RolesSection;
 	public GameObject RacesSection;
+	public PlayersPanel PlayerNamesPanel;
 
 	private Toggle[] RolesToggleArray;
 	private Toggle[] RacesToggleArray;
@@ -33,6 +34,7 @@ public class GameLobby : MonoBehaviour {
 			t.interactable = true;
 		}
 		RacesToggleArray [0].isOn = true;
+		PlayerNamesPanel.ClearNames ();
 	}
 
 	public void SetRace(int i)

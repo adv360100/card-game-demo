@@ -6,10 +6,14 @@ public class GameHostList : MonoBehaviour {
 
 	public GameObject OriginalGamePanel;
 	public Button JoinBtn;
+	public Text NoGamesText;
+	public Text FetchingText;
 
 	private int Index = 0;
 	private HostData[] HostList;
 	private GamePanel SelectedGame = null;
+
+	public enum JoinStates {JoinStateEmpty,JoinStateFetching,JoinStateList};
 
 	public HostData[] GetHosts ()
 	{
@@ -18,6 +22,11 @@ public class GameHostList : MonoBehaviour {
 
 	public void AddHostGames(HostData[] games)
 	{
+		if (games.Length == 0)
+			ChangeState (JoinStates.JoinStateEmpty);
+		else
+			ChangeState (JoinStates.JoinStateList);
+
 		HostList = games;
 		ClearList ();
 		foreach (HostData host in games) {
@@ -55,6 +64,28 @@ public class GameHostList : MonoBehaviour {
 
 	public void JoinPressed()
 	{
+		OnGameSelected (null);
 		NetworkManager.ConnectToServer (SelectedGame.Host,"");
+	}
+
+	public void ChangeState(JoinStates state)
+	{
+		switch (state) {
+		case JoinStates.JoinStateEmpty:
+			NoGamesText.enabled = true;
+			FetchingText.enabled = false;
+			break;
+		case JoinStates.JoinStateFetching:
+			NoGamesText.enabled = false;
+			FetchingText.enabled = true;
+			break;
+		case JoinStates.JoinStateList:
+			NoGamesText.enabled = false;
+			FetchingText.enabled = false;
+			break;
+		default:
+			Debug.Log("Invalid JoinState");
+			break;
+		}
 	}
 }

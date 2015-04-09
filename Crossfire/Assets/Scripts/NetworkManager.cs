@@ -39,6 +39,7 @@ public class NetworkManager : MonoBehaviour {
 	{
 		MasterServer.RequestHostList(GameTypeName);
 		Debug.Log ("Fetching game list");
+		MasterGameListManager.ChangeState (GameHostList.JoinStates.JoinStateFetching);
 	}
 	
 	void OnMasterServerEvent(MasterServerEvent msEvent)
@@ -70,8 +71,6 @@ public class NetworkManager : MonoBehaviour {
 
 	void OnConnectedToServer() {
 		Debug.Log("Connected to server");
-		//todo: get others info
-//		PersistantManager.GetInstance ().AddPlayer (Network.player, ProfileManager.LoadPlayerInfo ());
 		networkView.RPC ("AddPlayer", RPCMode.All, new object[]{Network.player,  ProfileManager.LoadPlayerInfo ().ToString()});
 		networkView.RPC ("QueryPlayers", RPCMode.Server, null);
 		JoinLobby ();
@@ -92,9 +91,10 @@ public class NetworkManager : MonoBehaviour {
 	void JoinLobby () {
 		SM.OpenPanel (Lobby.LobbyController);
 		Lobby.SetupLobby (Network.isServer);
-		GetComponent<PlayersPanel> ().AddPlayerName (PersistantManager.GetInstance ().GetPlayerInfo (Network.player).Name);
+		string playerName = PersistantManager.GetInstance ().GetPlayerInfo (Network.player).Name;
+		GetComponent<PlayersPanel> ().AddPlayerName (playerName);
 		if (Network.isClient)
-			networkView.RPC ("AddPlayerName", RPCMode.Others, PersistantManager.GetInstance ().GetPlayerInfo (Network.player).Name);
+			networkView.RPC ("AddPlayerName", RPCMode.Others, new object[]{playerName});
 	}
 
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
@@ -146,12 +146,6 @@ public class NetworkManager : MonoBehaviour {
 	public void SetPassword(string p)
 	{
 		Password = p;
-	}
-
-	[RPC]
-	void GetPlayerList(byte[] Namesdata)
-	{
-
 	}
 
 	[RPC]
