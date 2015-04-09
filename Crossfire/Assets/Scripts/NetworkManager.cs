@@ -64,8 +64,7 @@ public class NetworkManager : MonoBehaviour {
 		Debug.Log("Server initialized and ready");
 		networkView.RPC ("SetupLobby", RPCMode.AllBuffered, new object[]{GameName});
 		PersistantManager.GetInstance ().AddPlayer (Network.player, ProfileManager.LoadPlayerInfo ());
-		networkView.RPC ("AddPlayer", RPCMode.OthersBuffered, new object[]{Network.player, ProfileManager.LoadPlayerInfo ().ToString()});
-		networkView.RPC ("AddPlayerName", RPCMode.OthersBuffered, PersistantManager.GetInstance ().GetPlayerInfo (Network.player).Name);
+		AddPlayer(Network.player, ProfileManager.LoadPlayerInfo ().ToString());
 		JoinLobby ();
 	}
 
@@ -74,7 +73,20 @@ public class NetworkManager : MonoBehaviour {
 		//todo: get others info
 //		PersistantManager.GetInstance ().AddPlayer (Network.player, ProfileManager.LoadPlayerInfo ());
 		networkView.RPC ("AddPlayer", RPCMode.All, new object[]{Network.player,  ProfileManager.LoadPlayerInfo ().ToString()});
+		networkView.RPC ("QueryPlayers", RPCMode.Server, null);
 		JoinLobby ();
+	}
+
+	[RPC]
+	void QueryPlayers(NetworkMessageInfo info)
+	{
+		foreach (PersistantManager.PlayerInfo pi in PersistantManager.GetInstance().Players) {
+			if(pi.Player != info.sender)
+			{
+				networkView.RPC ("AddPlayerWithName", info.sender, new object[]{pi.Player, pi.Name});
+				networkView.RPC ("AddPlayerName", info.sender, pi.Name);
+			}
+		}
 	}
 
 	void JoinLobby () {
@@ -145,6 +157,12 @@ public class NetworkManager : MonoBehaviour {
 	[RPC]
 	public void AddPlayer (NetworkPlayer player, string json) {
 		PersistantManager.GetInstance().AddPlayer (player, JSON.Parse (json));
+	}
+
+	[RPC]
+	void AddPlayerWithName(NetworkPlayer player, string name)
+	{
+		PersistantManager.GetInstance ().AddPlayerWithName (player, name);
 	}
 
 	[RPC]

@@ -67,8 +67,13 @@ public class PersistantManager : MonoBehaviour {
 
 	public void AddPlayer(NetworkPlayer player, JSONNode json)
 	{
+		AddPlayerWithName(player, json[ProfileManager.kNameKey]);
+	}
+
+	public void AddPlayerWithName(NetworkPlayer player, string name)
+	{
 		PlayerInfo p = new PlayerInfo ();
-		p.Name = json[ProfileManager.kNameKey];
+		p.Name = name;
 		p.Player = player;
 		p.Race = Races.RaceUnknown;
 		p.Role = Roles.RoleUnknown;

@@ -13,8 +13,8 @@ public class PlayersPanel : MonoBehaviour {
 	[RPC]
 	public void AddPlayerName(string name)
 	{
-		if (PlayerNameList.Contains (name))
-			return;//skip as it is already in the list//Note: need to test 
+		//if (PlayerNameList.Contains (name))
+		//	return;//skip as it is already in the list//Note: need to test 
 
 		GameObject player = Instantiate (TextObject) as GameObject;
 		Text t = player.GetComponent<Text> ();
