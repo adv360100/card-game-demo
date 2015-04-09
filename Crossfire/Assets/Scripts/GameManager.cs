@@ -16,12 +16,13 @@ public class GameManager : MonoBehaviour {
 	public PlayerArea[] Players;
 	public ObstacleActions ObstaclePanel;
 	public bool IsSyncing = true;
+	public int NumOfPlayers;
+	public MoveCamera MainCamera;
 
 	private enum GamePhases {GamePhasesCrossfire = 0, GamePhasesPlayer, GamePhasesEnd, GamePhasesMAX};
 	private enum PlayerPhases {PlayerPhasesPlay = 0, PlayerPhasesApplyDamage, PlayerPhasesTakeDamage, PlayerPhasesDraw, PlayerPhasesBuy, PlayerPhasesEnd, PlayerPhasesMAX};
 	private GamePhases CurGamePhase = 0;
 	private PlayerPhases CurPlayerPhase = PlayerPhases.PlayerPhasesEnd;
-	private int NumOfPlayers;
 	private int FirstPlayerIndex = 0;
 	private int CurPlayerIndex = 0;
 
@@ -115,6 +116,9 @@ public class GameManager : MonoBehaviour {
 	[RPC]
 	void SetCrossfireDeckOrder (string order) {
 		CrossfireArea.SetMainDeckOrder (StringToArray (order));
+
+		// This is the last call so finish anything else before marking the game as synced
+		MainCamera.MoveToMyPlayer ();
 		IsSyncing = false;
 	}
 

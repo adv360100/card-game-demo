@@ -17,7 +17,6 @@ public class MoveCamera : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		OriginalOrthographicSize = camera.orthographicSize;
-		MoveToArea (CurrentAreaIndex);
 	}
 
 	public void Update()
@@ -97,5 +96,15 @@ public class MoveCamera : MonoBehaviour {
 			StopCoroutine(coroutine);
 			coroutine = null;
 		}
+	}
+
+	public void MoveToMyPlayer () {
+		for (int i = 0; i < GameManager.Instance.NumOfPlayers; i++) {
+			if (GameManager.Instance.Players[i] == GameManager.Instance.MyPlayer) {
+				CurrentAreaIndex = i;
+				break;
+			}
+		}
+		MoveToArea (CurrentAreaIndex);
 	}
 }
